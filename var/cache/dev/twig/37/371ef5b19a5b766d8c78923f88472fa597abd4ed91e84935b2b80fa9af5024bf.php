@@ -155,6 +155,6 @@ class __TwigTemplate_5a62d8aa784e1c0c2e4d57f44fc312e19b1a8318984f13b18f94ee879db
 {% block panel %}
     {{ render(path('_profiler_router', { token: token })) }}
 {% endblock %}
-", "@WebProfiler/Collector/router.html.twig", "/home/broccoli/code/mediatheque_3wa/mediatheque/vendor/symfony/web-profiler-bundle/Resources/views/Collector/router.html.twig");
+", "@WebProfiler/Collector/router.html.twig", "/media/hdd-home/www/media/vendor/symfony/web-profiler-bundle/Resources/views/Collector/router.html.twig");
     }
 }

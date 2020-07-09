@@ -81,6 +81,6 @@ class __TwigTemplate_c46af8d6fecbd78aea531fd10035a24fe4a3c1d9fcea0a6388855a280e4
     public function getSourceContext()
     {
         return new Source("{% block panel '' %}
-", "@WebProfiler/Profiler/ajax_layout.html.twig", "/home/broccoli/code/mediatheque_3wa/mediatheque/vendor/symfony/web-profiler-bundle/Resources/views/Profiler/ajax_layout.html.twig");
+", "@WebProfiler/Profiler/ajax_layout.html.twig", "/media/hdd-home/www/media/vendor/symfony/web-profiler-bundle/Resources/views/Profiler/ajax_layout.html.twig");
     }
 }

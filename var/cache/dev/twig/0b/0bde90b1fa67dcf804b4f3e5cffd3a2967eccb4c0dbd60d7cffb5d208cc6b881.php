@@ -227,6 +227,6 @@ class __TwigTemplate_e572ed717f5fafe6819a0985b26aac8751561fed8f2c761fb9aeb8e4a89
         </div>
     {% endif %}
 {% endblock %}
-", "@WebProfiler/Collector/exception.html.twig", "/home/broccoli/code/mediatheque_3wa/mediatheque/vendor/symfony/web-profiler-bundle/Resources/views/Collector/exception.html.twig");
+", "@WebProfiler/Collector/exception.html.twig", "/media/hdd-home/www/media/vendor/symfony/web-profiler-bundle/Resources/views/Collector/exception.html.twig");
     }
 }

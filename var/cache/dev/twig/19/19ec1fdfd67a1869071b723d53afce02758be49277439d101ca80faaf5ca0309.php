@@ -171,6 +171,6 @@ class __TwigTemplate_921d936f2c10fb8eab5b4fd67f2b25f9f48751a0aca5da8e0c399e8d3f8
         {%- endfor -%}
     </pre>
 {% endif %}
-", "@Doctrine/Collector/explain.html.twig", "/home/broccoli/code/mediatheque_3wa/mediatheque/vendor/doctrine/doctrine-bundle/Resources/views/Collector/explain.html.twig");
+", "@Doctrine/Collector/explain.html.twig", "/media/hdd-home/www/media/vendor/doctrine/doctrine-bundle/Resources/views/Collector/explain.html.twig");
     }
 }

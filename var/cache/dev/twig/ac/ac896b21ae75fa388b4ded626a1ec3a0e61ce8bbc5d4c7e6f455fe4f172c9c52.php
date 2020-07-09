@@ -99,6 +99,6 @@ class __TwigTemplate_6e886f9d90ee429c5e263150c6f9e37cfd91848ffa02285e887ad54d980
 .container.body_default {
     border-top: 8px solid #aaaaaa;
 }
-", "@email/zurb_2/notification/local.css", "/home/broccoli/code/mediatheque_3wa/mediatheque/vendor/symfony/twig-bridge/Resources/views/Email/zurb_2/notification/local.css");
+", "@email/zurb_2/notification/local.css", "/media/hdd-home/www/media/vendor/symfony/twig-bridge/Resources/views/Email/zurb_2/notification/local.css");
     }
 }
