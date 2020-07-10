@@ -7,6 +7,9 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=MediaRepository::class)
+ * @ORM\InheritanceType("JOINED")
+ * @ORM\DiscriminatorColumn(name="media_type_id", type="integer")
+ * @ORM\DiscriminatorMap({"0" = "Media", "1" = "Book", "2" = "Film", "3" = "Music"})
  */
 class Media
 {
@@ -15,28 +18,28 @@ class Media
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\Column(type="string", length=500)
      */
-    private $name;
+    protected $name;
 
     /**
      * @ORM\Column(type="string", length=500, nullable=true)
      */
-    private $author;
+    protected $author;
 
     /**
      * @ORM\Column(type="text", nullable=true)
      */
-    private $description;
+    protected $description;
 
     /**
      * @ORM\ManyToOne(targetEntity=MediaType::class)
      * @ORM\JoinColumn(nullable=false)
      */
-    private $media_type_id;
+    protected $media_type_id;
 
     public function getId(): ?int
     {

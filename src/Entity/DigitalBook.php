@@ -27,6 +27,12 @@ class DigitalBook
      */
     private $path;
 
+    /**
+     * @ORM\OneToOne(targetEntity=Book::class, inversedBy="digitalBook", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $media_id;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -52,6 +58,18 @@ class DigitalBook
     public function setPath(?string $path): self
     {
         $this->path = $path;
+
+        return $this;
+    }
+
+    public function getMediaId(): ?Book
+    {
+        return $this->media_id;
+    }
+
+    public function setMediaId(Book $media_id): self
+    {
+        $this->media_id = $media_id;
 
         return $this;
     }

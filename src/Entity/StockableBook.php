@@ -27,6 +27,12 @@ class StockableBook
      */
     private $reception_date;
 
+    /**
+     * @ORM\OneToOne(targetEntity=Book::class, inversedBy="stockableBook", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $media_id;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -52,6 +58,18 @@ class StockableBook
     public function setReceptionDate(?\DateTimeInterface $reception_date): self
     {
         $this->reception_date = $reception_date;
+
+        return $this;
+    }
+
+    public function getMediaId(): ?Book
+    {
+        return $this->media_id;
+    }
+
+    public function setMediaId(Book $media_id): self
+    {
+        $this->media_id = $media_id;
 
         return $this;
     }

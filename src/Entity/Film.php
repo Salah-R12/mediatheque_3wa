@@ -8,14 +8,14 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass=FilmRepository::class)
  */
-class Film
+class Film extends Media
 {
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\Column(type="string", length=500)
@@ -41,6 +41,16 @@ class Film
      * @ORM\Column(type="string", length=500, nullable=true)
      */
     private $actors;
+
+    /**
+     * @ORM\OneToOne(targetEntity=DigitalFilm::class, mappedBy="media_id", cascade={"persist", "remove"})
+     */
+    private $digitalFilm;
+
+    /**
+     * @ORM\OneToOne(targetEntity=StockableFilm::class, mappedBy="media_id", cascade={"persist", "remove"})
+     */
+    private $stockableFilm;
 
     public function getId(): ?int
     {
@@ -115,6 +125,40 @@ class Film
     public function setActors(string $actors): self
     {
         $this->actors = $actors;
+
+        return $this;
+    }
+
+    public function getDigitalFilm(): ?DigitalFilm
+    {
+        return $this->digitalFilm;
+    }
+
+    public function setDigitalFilm(DigitalFilm $digitalFilm): self
+    {
+        $this->digitalFilm = $digitalFilm;
+
+        // set the owning side of the relation if necessary
+        if ($digitalFilm->getMediaId() !== $this) {
+            $digitalFilm->setMediaId($this);
+        }
+
+        return $this;
+    }
+
+    public function getStockableFilm(): ?StockableFilm
+    {
+        return $this->stockableFilm;
+    }
+
+    public function setStockableFilm(StockableFilm $stockableFilm): self
+    {
+        $this->stockableFilm = $stockableFilm;
+
+        // set the owning side of the relation if necessary
+        if ($stockableFilm->getMediaId() !== $this) {
+            $stockableFilm->setMediaId($this);
+        }
 
         return $this;
     }
