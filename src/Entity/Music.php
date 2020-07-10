@@ -42,16 +42,6 @@ class Music extends Media
      */
     private $compositor;
 
-    /**
-     * @ORM\OneToOne(targetEntity=DigitalMusic::class, mappedBy="media_id", cascade={"persist", "remove"})
-     */
-    private $digitalMusic;
-
-    /**
-     * @ORM\OneToOne(targetEntity=StockableMusic::class, mappedBy="media_id", cascade={"persist", "remove"})
-     */
-    private $stockableMusic;
-
     public function getId(): ?int
     {
         return $this->id;
@@ -125,40 +115,6 @@ class Music extends Media
     public function setPublishDate(\DateTimeInterface $publish_date): self
     {
         $this->publish_date = $publish_date;
-
-        return $this;
-    }
-
-    public function getDigitalMusic(): ?DigitalMusic
-    {
-        return $this->digitalMusic;
-    }
-
-    public function setDigitalMusic(DigitalMusic $digitalMusic): self
-    {
-        $this->digitalMusic = $digitalMusic;
-
-        // set the owning side of the relation if necessary
-        if ($digitalMusic->getMediaId() !== $this) {
-            $digitalMusic->setMediaId($this);
-        }
-
-        return $this;
-    }
-
-    public function getStockableMusic(): ?StockableMusic
-    {
-        return $this->stockableMusic;
-    }
-
-    public function setStockableMusic(StockableMusic $stockableMusic): self
-    {
-        $this->stockableMusic = $stockableMusic;
-
-        // set the owning side of the relation if necessary
-        if ($stockableMusic->getMediaId() !== $this) {
-            $stockableMusic->setMediaId($this);
-        }
 
         return $this;
     }

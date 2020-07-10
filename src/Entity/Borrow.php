@@ -28,21 +28,31 @@ class Borrow
     private $return_date;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true)
+     * @ORM\Column(type="datetime")
      */
-    private $expected_date;
+    private $expiry_date;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Member::class)
+     * @ORM\ManyToOne(targetEntity=Member::class, inversedBy="borrows")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $member_id;
+    private $member;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Media::class)
+     * @ORM\ManyToOne(targetEntity=Media::class, inversedBy="borrows")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $media_id;
+    private $media;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Staff::class, inversedBy="borrows")
+     */
+    private $staff;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=StateOfMedia::class)
+     */
+    private $return_media_state;
 
     public function getId(): ?int
     {
@@ -73,38 +83,62 @@ class Borrow
         return $this;
     }
 
-    public function getExpectedDate(): ?\DateTimeInterface
+    public function getExpiryDate(): ?\DateTimeInterface
     {
-        return $this->expected_date;
+        return $this->expiry_date;
     }
 
-    public function setExpectedDate(?\DateTimeInterface $expected_date): self
+    public function setExpiryDate(?\DateTimeInterface $expiry_date): self
     {
-        $this->expected_date = $expected_date;
+        $this->expiry_date = $expiry_date;
 
         return $this;
     }
 
-    public function getMemberId(): ?Member
+    public function getMember(): ?Member
     {
-        return $this->member_id;
+        return $this->member;
     }
 
-    public function setMemberId(?Member $member_id): self
+    public function setMember(?Member $member): self
     {
-        $this->member_id = $member_id;
+        $this->member = $member;
 
         return $this;
     }
 
-    public function getMediaId(): ?Media
+    public function getMedia(): ?Media
     {
-        return $this->media_id;
+        return $this->media;
     }
 
-    public function setMediaId(?Media $media_id): self
+    public function setMedia(?Media $media): self
     {
-        $this->media_id = $media_id;
+        $this->media = $media;
+
+        return $this;
+    }
+
+    public function getStaff(): ?Staff
+    {
+        return $this->staff;
+    }
+
+    public function setStaff(?Staff $staff): self
+    {
+        $this->staff = $staff;
+
+        return $this;
+    }
+
+    public function getReturnMediaState(): ?StateOfMedia
+    {
+        return $this->return_media_state;
+    }
+
+    public function setReturnMediaState(?StateOfMedia $return_media_state): self
+    {
+        $this->return_media_state = $return_media_state;
 
         return $this;
     }

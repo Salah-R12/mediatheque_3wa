@@ -42,16 +42,6 @@ class Film extends Media
      */
     private $actors;
 
-    /**
-     * @ORM\OneToOne(targetEntity=DigitalFilm::class, mappedBy="media_id", cascade={"persist", "remove"})
-     */
-    private $digitalFilm;
-
-    /**
-     * @ORM\OneToOne(targetEntity=StockableFilm::class, mappedBy="media_id", cascade={"persist", "remove"})
-     */
-    private $stockableFilm;
-
     public function getId(): ?int
     {
         return $this->id;
@@ -125,40 +115,6 @@ class Film extends Media
     public function setActors(string $actors): self
     {
         $this->actors = $actors;
-
-        return $this;
-    }
-
-    public function getDigitalFilm(): ?DigitalFilm
-    {
-        return $this->digitalFilm;
-    }
-
-    public function setDigitalFilm(DigitalFilm $digitalFilm): self
-    {
-        $this->digitalFilm = $digitalFilm;
-
-        // set the owning side of the relation if necessary
-        if ($digitalFilm->getMediaId() !== $this) {
-            $digitalFilm->setMediaId($this);
-        }
-
-        return $this;
-    }
-
-    public function getStockableFilm(): ?StockableFilm
-    {
-        return $this->stockableFilm;
-    }
-
-    public function setStockableFilm(StockableFilm $stockableFilm): self
-    {
-        $this->stockableFilm = $stockableFilm;
-
-        // set the owning side of the relation if necessary
-        if ($stockableFilm->getMediaId() !== $this) {
-            $stockableFilm->setMediaId($this);
-        }
 
         return $this;
     }

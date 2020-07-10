@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\MemberRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -66,6 +68,21 @@ class Member
      * @ORM\Column(type="string", length=50, nullable=true)
      */
     private $phone;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Borrow::class, mappedBy="member")
+     */
+    private $borrows;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Staff::class)
+     */
+    private $created_by_staff;
+
+    public function __construct()
+    {
+        $this->borrows = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -188,6 +205,49 @@ class Member
     public function setPhone(?string $phone): self
     {
         $this->phone = $phone;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Borrow[]
+     */
+    public function getBorrows(): Collection
+    {
+        return $this->borrows;
+    }
+
+    public function addBorrow(Borrow $borrow): self
+    {
+        if (!$this->borrows->contains($borrow)) {
+            $this->borrows[] = $borrow;
+            $borrow->setMember($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBorrow(Borrow $borrow): self
+    {
+        if ($this->borrows->contains($borrow)) {
+            $this->borrows->removeElement($borrow);
+            // set the owning side to null (unless already changed)
+            if ($borrow->getMember() === $this) {
+                $borrow->setMember(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getCreatedByStaff(): ?Staff
+    {
+        return $this->created_by_staff;
+    }
+
+    public function setCreatedByStaff(?Staff $created_by_staff): self
+    {
+        $this->created_by_staff = $created_by_staff;
 
         return $this;
     }
