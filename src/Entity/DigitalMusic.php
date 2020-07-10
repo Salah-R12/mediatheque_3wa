@@ -27,6 +27,12 @@ class DigitalMusic
      */
     private $path;
 
+    /**
+     * @ORM\OneToOne(targetEntity=Music::class, inversedBy="digitalMusic", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $media_id;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -52,6 +58,18 @@ class DigitalMusic
     public function setPath(?string $path): self
     {
         $this->path = $path;
+
+        return $this;
+    }
+
+    public function getMediaId(): ?Music
+    {
+        return $this->media_id;
+    }
+
+    public function setMediaId(Music $media_id): self
+    {
+        $this->media_id = $media_id;
 
         return $this;
     }

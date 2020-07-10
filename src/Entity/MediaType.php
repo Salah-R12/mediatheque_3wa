@@ -22,6 +22,11 @@ class MediaType
      */
     private $name;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $borrow_duration;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -35,6 +40,18 @@ class MediaType
     public function setName(string $name): self
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+    public function getBorrowDuration(): ?int
+    {
+        return $this->borrow_duration;
+    }
+
+    public function setBorrowDuration(int $borrow_duration): self
+    {
+        $this->borrow_duration = $borrow_duration;
 
         return $this;
     }

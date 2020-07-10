@@ -27,6 +27,12 @@ class DigitalFilm
      */
     private $path;
 
+    /**
+     * @ORM\OneToOne(targetEntity=Film::class, cascade={"persist", "remove"})
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $media_id;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -52,6 +58,18 @@ class DigitalFilm
     public function setPath(?string $path): self
     {
         $this->path = $path;
+
+        return $this;
+    }
+
+    public function getMediaId(): ?Film
+    {
+        return $this->media_id;
+    }
+
+    public function setMediaId(Film $media_id): self
+    {
+        $this->media_id = $media_id;
 
         return $this;
     }
