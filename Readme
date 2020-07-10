@@ -1,0 +1,18 @@
+## Création de la DB à partir des entités Doctrine définies dans src/Entity
+
+# S'assurer que la configuration de la base de données est faite dans le fichier ".env.local"
+S'il n'existe pas, copier le fichier ".env" et le coller en le renommant ".env.local". Ce dernier sera alors utilisé en priorité par Symfony
+
+Vérifier les paramètres de connexion à la DB, normalement, à la fin du fichier
+```.env
+DATABASE_URL=mysql://[db_user]:[db_password]@127.0.0.1:3306/mediatheque_3wa?serverVersion=5.7
+```
+Remplacer "db_user" par son utilisateur MySQL ayant le droit de créer une database (par exemple "root").
+
+Pour fini, utiliser la console symfony :
+```bash
+cd /path/to/project
+./bin/console doctrine:database:create
+./bin/console make:migration
+./bin/console doctrine:migrations:migrate
+```

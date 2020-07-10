@@ -18,4 +18,4 @@
 /.settings/
 /.buildpath
 /.project
-/src/Migrations/Version20200710150615.php
+/src/Migrations/Version*.php
