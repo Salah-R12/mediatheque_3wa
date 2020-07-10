@@ -43,7 +43,7 @@ class Member
     private $email;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=500)
      */
     private $address1;
 

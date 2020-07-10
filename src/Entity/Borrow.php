@@ -32,6 +32,18 @@ class Borrow
      */
     private $expected_date;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Member::class)
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $member_id;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Media::class)
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $media_id;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -69,6 +81,30 @@ class Borrow
     public function setExpectedDate(?\DateTimeInterface $expected_date): self
     {
         $this->expected_date = $expected_date;
+
+        return $this;
+    }
+
+    public function getMemberId(): ?Member
+    {
+        return $this->member_id;
+    }
+
+    public function setMemberId(?Member $member_id): self
+    {
+        $this->member_id = $member_id;
+
+        return $this;
+    }
+
+    public function getMediaId(): ?Media
+    {
+        return $this->media_id;
+    }
+
+    public function setMediaId(?Media $media_id): self
+    {
+        $this->media_id = $media_id;
 
         return $this;
     }
