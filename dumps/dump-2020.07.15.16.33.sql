@@ -471,3 +471,13 @@ UNLOCK TABLES;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 -- Dump completed on 2020-07-15  7:33:53
+
+--
+-- Dumping data for table `media_type`
+--
+
+LOCK TABLES `media_type` WRITE;
+/*!40000 ALTER TABLE `media_type` DISABLE KEYS */;
+INSERT INTO `media_type` VALUES (1,'Book',30),(2,'Film',7),(3,'Music',15);
+/*!40000 ALTER TABLE `media_type` ENABLE KEYS */;
+UNLOCK TABLES;
