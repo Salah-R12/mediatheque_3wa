@@ -2,25 +2,25 @@
 
 namespace App\Repository;
 
-use App\Entity\StockableFilm;
+use App\Entity\StockableMedia;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @method StockableFilm|null find($id, $lockMode = null, $lockVersion = null)
- * @method StockableFilm|null findOneBy(array $criteria, array $orderBy = null)
- * @method StockableFilm[]    findAll()
- * @method StockableFilm[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method StockableMedia|null find($id, $lockMode = null, $lockVersion = null)
+ * @method StockableMedia|null findOneBy(array $criteria, array $orderBy = null)
+ * @method StockableMedia[]    findAll()
+ * @method StockableMedia[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class StockableFilmRepository extends ServiceEntityRepository
+class StockableMediaRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, StockableFilm::class);
+        parent::__construct($registry, StockableMedia::class);
     }
 
     // /**
-    //  * @return StockableFilm[] Returns an array of StockableFilm objects
+    //  * @return StockableMedia[] Returns an array of StockableMedia objects
     //  */
     /*
     public function findByExampleField($value)
@@ -37,7 +37,7 @@ class StockableFilmRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?StockableFilm
+    public function findOneBySomeField($value): ?StockableMedia
     {
         return $this->createQueryBuilder('s')
             ->andWhere('s.exampleField = :val')

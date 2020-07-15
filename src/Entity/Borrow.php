@@ -18,9 +18,26 @@ class Borrow
     private $id;
 
     /**
+     * @ORM\ManyToOne(targetEntity=Member::class, inversedBy="borrows")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $member;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=StockableMediaCopy::class, inversedBy="borrows")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $stockable_media_copy;
+
+    /**
      * @ORM\Column(type="datetime")
      */
     private $borrow_date;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $expiry_date;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
@@ -28,25 +45,37 @@ class Borrow
     private $return_date;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true)
+     * @ORM\ManyToOne(targetEntity=StateOfMedia::class)
      */
-    private $expected_date;
-
-    /**
-     * @ORM\ManyToOne(targetEntity=Member::class)
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $member_id;
-
-    /**
-     * @ORM\ManyToOne(targetEntity=Media::class)
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $media_id;
+    private $return_media_state;
 
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getMember(): ?Member
+    {
+        return $this->member;
+    }
+
+    public function setMember(?Member $member): self
+    {
+        $this->member = $member;
+
+        return $this;
+    }
+
+    public function getStockableMediaCopy(): ?StockableMediaCopy
+    {
+        return $this->stockable_media_copy;
+    }
+
+    public function setStockableMediaCopy(?StockableMediaCopy $stockable_media_copy): self
+    {
+        $this->stockable_media_copy = $stockable_media_copy;
+
+        return $this;
     }
 
     public function getBorrowDate(): ?\DateTimeInterface
@@ -57,6 +86,18 @@ class Borrow
     public function setBorrowDate(\DateTimeInterface $borrow_date): self
     {
         $this->borrow_date = $borrow_date;
+
+        return $this;
+    }
+
+    public function getExpiryDate(): ?\DateTimeInterface
+    {
+        return $this->expiry_date;
+    }
+
+    public function setExpiryDate(\DateTimeInterface $expiry_date): self
+    {
+        $this->expiry_date = $expiry_date;
 
         return $this;
     }
@@ -73,38 +114,14 @@ class Borrow
         return $this;
     }
 
-    public function getExpectedDate(): ?\DateTimeInterface
+    public function getReturnMediaState(): ?StateOfMedia
     {
-        return $this->expected_date;
+        return $this->return_media_state;
     }
 
-    public function setExpectedDate(?\DateTimeInterface $expected_date): self
+    public function setReturnMediaState(?StateOfMedia $return_media_state): self
     {
-        $this->expected_date = $expected_date;
-
-        return $this;
-    }
-
-    public function getMemberId(): ?Member
-    {
-        return $this->member_id;
-    }
-
-    public function setMemberId(?Member $member_id): self
-    {
-        $this->member_id = $member_id;
-
-        return $this;
-    }
-
-    public function getMediaId(): ?Media
-    {
-        return $this->media_id;
-    }
-
-    public function setMediaId(?Media $media_id): self
-    {
-        $this->media_id = $media_id;
+        $this->return_media_state = $return_media_state;
 
         return $this;
     }

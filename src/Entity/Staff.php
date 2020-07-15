@@ -70,13 +70,14 @@ class Staff
     private $phone;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Role::class)
+     * @ORM\ManyToMany(targetEntity=Role::class, inversedBy="staffs")
      */
-    private $Roles;
+    private $roles;
+
 
     public function __construct()
     {
-        $this->Roles = new ArrayCollection();
+        $this->roles = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -209,13 +210,13 @@ class Staff
      */
     public function getRoles(): Collection
     {
-        return $this->Roles;
+        return $this->roles;
     }
 
     public function addRole(Role $role): self
     {
-        if (!$this->Roles->contains($role)) {
-            $this->Roles[] = $role;
+        if (!$this->roles->contains($role)) {
+            $this->roles[] = $role;
         }
 
         return $this;
@@ -223,11 +224,11 @@ class Staff
 
     public function removeRole(Role $role): self
     {
-        if ($this->Roles->contains($role)) {
-            $this->Roles->removeElement($role);
+        if ($this->roles->contains($role)) {
+            $this->roles->removeElement($role);
         }
 
         return $this;
     }
-    
+
 }

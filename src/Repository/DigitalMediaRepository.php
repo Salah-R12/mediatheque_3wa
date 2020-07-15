@@ -2,25 +2,25 @@
 
 namespace App\Repository;
 
-use App\Entity\DigitalMusic;
+use App\Entity\DigitalMedia;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @method DigitalMusic|null find($id, $lockMode = null, $lockVersion = null)
- * @method DigitalMusic|null findOneBy(array $criteria, array $orderBy = null)
- * @method DigitalMusic[]    findAll()
- * @method DigitalMusic[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method DigitalMedia|null find($id, $lockMode = null, $lockVersion = null)
+ * @method DigitalMedia|null findOneBy(array $criteria, array $orderBy = null)
+ * @method DigitalMedia[]    findAll()
+ * @method DigitalMedia[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class DigitalMusicRepository extends ServiceEntityRepository
+class DigitalMediaRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, DigitalMusic::class);
+        parent::__construct($registry, DigitalMedia::class);
     }
 
     // /**
-    //  * @return DigitalMusic[] Returns an array of DigitalMusic objects
+    //  * @return DigitalMedia[] Returns an array of DigitalMedia objects
     //  */
     /*
     public function findByExampleField($value)
@@ -37,7 +37,7 @@ class DigitalMusicRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?DigitalMusic
+    public function findOneBySomeField($value): ?DigitalMedia
     {
         return $this->createQueryBuilder('d')
             ->andWhere('d.exampleField = :val')

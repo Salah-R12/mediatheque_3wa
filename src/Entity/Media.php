@@ -3,12 +3,14 @@
 namespace App\Entity;
 
 use App\Repository\MediaRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=MediaRepository::class)
  * @ORM\InheritanceType("JOINED")
- * @ORM\DiscriminatorColumn(name="media_type_id", type="integer")
+ * @ORM\DiscriminatorColumn(name="media_type", type="integer")
  * @ORM\DiscriminatorMap({"0" = "Media", "1" = "Book", "2" = "Film", "3" = "Music"})
  */
 class Media
@@ -36,10 +38,20 @@ class Media
     protected $description;
 
     /**
-     * @ORM\ManyToOne(targetEntity=MediaType::class)
+     * @ORM\ManyToOne(targetEntity=MediaType::class, inversedBy="medias")
      * @ORM\JoinColumn(nullable=false)
      */
-    protected $media_type_id;
+    protected $media_type;
+
+    /**
+     * @ORM\OneToOne(targetEntity=DigitalMedia::class, mappedBy="media", cascade={"persist", "remove"})
+     */
+    private $digitalMedia;
+
+    /**
+     * @ORM\OneToOne(targetEntity=StockableMedia::class, mappedBy="media", cascade={"persist", "remove"})
+     */
+    private $stockableMedia;
 
     public function getId(): ?int
     {
@@ -82,14 +94,49 @@ class Media
         return $this;
     }
 
-    public function getMediaTypeId(): ?MediaType
+    public function getMediaType(): ?MediaType
     {
-        return $this->media_type_id;
+        return $this->media_type;
     }
 
-    public function setMediaTypeId(?MediaType $media_type_id): self
+    public function setMediaType(?MediaType $media_type): self
     {
-        $this->media_type_id = $media_type_id;
+        $this->media_type = $media_type;
+
+        return $this;
+    }
+
+
+    public function getDigitalMedia(): ?DigitalMedia
+    {
+        return $this->digitalMedia;
+    }
+
+    public function setDigitalMedia(DigitalMedia $digitalMedia): self
+    {
+        $this->digitalMedia = $digitalMedia;
+
+        // set the owning side of the relation if necessary
+        if ($digitalMedia->getMedia() !== $this) {
+            $digitalMedia->setMedia($this);
+        }
+
+        return $this;
+    }
+
+    public function getStockableMedia(): ?StockableMedia
+    {
+        return $this->stockableMedia;
+    }
+
+    public function setStockableMedia(StockableMedia $stockableMedia): self
+    {
+        $this->stockableMedia = $stockableMedia;
+
+        // set the owning side of the relation if necessary
+        if ($stockableMedia->getMedia() !== $this) {
+            $stockableMedia->setMedia($this);
+        }
 
         return $this;
     }
