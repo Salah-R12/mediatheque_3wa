@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\DigitalMediaRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -32,6 +34,16 @@ class DigitalMedia
      * @ORM\JoinColumn(nullable=false)
      */
     private $media;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Stream::class, mappedBy="digital_media")
+     */
+    private $streams;
+
+    public function __construct()
+    {
+        $this->streams = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -70,6 +82,37 @@ class DigitalMedia
     public function setMedia(Media $media): self
     {
         $this->media = $media;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Stream[]
+     */
+    public function getStreams(): Collection
+    {
+        return $this->streams;
+    }
+
+    public function addStream(Stream $stream): self
+    {
+        if (!$this->streams->contains($stream)) {
+            $this->streams[] = $stream;
+            $stream->setDigitalMedia($this);
+        }
+
+        return $this;
+    }
+
+    public function removeStream(Stream $stream): self
+    {
+        if ($this->streams->contains($stream)) {
+            $this->streams->removeElement($stream);
+            // set the owning side to null (unless already changed)
+            if ($stream->getDigitalMedia() === $this) {
+                $stream->setDigitalMedia(null);
+            }
+        }
 
         return $this;
     }
