@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New StateOfMedia{% endblock %}
+
+{% block body %}
+    <h1>Create new StateOfMedia</h1>
+
+    {{ include('state_of_media/_form.html.twig') }}
+
+    <a href="{{ path('state_of_media_index') }}">back to list</a>
+{% endblock %}
