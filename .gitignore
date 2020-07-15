@@ -20,4 +20,5 @@
 /.project
 docker-compose.yaml
 /src/Migrations/Version*.php
+/mysql_schemas/
 
