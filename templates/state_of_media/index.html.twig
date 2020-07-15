@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}StateOfMedia index{% endblock %}
+
+{% block body %}
+    <h1>StateOfMedia index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for state_of_media in state_of_media %}
+            <tr>
+                <td>{{ state_of_media.id }}</td>
+                <td>{{ state_of_media.name }}</td>
+                <td>
+                    <a href="{{ path('state_of_media_show', {'id': state_of_media.id}) }}">show</a>
+                    <a href="{{ path('state_of_media_edit', {'id': state_of_media.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('state_of_media_new') }}">Create new</a>
+{% endblock %}
