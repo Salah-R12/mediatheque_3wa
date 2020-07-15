@@ -79,9 +79,15 @@ class Member
      */
     private $streams;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Borrow::class, mappedBy="member")
+     */
+    private $borrows;
+
     public function __construct()
     {
         $this->streams = new ArrayCollection();
+        $this->borrows = new ArrayCollection();
     }
 
 
@@ -247,6 +253,37 @@ class Member
             // set the owning side to null (unless already changed)
             if ($stream->getMember() === $this) {
                 $stream->setMember(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Borrow[]
+     */
+    public function getBorrows(): Collection
+    {
+        return $this->borrows;
+    }
+
+    public function addBorrow(Borrow $borrow): self
+    {
+        if (!$this->borrows->contains($borrow)) {
+            $this->borrows[] = $borrow;
+            $borrow->setMember($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBorrow(Borrow $borrow): self
+    {
+        if ($this->borrows->contains($borrow)) {
+            $this->borrows->removeElement($borrow);
+            // set the owning side to null (unless already changed)
+            if ($borrow->getMember() === $this) {
+                $borrow->setMember(null);
             }
         }
 
