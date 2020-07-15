@@ -2,25 +2,25 @@
 
 namespace App\Repository;
 
-use App\Entity\Borrow;
+use App\Entity\StockableMediaCopy;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @method Borrow|null find($id, $lockMode = null, $lockVersion = null)
- * @method Borrow|null findOneBy(array $criteria, array $orderBy = null)
- * @method Borrow[]    findAll()
- * @method Borrow[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method StockableMediaCopy|null find($id, $lockMode = null, $lockVersion = null)
+ * @method StockableMediaCopy|null findOneBy(array $criteria, array $orderBy = null)
+ * @method StockableMediaCopy[]    findAll()
+ * @method StockableMediaCopy[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class BorrowRepository extends ServiceEntityRepository
+class StockableMediaCopyRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Borrow::class);
+        parent::__construct($registry, StockableMediaCopy::class);
     }
 
     // /**
-    //  * @return Stream[] Returns an array of Stream objects
+    //  * @return StockableMediaCopy[] Returns an array of StockableMediaCopy objects
     //  */
     /*
     public function findByExampleField($value)
@@ -37,7 +37,7 @@ class BorrowRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?Stream
+    public function findOneBySomeField($value): ?StockableMediaCopy
     {
         return $this->createQueryBuilder('s')
             ->andWhere('s.exampleField = :val')

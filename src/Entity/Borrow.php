@@ -18,14 +18,21 @@ class Borrow
     private $id;
 
     /**
+     * @ORM\ManyToOne(targetEntity=Member::class, inversedBy="borrows")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $member;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=StockableMediaCopy::class, inversedBy="borrows")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $stockable_media_copy;
+
+    /**
      * @ORM\Column(type="datetime")
      */
     private $borrow_date;
-
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
-    private $return_date;
 
     /**
      * @ORM\Column(type="datetime")
@@ -33,21 +40,9 @@ class Borrow
     private $expiry_date;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Member::class, inversedBy="borrows")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\Column(type="datetime", nullable=true)
      */
-    private $member;
-
-    /**
-     * @ORM\ManyToOne(targetEntity=Media::class, inversedBy="borrows")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $media;
-
-    /**
-     * @ORM\ManyToOne(targetEntity=Staff::class, inversedBy="borrows")
-     */
-    private $staff;
+    private $return_date;
 
     /**
      * @ORM\ManyToOne(targetEntity=StateOfMedia::class)
@@ -57,42 +52,6 @@ class Borrow
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getBorrowDate(): ?\DateTimeInterface
-    {
-        return $this->borrow_date;
-    }
-
-    public function setBorrowDate(\DateTimeInterface $borrow_date): self
-    {
-        $this->borrow_date = $borrow_date;
-
-        return $this;
-    }
-
-    public function getReturnDate(): ?\DateTimeInterface
-    {
-        return $this->return_date;
-    }
-
-    public function setReturnDate(?\DateTimeInterface $return_date): self
-    {
-        $this->return_date = $return_date;
-
-        return $this;
-    }
-
-    public function getExpiryDate(): ?\DateTimeInterface
-    {
-        return $this->expiry_date;
-    }
-
-    public function setExpiryDate(?\DateTimeInterface $expiry_date): self
-    {
-        $this->expiry_date = $expiry_date;
-
-        return $this;
     }
 
     public function getMember(): ?Member
@@ -107,26 +66,50 @@ class Borrow
         return $this;
     }
 
-    public function getMedia(): ?Media
+    public function getStockableMediaCopy(): ?StockableMediaCopy
     {
-        return $this->media;
+        return $this->stockable_media_copy;
     }
 
-    public function setMedia(?Media $media): self
+    public function setStockableMediaCopy(?StockableMediaCopy $stockable_media_copy): self
     {
-        $this->media = $media;
+        $this->stockable_media_copy = $stockable_media_copy;
 
         return $this;
     }
 
-    public function getStaff(): ?Staff
+    public function getBorrowDate(): ?\DateTimeInterface
     {
-        return $this->staff;
+        return $this->borrow_date;
     }
 
-    public function setStaff(?Staff $staff): self
+    public function setBorrowDate(\DateTimeInterface $borrow_date): self
     {
-        $this->staff = $staff;
+        $this->borrow_date = $borrow_date;
+
+        return $this;
+    }
+
+    public function getExpiryDate(): ?\DateTimeInterface
+    {
+        return $this->expiry_date;
+    }
+
+    public function setExpiryDate(\DateTimeInterface $expiry_date): self
+    {
+        $this->expiry_date = $expiry_date;
+
+        return $this;
+    }
+
+    public function getReturnDate(): ?\DateTimeInterface
+    {
+        return $this->return_date;
+    }
+
+    public function setReturnDate(?\DateTimeInterface $return_date): self
+    {
+        $this->return_date = $return_date;
 
         return $this;
     }

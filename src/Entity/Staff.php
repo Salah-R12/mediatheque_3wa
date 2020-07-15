@@ -74,16 +74,10 @@ class Staff
      */
     private $roles;
 
-    /**
-     * @ORM\OneToMany(targetEntity=Borrow::class, mappedBy="staff")
-     */
-    private $borrows;
 
     public function __construct()
     {
         $this->roles = new ArrayCollection();
-        $this->stockableMediaStates = new ArrayCollection();
-        $this->borrows = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -237,34 +231,4 @@ class Staff
         return $this;
     }
 
-    /**
-     * @return Collection|Borrow[]
-     */
-    public function getBorrows(): Collection
-    {
-        return $this->borrows;
-    }
-
-    public function addBorrow(Borrow $borrow): self
-    {
-        if (!$this->borrows->contains($borrow)) {
-            $this->borrows[] = $borrow;
-            $borrow->setStaff($this);
-        }
-
-        return $this;
-    }
-
-    public function removeBorrow(Borrow $borrow): self
-    {
-        if ($this->borrows->contains($borrow)) {
-            $this->borrows->removeElement($borrow);
-            // set the owning side to null (unless already changed)
-            if ($borrow->getStaff() === $this) {
-                $borrow->setStaff(null);
-            }
-        }
-
-        return $this;
-    }
 }

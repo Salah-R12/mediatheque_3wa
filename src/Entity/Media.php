@@ -44,11 +44,6 @@ class Media
     protected $media_type;
 
     /**
-     * @ORM\OneToMany(targetEntity=Borrow::class, mappedBy="media")
-     */
-    private $borrows;
-
-    /**
      * @ORM\OneToOne(targetEntity=DigitalMedia::class, mappedBy="media", cascade={"persist", "remove"})
      */
     private $digitalMedia;
@@ -57,11 +52,6 @@ class Media
      * @ORM\OneToOne(targetEntity=StockableMedia::class, mappedBy="media", cascade={"persist", "remove"})
      */
     private $stockableMedia;
-
-    public function __construct()
-    {
-        $this->borrows = new ArrayCollection();
-    }
 
     public function getId(): ?int
     {
@@ -116,36 +106,6 @@ class Media
         return $this;
     }
 
-    /**
-     * @return Collection|Borrow[]
-     */
-    public function getBorrows(): Collection
-    {
-        return $this->borrows;
-    }
-
-    public function addBorrow(Borrow $borrow): self
-    {
-        if (!$this->borrows->contains($borrow)) {
-            $this->borrows[] = $borrow;
-            $borrow->setMedia($this);
-        }
-
-        return $this;
-    }
-
-    public function removeBorrow(Borrow $borrow): self
-    {
-        if ($this->borrows->contains($borrow)) {
-            $this->borrows->removeElement($borrow);
-            // set the owning side to null (unless already changed)
-            if ($borrow->getMedia() === $this) {
-                $borrow->setMedia(null);
-            }
-        }
-
-        return $this;
-    }
 
     public function getDigitalMedia(): ?DigitalMedia
     {
