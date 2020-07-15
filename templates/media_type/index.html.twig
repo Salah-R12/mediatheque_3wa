@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}MediaType index{% endblock %}
+
+{% block body %}
+    <h1>MediaType index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Borrow_duration</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for media_type in media_types %}
+            <tr>
+                <td>{{ media_type.id }}</td>
+                <td>{{ media_type.name }}</td>
+                <td>{{ media_type.borrowDuration }}</td>
+                <td>
+                    <a href="{{ path('media_type_show', {'id': media_type.id}) }}">show</a>
+                    <a href="{{ path('media_type_edit', {'id': media_type.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('media_type_new') }}">Create new</a>
+{% endblock %}
