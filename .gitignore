@@ -21,3 +21,4 @@ docker-compose.yaml
 /.settings/
 /.buildpath
 /.project
+/src/Migrations/Version*.php

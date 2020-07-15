@@ -27,16 +27,6 @@ class Book extends Media
      */
     private $page_nb;
 
-    /**
-     * @ORM\OneToOne(targetEntity=DigitalBook::class, mappedBy="media_id", cascade={"persist", "remove"})
-     */
-    private $digitalBook;
-
-    /**
-     * @ORM\OneToOne(targetEntity=StockableBook::class, mappedBy="media_id", cascade={"persist", "remove"})
-     */
-    private $stockableBook;
-
     public function getId(): ?int
     {
         return $this->id;
@@ -54,18 +44,6 @@ class Book extends Media
         return $this;
     }
 
-    public function getPublishDate(): ?\DateTimeInterface
-    {
-        return $this->publish_date;
-    }
-
-    public function setPublishDate(\DateTimeInterface $publish_date): self
-    {
-        $this->publish_date = $publish_date;
-
-        return $this;
-    }
-
     public function getPageNb(): ?int
     {
         return $this->page_nb;
@@ -74,40 +52,6 @@ class Book extends Media
     public function setPageNb(int $page_nb): self
     {
         $this->page_nb = $page_nb;
-
-        return $this;
-    }
-
-    public function getDigitalBook(): ?DigitalBook
-    {
-        return $this->digitalBook;
-    }
-
-    public function setDigitalBook(DigitalBook $digitalBook): self
-    {
-        $this->digitalBook = $digitalBook;
-
-        // set the owning side of the relation if necessary
-        if ($digitalBook->getMediaId() !== $this) {
-            $digitalBook->setMediaId($this);
-        }
-
-        return $this;
-    }
-
-    public function getStockableBook(): ?StockableBook
-    {
-        return $this->stockableBook;
-    }
-
-    public function setStockableBook(StockableBook $stockableBook): self
-    {
-        $this->stockableBook = $stockableBook;
-
-        // set the owning side of the relation if necessary
-        if ($stockableBook->getMediaId() !== $this) {
-            $stockableBook->setMediaId($this);
-        }
 
         return $this;
     }

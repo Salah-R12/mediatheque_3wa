@@ -2,13 +2,15 @@
 
 namespace App\Entity;
 
-use App\Repository\StockableMusicRepository;
+use App\Repository\StockableMediaRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=StockableMusicRepository::class)
+ * @ORM\Entity(repositoryClass=StockableMediaRepository::class)
  */
-class StockableMusic
+class StockableMedia
 {
     /**
      * @ORM\Id()
@@ -28,10 +30,10 @@ class StockableMusic
     private $reception_date;
 
     /**
-     * @ORM\OneToOne(targetEntity=Music::class, inversedBy="stockableMusic", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity=Media::class, inversedBy="stockableMedia", cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=false)
      */
-    private $media_id;
+    private $media;
 
     public function getId(): ?int
     {
@@ -62,14 +64,14 @@ class StockableMusic
         return $this;
     }
 
-    public function getMediaId(): ?Music
+    public function getMedia(): ?Media
     {
-        return $this->media_id;
+        return $this->media;
     }
 
-    public function setMediaId(Music $media_id): self
+    public function setMedia(Media $media): self
     {
-        $this->media_id = $media_id;
+        $this->media = $media;
 
         return $this;
     }

@@ -2,13 +2,13 @@
 
 namespace App\Entity;
 
-use App\Repository\DigitalBookRepository;
+use App\Repository\DigitalMediaRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=DigitalBookRepository::class)
+ * @ORM\Entity(repositoryClass=DigitalMediaRepository::class)
  */
-class DigitalBook
+class DigitalMedia
 {
     /**
      * @ORM\Id()
@@ -28,10 +28,10 @@ class DigitalBook
     private $path;
 
     /**
-     * @ORM\OneToOne(targetEntity=Book::class, inversedBy="digitalBook", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity=Media::class, inversedBy="digitalMedia", cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=false)
      */
-    private $media_id;
+    private $media;
 
     public function getId(): ?int
     {
@@ -43,7 +43,7 @@ class DigitalBook
         return $this->url;
     }
 
-    public function setUrl(string $url): self
+    public function setUrl(?string $url): self
     {
         $this->url = $url;
 
@@ -62,14 +62,14 @@ class DigitalBook
         return $this;
     }
 
-    public function getMediaId(): ?Book
+    public function getMedia(): ?Media
     {
-        return $this->media_id;
+        return $this->media;
     }
 
-    public function setMediaId(Book $media_id): self
+    public function setMedia(Media $media): self
     {
-        $this->media_id = $media_id;
+        $this->media = $media;
 
         return $this;
     }

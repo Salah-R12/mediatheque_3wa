@@ -2,25 +2,25 @@
 
 namespace App\Repository;
 
-use App\Entity\StockableBook;
+use App\Entity\StateOfMedia;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @method StockableBook|null find($id, $lockMode = null, $lockVersion = null)
- * @method StockableBook|null findOneBy(array $criteria, array $orderBy = null)
- * @method StockableBook[]    findAll()
- * @method StockableBook[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method StateOfMedia|null find($id, $lockMode = null, $lockVersion = null)
+ * @method StateOfMedia|null findOneBy(array $criteria, array $orderBy = null)
+ * @method StateOfMedia[]    findAll()
+ * @method StateOfMedia[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class StockableBookRepository extends ServiceEntityRepository
+class StateOfMediaRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, StockableBook::class);
+        parent::__construct($registry, StateOfMedia::class);
     }
 
     // /**
-    //  * @return StockableBook[] Returns an array of StockableBook objects
+    //  * @return StateOfMedia[] Returns an array of StateOfMedia objects
     //  */
     /*
     public function findByExampleField($value)
@@ -37,7 +37,7 @@ class StockableBookRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?StockableBook
+    public function findOneBySomeField($value): ?StateOfMedia
     {
         return $this->createQueryBuilder('s')
             ->andWhere('s.exampleField = :val')
