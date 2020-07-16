@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit StockableMedia{% endblock %}
+
+{% block body %}
+    <h1>Edit StockableMedia</h1>
+
+    {{ include('stockable_media/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('stockable_media_index') }}">back to list</a>
+
+    {{ include('stockable_media/_delete_form.html.twig') }}
+{% endblock %}
