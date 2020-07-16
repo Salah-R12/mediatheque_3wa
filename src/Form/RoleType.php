@@ -16,10 +16,7 @@ class RoleType extends AbstractType
     {
         $builder
             ->add('name', TextType::class)
-            ->add('staffs', EntityType::class, [
-                'class' => Staff::class,
-                'choice_label' => 'username'
-            ])
+            ->add('staffs')
         ;
     }
 
