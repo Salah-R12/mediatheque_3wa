@@ -14,10 +14,15 @@ class MediaTypeType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $nameOptions = [
+            'label' => 'Type de média'
+        ];
+        $borrowDurationOptions = [
+            'label' => 'Durée max. de l\'emprunt (en jours)'
+        ];
         $builder
-            ->add('name', TextType::class)
-            ->add('borrow_duration', NumberType::class)
-        ;
+            ->add('name', TextType::class, $nameOptions)
+            ->add('borrow_duration', NumberType::class, $borrowDurationOptions);
     }
 
     public function configureOptions(OptionsResolver $resolver)
