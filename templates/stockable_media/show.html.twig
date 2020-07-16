@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}StockableMedia{% endblock %}
+
+{% block body %}
+    <h1>StockableMedia</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ stockable_media.id }}</td>
+            </tr>
+            <tr>
+                <th>Stock</th>
+                <td>{{ stockable_media.stock }}</td>
+            </tr>
+            <tr>
+                <th>Reception_date</th>
+                <td>{{ stockable_media.receptionDate ? stockable_media.receptionDate|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('stockable_media_index') }}">back to list</a>
+
+    <a href="{{ path('stockable_media_edit', {'id': stockable_media.id}) }}">edit</a>
+
+    {{ include('stockable_media/_delete_form.html.twig') }}
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}StockableMedia index{% endblock %}
+
+{% block body %}
+    <h1>StockableMedia index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Stock</th>
+                <th>Reception_date</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for stockable_media in stockable_media %}
+            <tr>
+                <td>{{ stockable_media.id }}</td>
+                <td>{{ stockable_media.stock }}</td>
+                <td>{{ stockable_media.receptionDate ? stockable_media.receptionDate|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                    <a href="{{ path('stockable_media_show', {'id': stockable_media.id}) }}">show</a>
+                    <a href="{{ path('stockable_media_edit', {'id': stockable_media.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('stockable_media_new') }}">Create new</a>
+{% endblock %}

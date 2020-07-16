@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit DigitalMedia{% endblock %}
+
+{% block body %}
+    <h1>Edit DigitalMedia</h1>
+
+    {{ include('digital_media/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('digital_media_index') }}">back to list</a>
+
+    {{ include('digital_media/_delete_form.html.twig') }}
+{% endblock %}

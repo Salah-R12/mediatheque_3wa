@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\Media;
 use App\Repository\MediaTypeRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -97,5 +98,10 @@ class MediaType
         }
 
         return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->name;
     }
 }
