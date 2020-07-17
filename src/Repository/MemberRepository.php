@@ -19,6 +19,18 @@ class MemberRepository extends ServiceEntityRepository
         parent::__construct($registry, Member::class);
     }
 
+    public function findAllExcludePassword(){
+        return $this->createQueryBuilder('m')
+            ->addSelect('m.id')
+            ->addSelect('m.username')
+            ->addSelect('m.first_name firstName')
+            ->addSelect('m.last_name lastName')
+            ->addSelect('m.email')
+            ->orderBy('m.username', 'ASC')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
     // /**
     //  * @return Member[] Returns an array of Member objects
     //  */
