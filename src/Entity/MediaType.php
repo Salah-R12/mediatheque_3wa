@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\Media;
 use App\Repository\MediaTypeRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
