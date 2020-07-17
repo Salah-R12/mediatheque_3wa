@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Staff;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -15,7 +16,7 @@ class StaffType extends AbstractType
             ->add('first_name')
             ->add('last_name')
             ->add('username')
-            ->add('password')
+            ->add('password', PasswordType::class)
             ->add('email')
             ->add('address1')
             ->add('address2')
