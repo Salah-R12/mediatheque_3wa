@@ -9,7 +9,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-
 class DigitalMediaController extends AbstractController
 {
     public function index(DigitalMediaRepository $digitalMediaRepository): Response
@@ -18,6 +17,7 @@ class DigitalMediaController extends AbstractController
             'digital_media' => $digitalMediaRepository->findAll(),
         ]);
     }
+
 
      public function new(Request $request): Response
     {
@@ -38,6 +38,7 @@ class DigitalMediaController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+
 
     public function show(DigitalMedia $digitalMedia): Response
     {
