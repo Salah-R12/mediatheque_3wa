@@ -2,26 +2,31 @@
 
 namespace App\Form;
 
-use App\Entity\StockableMedia;
+use App\Entity\Book;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class StockableMediaType extends AbstractType
+class BookType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('stock')
-            ->add('reception_date')
-            //->add('media')
+            ->add('name')
+            ->add('author')
+            ->add('description')
+            ->add('edition')
+            ->add('page_nb')
+            //->add('media_type')
+            ->add('digitalMedia', DigitalMediaType::class)
+            ->add('stockableMedia', StockableMediaType::class)
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => StockableMedia::class,
+            'data_class' => Book::class,
         ]);
     }
 }

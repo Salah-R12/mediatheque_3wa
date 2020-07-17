@@ -8,16 +8,9 @@ use App\Repository\DigitalMediaRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route("/digital/media")
- */
 class DigitalMediaController extends AbstractController
 {
-    /**
-     * @Route("/", name="digital_media_index", methods={"GET"})
-     */
     public function index(DigitalMediaRepository $digitalMediaRepository): Response
     {
         return $this->render('digital_media/index.html.twig', [
@@ -25,10 +18,8 @@ class DigitalMediaController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/new", name="digital_media_new", methods={"GET","POST"})
-     */
-    public function new(Request $request): Response
+
+     public function new(Request $request): Response
     {
         $digitalMedia = new DigitalMedia();
         $form = $this->createForm(DigitalMediaType::class, $digitalMedia);
@@ -48,9 +39,7 @@ class DigitalMediaController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/{id}", name="digital_media_show", methods={"GET"})
-     */
+
     public function show(DigitalMedia $digitalMedia): Response
     {
         return $this->render('digital_media/show.html.twig', [
@@ -58,9 +47,6 @@ class DigitalMediaController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/{id}/edit", name="digital_media_edit", methods={"GET","POST"})
-     */
     public function edit(Request $request, DigitalMedia $digitalMedia): Response
     {
         $form = $this->createForm(DigitalMediaType::class, $digitalMedia);
@@ -78,9 +64,6 @@ class DigitalMediaController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/{id}", name="digital_media_delete", methods={"DELETE"})
-     */
     public function delete(Request $request, DigitalMedia $digitalMedia): Response
     {
         if ($this->isCsrfTokenValid('delete'.$digitalMedia->getId(), $request->request->get('_token'))) {
