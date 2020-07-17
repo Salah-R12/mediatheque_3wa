@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass=MediaRepository::class)
  * @ORM\InheritanceType("JOINED")
- * @ORM\DiscriminatorColumn(name="media_type", type="integer")
+ * @ORM\DiscriminatorColumn(name="media_type_id", type="integer")
  * @ORM\DiscriminatorMap({"0" = "Media", "1" = "Book", "2" = "Film", "3" = "Music"})
  */
 class Media
