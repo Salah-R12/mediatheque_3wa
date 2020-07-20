@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=BorrowRepository::class)
+ * @ORM\HasLifecycleCallbacks()
  */
 class Borrow
 {
@@ -125,6 +126,22 @@ class Borrow
 
         return $this;
     }
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function calculateExpiryDate(): self
+    {
+        // Expiry date must be pre-defined (on insert only) by the day numbers set to media type
+        // e.g. if media type is book, and borrow duration is 30 days, then expiry date must be borrow date + 30 days
+
+        // Get borrow duration
+        $borrowDuration = $this->getStockableMediaCopy()->getStockableMedia()->getMedia()->getMediaType()->getBorrowDuration();
+        $expiryDateTime = new \DateTime($this->getBorrowDate()->getTimestamp());
+        $expiryDateTime->add(new \DateInterval("P${borrowDuration}D"));
+        return $this->setExpiryDate($expiryDateTime);
+    }
+
     public function __toString()
     {
         return $this->id;

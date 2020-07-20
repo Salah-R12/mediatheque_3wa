@@ -6,12 +6,14 @@ use App\Repository\MediaRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Bundle\DoctrineBundle\Registry;
 
 /**
  * @ORM\Entity(repositoryClass=MediaRepository::class)
  * @ORM\InheritanceType("JOINED")
  * @ORM\DiscriminatorColumn(name="media_type_id", type="integer")
  * @ORM\DiscriminatorMap({"0" = "Media", "1" = "Book", "2" = "Film", "3" = "Music"})
+ * @ORM\HasLifecycleCallbacks()
  */
 class Media
 {
@@ -46,13 +48,33 @@ class Media
     /**
      * @ORM\OneToOne(targetEntity=DigitalMedia::class, mappedBy="media", cascade={"persist", "remove"})
      */
-    private $digitalMedia;
+    protected $digitalMedia;
 
     /**
      * @ORM\OneToOne(targetEntity=StockableMedia::class, mappedBy="media", cascade={"persist", "remove"})
      */
-    private $stockableMedia;
-
+    protected $stockableMedia;
+    
+    
+    /**
+     * 
+     * @var \Doctrine\Bundle\DoctrineBundle\Registry
+     */
+    protected $doctrineRegistry;
+    
+    /**
+     * Parameter must be passed from controller.
+     * E.g: into BookController
+     * 		public function new (...){
+     * 			$book = new Book($this->getDoctrine()->getManager());
+     * 		}
+     * @param \Doctrine\Bundle\DoctrineBundle\Registry $doctrineRegistry Optional (default null)
+     */
+    public function __construct(Registry $doctrineRegistry = null){
+    	if ($doctrineRegistry)
+    		$this->setDoctrine($doctrineRegistry);
+    }
+    
     public function getId(): ?int
     {
         return $this->id;
@@ -140,8 +162,19 @@ class Media
 
         return $this;
     }
-
-    public function __toString()
+    
+    public function getDoctrine(): Registry{
+    	return $this->doctrineRegistry;
+    }
+    
+    public function setDoctrine(Registry $doctrineRegistry): self{
+    	if (is_a($doctrineRegistry, Registry::class)){
+    		$this->doctrineRegistry = $doctrineRegistry;
+    	}
+    	return $this;
+    }
+    
+    public function __toString(): string
     {
         return $this->name;
     }

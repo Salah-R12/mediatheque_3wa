@@ -25,6 +25,7 @@ class StockableMediaController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            print_r($stockableMedia);exit;
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($stockableMedia);
             $entityManager->flush();
