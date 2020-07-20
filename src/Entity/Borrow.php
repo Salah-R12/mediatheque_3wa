@@ -7,9 +7,20 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=BorrowRepository::class)
+ * * @ORM\HasLifecycleCallbacks()
  */
 class Borrow
 {
+    public function __construct()
+    {
+       /* $cuurentDate = new \DateTime();
+        $this->borrow_date = $cuurentDate;
+        $cuurentDate2 = new \DateTime();
+        $this->expiry_date = $cuurentDate2->add(new \DateInterval('P20D'));*/
+
+        $this->borrow_date = new \DateTime();
+    }
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -88,6 +99,14 @@ class Borrow
         $this->borrow_date = $borrow_date;
 
         return $this;
+    }
+    /**
+     * @ORM\PrePersist
+     */
+    public function createdAt ()
+    {
+        $this->borrow_date = new \DateTime();
+
     }
 
     public function getExpiryDate(): ?\DateTimeInterface

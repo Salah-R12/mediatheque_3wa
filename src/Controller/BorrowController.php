@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Borrow;
 use App\Form\BorrowType;
+use App\Form\BorrowUpdateType;
 use App\Repository\BorrowRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -31,7 +32,7 @@ class BorrowController extends AbstractController
     public function new(Request $request): Response
     {
         $borrow = new Borrow();
-        $form = $this->createForm(BorrowType::class, $borrow);
+        $form = $this->createForm(BorrowUpdateType::class, $borrow);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
