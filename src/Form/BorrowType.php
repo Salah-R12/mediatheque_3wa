@@ -7,23 +7,19 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class BorrowType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('borrow_date', DateTimeType::class, [
-            	'widget' => 'single_text',
-            	'attr' => [
-            		'placeholder' => date('d/m/Y H:i:s')
-            	]
-            ])
-            //->add('expiry_date')
+            ->add('borrow_date')
+            ->add('expiry_date')
             ->add('return_date')
             ->add('member')
             ->add('stockable_media_copy')
-            //->add('return_media_state')
+            ->add('return_media_state')
         ;
     }
 
