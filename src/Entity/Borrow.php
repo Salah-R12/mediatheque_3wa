@@ -33,6 +33,10 @@ class Borrow
      * @ORM\Column(type="datetime")
      */
     private $borrow_date;
+    public function __construct()
+    {
+        $this->borrow_date = new \DateTime();
+    }
 
     /**
      * @ORM\Column(type="datetime")
