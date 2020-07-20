@@ -34,10 +34,6 @@ class Borrow
      * @ORM\Column(type="datetime")
      */
     private $borrow_date;
-    public function __construct()
-    {
-        $this->borrow_date = new \DateTime();
-    }
 
     /**
      * @ORM\Column(type="datetime")
@@ -54,6 +50,12 @@ class Borrow
      */
     private $return_media_state;
 
+    
+    public function __construct()
+    {
+    	$this->borrow_date = new \DateTime();
+    }
+    
     public function getId(): ?int
     {
         return $this->id;
@@ -141,7 +143,7 @@ class Borrow
 
         // Get borrow duration
         $borrowDuration = $this->getStockableMediaCopy()->getStockableMedia()->getMedia()->getMediaType()->getBorrowDuration();
-        $expiryDateTime = new \DateTime($this->getBorrowDate()->getTimestamp());
+        $expiryDateTime = new \DateTime($this->getBorrowDate()->format('Y-m-d H:i'));
         $expiryDateTime->add(new \DateInterval("P${borrowDuration}D"));
         return $this->setExpiryDate($expiryDateTime);
     }
