@@ -10,6 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Service\Entity\StockableMediaCopy as StockableMediaCopyService;
 
 /**
  * @Route("/music")
@@ -29,16 +30,18 @@ class MusicController extends AbstractController
     /**
      * @Route("/new", name="music_new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    public function new(Request $request, StockableMediaCopyService $stockableCopyService): Response
     {
         $music = new Music();
         $form = $this->createForm(MusicType::class, $music);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
             $mediaType = $this->getDoctrine()->getRepository(MediaType::class)->findOneBy(['name' => 'Music']);
             $music->setMediaType($mediaType);
+            $stockableCopyService->generateCopyFromMedia($music->getStockableMedia());
+            
+            $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($music);
             $entityManager->flush();
 
@@ -64,13 +67,14 @@ class MusicController extends AbstractController
     /**
      * @Route("/{id}/edit", name="music_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, Music $music): Response
+    public function edit(Request $request, Music $music, StockableMediaCopyService $stockableCopyService): Response
     {
         $form = $this->createForm(MusicType::class, $music);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+        	$stockableCopyService->generateCopyFromMedia($music->getStockableMedia());
+        	$this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('music_index');
         }
