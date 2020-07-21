@@ -116,4 +116,8 @@ class DigitalMedia
 
         return $this;
     }
+
+    public function __toString(): string{
+    	return $this->getMedia()->getMediaType()->getName() . ' : ' . $this->getMedia()->getName();
+    }
 }
