@@ -60,37 +60,6 @@ class StockableMedia{
 	}
 
 	public function setStock(?int $stock): self{
-		// Dès lors que l'on modifie la valeur de "stock", on doit impacter le nombre d'exemplaires présents dans la médiathèque
-		// Par exemple, si on indique que la quantité "stock" d'un livre est égal à 5,
-		// alors il doit y avoir 5 exemplaires de ce même livre dans la table "stockable_media_copy"
-		if ($doctrine = $this->getMedia()->getDoctrine()){ // Attention, ici on utilise l'instance de "Doctrine\Registry" provenant du controller, mais injecté dans l'objet "Media" (voir le constructeur de la classe "Media")
-			// On récupère le vrai nombre d'exemplaires présents dans la médiathèque
-			$realStock = $this->getStockableMediaCopies()->count();
-			if ($stock > $realStock){
-				// Cas où l'on ajoute 1 ou plusieurs exemplaires (car la valeur de stock a augmenté)
-
-				// D'abord, récupérer l'objet d'instance "MediaState" correspondant à l'ID 3 (état neuf)
-				$media_state = $this->getMedia()->getDoctrine()->getRepository(StateOfMedia::class)->findOneBy(['id' => 3]);
-				// Ajout de la différence de média
-				for ($i = $realStock + 1; $i <= $stock; $i++){
-					$newStockableMediaCopy = new StockableMediaCopy();
-					// La propriété "copy_number" définit donc le numéro de l'exemplaire
-					$newStockableMediaCopy->setCopyNumber($i);
-					// cette nouvelle instance de "StockableMediaCopy" est liée l'instance "$this" de "StockableMedia"
-					$newStockableMediaCopy->setStockableMedia($this);
-					// Enfin, on applique l'état "neuf" à cette nouvelle copie, considérant que par défaut, un nouvel exemplaire est présupposément neuf
-					$newStockableMediaCopy->setMediaState($media_state);
-					// Utilisation de l'entity manager de l'objet "doctrine" qui a été injecté (injection de dépendance) dans l'objet "Media"
-					$doctrine->getManager()->persist($newStockableMediaCopy);
-					$this->addStockableMediaCopy($newStockableMediaCopy);
-				}
-			} elseif ($stock < $realStock){
-				foreach ($this->getStockableMediaCopies() as $stockableMediaCopy){
-					if ($stockableMediaCopy->getCopyNumber() > $stock)
-						$this->removeStockableMediaCopy($stockableMediaCopy);
-				}
-			}
-		}
 		$this->stock = $stock;
 
 		return $this;

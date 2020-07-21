@@ -47,4 +47,16 @@ class StockableMediaCopyRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function findAll(){
+        return $this->createQueryBuilder('s')
+        	->select("s, SUM(IF(b.stockable_media_copy_id IS NULL OR (b.stockable_media_copy_id IS NOT NULL AND IFNULL(b.return_date, '') <> ''), 1, 0)) AS borrowable")
+        	->leftJoin(\App\Entity\Borrow::class, 'b')
+        	->groupBy('s.id')
+            ->having('borrowable > 0')
+            ->orderBy('s.id', 'ASC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 }
