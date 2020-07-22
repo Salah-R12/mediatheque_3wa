@@ -1,20 +1,52 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="#">Navbar</a>
+    <a class="navbar-brand" href="{{ home_page.route_name ? path('home_page.route_name') : '#' }}">{{ home_page.title }}</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-                <a class="nav-link" href="#">Home
+        {% for item in navbar_links %}
+        	{# "set" declaring new variable, that is here class named "active" bind to current page #}
+            {% set activeClass = item.route_name == current_route_name ? 'active' : '' %}
+            {% set hasChildren = item.children is defined and item.children|length > 0 %}
+            <li class="nav-item {{ activeClass }}"
+            	{% if hasChildren %}
+            	onmouseover="$(this).find('ul').show();"
+            	onmouseleave="$(this).find('ul').hide();"
+            	{% endif %}
+            >
+            	{% set link = item.route_name ? path(item.route_name) : '#' %}
+                <a class="nav-link" href="{{ link }}">
+                	{{ item.title }}
+                	{% if activeClass %}
                     <span class="sr-only">(current)</span>
+                    {% endif %}
                 </a>
+                {# display child links if exist #}
+                {% if hasChildren %}
+                <ul class="navbar-nav mr-auto" style="display: none; position: absolute; background: lightgrey;">
+                {% for child in item.children %}
+                    {% set activeClass = child.route_name == current_route_name ? 'active' : '' %}
+                	<li class="nav-item {{ activeClass }}">
+                    	{% set sublink = child.route_name ? path(child.route_name) : '#' %}
+                        <a class="nav-link" href="{{ sublink }}">
+                        	{{ child.title }}
+                        	{% if activeClass %}
+                            <span class="sr-only">(current)</span>
+                            {% endif %}
+                        </a>
+                	</li>
+                {% endfor %}
+                </ul>
+                {% endif %}
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/borrow">Borrow</a>
-            </li>
+        {% endfor %}
         </ul>
+        
+        
+        <!-- TODO Faire une condition d'affichage des éléments de menu pour les utilisateurs connectés -->
+        
         <form class="form-inline my-2 my-lg-0">
             <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>

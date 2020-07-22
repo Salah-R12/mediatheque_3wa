@@ -38,7 +38,6 @@ class BorrowType extends AbstractType
                 'widget' => 'single_text',
                 'html5' => true,
                 ])
-            ->add('return_date')
             ->add('member')
             ->add('stockable_media_copy'/*, EntityType::class, [
                 'class' => StockableMedia::class,
@@ -47,6 +46,7 @@ class BorrowType extends AbstractType
                     return $smc->findAll();
                 }
             ]*/)
+            ->add('return_date')
             ->add('return_media_state')
         ;
     }

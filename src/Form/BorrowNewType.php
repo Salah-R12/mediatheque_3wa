@@ -7,7 +7,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class BorrowUpdateType extends AbstractType
+class BorrowNewType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
