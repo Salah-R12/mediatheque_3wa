@@ -2,6 +2,9 @@
     {{ form_start(form) }}
     {{ form_widget(form) }}
 
+    {% if borrow_duration is defined %}
+      <input class="borrow_duration" type="hidden" value="{{borrow_duration}}"/>
+    {% endif %}
     <button class="btn">{{ button_label|default('Save') }}</button>
     {{ form_end(form) }}
 

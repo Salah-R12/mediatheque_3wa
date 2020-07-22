@@ -66,7 +66,7 @@ class BorrowController extends AbstractController
     {
         $form = $this->createForm(BorrowType::class, $borrow);
         $form->handleRequest($request);
-
+        $borrow_duration = $borrow->getDurationDate();
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
@@ -76,6 +76,7 @@ class BorrowController extends AbstractController
         return $this->render('borrow/edit.html.twig', [
             'borrow' => $borrow,
             'form' => $form->createView(),
+            'borrow_duration' => $borrow_duration,
         ]);
     }
 

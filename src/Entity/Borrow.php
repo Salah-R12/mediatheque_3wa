@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\BorrowRepository;
 use Doctrine\ORM\Mapping as ORM;
+use phpDocumentor\Reflection\Types\Integer;
 
 /**
  * @ORM\Entity(repositoryClass=BorrowRepository::class)
@@ -147,5 +148,14 @@ class Borrow
     public function __toString()
     {
         return $this->id;
+    }
+
+    public function getDurationDate() :Int
+    {
+        return $this->getStockableMediaCopy()
+                        ->getStockableMedia()
+                            ->getMedia()
+                                ->getMediaType()
+                                    ->getBorrowDuration();
     }
 }
