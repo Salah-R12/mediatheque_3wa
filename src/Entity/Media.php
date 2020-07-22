@@ -56,25 +56,6 @@ class Media
     protected $stockableMedia;
     
     
-    /**
-     * 
-     * @var \Doctrine\Bundle\DoctrineBundle\Registry
-     */
-    protected $doctrineRegistry;
-    
-    /**
-     * Parameter must be passed from controller.
-     * E.g: into BookController
-     * 		public function new (...){
-     * 			$book = new Book($this->getDoctrine()->getManager());
-     * 		}
-     * @param \Doctrine\Bundle\DoctrineBundle\Registry $doctrineRegistry Optional (default null)
-     */
-    public function __construct(Registry $doctrineRegistry = null){
-    	if ($doctrineRegistry)
-    		$this->setDoctrine($doctrineRegistry);
-    }
-    
     public function getId(): ?int
     {
         return $this->id;
@@ -161,17 +142,6 @@ class Media
         }
 
         return $this;
-    }
-    
-    public function getDoctrine(): Registry{
-    	return $this->doctrineRegistry;
-    }
-    
-    public function setDoctrine(Registry $doctrineRegistry): self{
-    	if (is_a($doctrineRegistry, Registry::class)){
-    		$this->doctrineRegistry = $doctrineRegistry;
-    	}
-    	return $this;
     }
     
     public function __toString(): string

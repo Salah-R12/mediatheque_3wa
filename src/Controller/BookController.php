@@ -10,6 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Service\Entity\StockableMediaCopy as StockableMediaCopyService;
 
 /**
  * @Route("/book")
@@ -29,16 +30,17 @@ class BookController extends AbstractController
     /**
      * @Route("/new", name="book_new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    public function new(Request $request, StockableMediaCopyService $stockableCopyService): Response
     {
         $book = new Book();
         $form = $this->createForm(BookType::class, $book);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
             $mediaType = $this->getDoctrine()->getRepository(MediaType::class)->findOneBy(['name' => 'Book']);
             $book->setMediaType($mediaType);
+            $stockableCopyService->generateCopyFromMedia($book->getStockableMedia());
+            $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($book);
             $entityManager->flush();
 
@@ -64,16 +66,14 @@ class BookController extends AbstractController
     /**
      * @Route("/{id}/edit", name="book_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, Book $book): Response
+    public function edit(Request $request, Book $book, StockableMediaCopyService $stockableCopyService): Response
     {
-    	// Setting DoctrineRegistry for book object
-    	$book->setDoctrine($this->getDoctrine());
-    	
         $form = $this->createForm(BookType::class, $book);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-        	$this->getDoctrine()->getManager()->flush();
+        	$stockableCopyService->generateCopyFromMedia($book->getStockableMedia());
+         	$this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('book_index');
         }

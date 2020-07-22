@@ -10,6 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Service\Entity\StockableMediaCopy as StockableMediaCopyService;
 
 /**
  * @Route("/film")
@@ -29,7 +30,7 @@ class FilmController extends AbstractController
     /**
      * @Route("/new", name="film_new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    public function new(Request $request, StockableMediaCopyService $stockableCopyService): Response
     {
         $film = new Film();
         $form = $this->createForm(FilmType::class, $film);
@@ -37,6 +38,8 @@ class FilmController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $film_media = $this->getDoctrine()->getRepository(MediaType::class)->findOneBy(['name' => 'Film']);
             $film->setMediaType($film_media);
+            $stockableCopyService->generateCopyFromMedia($film->getStockableMedia());
+            
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($film);
             $entityManager->flush();
@@ -62,12 +65,13 @@ class FilmController extends AbstractController
     /**
      * @Route("/{id}/edit", name="film_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, Film $film): Response
+    public function edit(Request $request, Film $film, StockableMediaCopyService $stockableCopyService): Response
     {
         $form = $this->createForm(FilmType::class, $film);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+        	$stockableCopyService->generateCopyFromMedia($film->getStockableMedia());
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('film_index');

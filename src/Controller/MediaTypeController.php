@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/media/type")
+ * @Route("/media_type")
  */
 class MediaTypeController extends AbstractController
 {

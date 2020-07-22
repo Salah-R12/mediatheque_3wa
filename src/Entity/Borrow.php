@@ -4,10 +4,11 @@ namespace App\Entity;
 
 use App\Repository\BorrowRepository;
 use Doctrine\ORM\Mapping as ORM;
+use phpDocumentor\Reflection\Types\Integer;
 
 /**
  * @ORM\Entity(repositoryClass=BorrowRepository::class)
- * @ORM\HasLifecycleCallbacks()
+ * * @ORM\HasLifecycleCallbacks()
  */
 class Borrow
 {
@@ -97,6 +98,7 @@ class Borrow
         return $this;
     }
 
+
     public function getExpiryDate(): ?\DateTimeInterface
     {
         return $this->expiry_date;
@@ -151,5 +153,14 @@ class Borrow
     public function __toString()
     {
         return $this->id;
+    }
+
+    public function getBorrowDuration() :Int
+    {
+        return $this->getStockableMediaCopy()
+                        ->getStockableMedia()
+                            ->getMedia()
+                                ->getMediaType()
+                                    ->getBorrowDuration();
     }
 }

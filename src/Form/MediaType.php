@@ -2,12 +2,12 @@
 
 namespace App\Form;
 
-use App\Entity\Music;
+use App\Entity\Media;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class MusicType extends AbstractType
+class MediaType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -15,20 +15,16 @@ class MusicType extends AbstractType
             ->add('name')
             ->add('author')
             ->add('description')
-            ->add('singer')
-            ->add('band')
-            ->add('titles')
-            ->add('album')
-            ->add('compositor')
-            ->add('digitalMedia', DigitalMediaType::class)
-            ->add('stockableMedia', StockableMediaType::class)
+            ->add('media_type')
+            ->add('digitalMedia')
+            ->add('stockableMedia')
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Music::class,
+            'data_class' => Media::class,
         ]);
     }
 }
