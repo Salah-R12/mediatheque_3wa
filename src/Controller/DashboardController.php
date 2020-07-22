@@ -18,9 +18,9 @@ class DashboardController extends AbstractController
         $DatabaseEm3 = $this->getDoctrine()->getManager();
 
         // Write your raw SQL
-        $last_books = 'SELECT ID, name FROM book ORDER BY ID DESC LIMIT 5;';
-        $last_films = 'SELECT ID, name FROM film ORDER BY ID DESC LIMIT 5;';
-        $last_musics = 'SELECT ID, name FROM music ORDER BY ID DESC LIMIT 5;';
+        $last_books = 'SELECT t1.id, t2.name FROM book t1 INNER JOIN media t2 WHERE t1.id = t2.id ORDER BY ID DESC LIMIT 5;';
+        $last_films = 'SELECT id, original_title FROM film ORDER BY ID DESC LIMIT 5;';
+        $last_musics = 'SELECT ID, titles FROM music ORDER BY ID DESC LIMIT 5;';
 
         // Prepare the query from DATABASE1
         $statementDB1 = $DatabaseEm1->getConnection()->prepare($last_books);

@@ -2,20 +2,36 @@
 
 {% block title %}Hello DashboardController!{% endblock %}
 
+{% block stylesheets %}
+
+{% endblock }
+
 {% block body %}
-{{last_books}}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+<h2></h2>
+<div>
+    <h2>Nouveautes : Musiques</h2>
+    <ul class="list-group">
+        {% for el in last_musics %}
+            <li class="list-group-item"><a href='music/{{el.ID}}'>{{el.titles}}</a></li>
+        {% endfor %}
+    </ul>
+</div>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+<div>
+    <h2>Nouveautes : Films</h2>
+    <ul class="list-group">
+        {% for el in last_films %}
+            <li class="list-group-item"><a href='film/{{el.id}}'>{{el.original_title}}</a></li>
+        {% endfor %}
+    </ul>
+</div>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ '/home/broccoli/code/mediatheque_3wa/src/Controller/DashboardController.php'|file_link(0) }}">src/Controller/DashboardController.php</a></code></li>
-        <li>Your template at <code><a href="{{ '/home/broccoli/code/mediatheque_3wa/templates/dashboard/index.html.twig'|file_link(0) }}">templates/dashboard/index.html.twig</a></code></li>
+<div>
+    <h2>Nouveautes : Livres</h2>
+    <ul class="list-group">
+        {% for el in last_books %}
+            <li class="list-group-item"><a href='book/{{el.id}}'>{{el.name}}</a></li>
+        {% endfor %}
     </ul>
 </div>
 {% endblock %}
