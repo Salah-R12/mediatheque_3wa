@@ -4,13 +4,36 @@ namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Service\Navigation;
+use Symfony\Component\HttpFoundation\Request;
 
 class NavbarController extends AbstractController
 {
-    public function index()
+	/**
+	 * 
+	 * @param Navigation $nav
+	 * @param string $current_route_name It is passed from template, to give the parent controller route name (since here, current route name would be in this controller, actually not defined)
+	 * @return \Symfony\Component\HttpFoundation\Response
+	 */
+    public function index(Navigation $nav, string $current_route_name)
     {
+    	// TODO defined roles: for instance, all is public
+    	$userRoleID = null;
+    	$navbar_links = $nav->getNavBarLinks($userRoleID);
+    	$homepage_link = [];
+    	foreach ($navbar_links as $ix => $item){
+    		if (!empty($item['is_homepage'])){
+    			$homepage_link = $item;
+    			unset($navbar_links[$ix]);
+    			break;
+    		}
+    	}
+    	
         return $this->render('navbar/index.html.twig', [
             'controller_name' => 'NavbarController',
+        	'navbar_links' => $navbar_links,
+        	'home_page' => $homepage_link,
+        	'current_route_name'  => $current_route_name
         ]);
     }
 }
