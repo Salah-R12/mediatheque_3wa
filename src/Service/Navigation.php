@@ -45,7 +45,7 @@ class Navigation{
 		$links = [
 			[
 				"title" => "Médiathèque 3WA", // Site name, link to home page
-				"route_name" => null, // There is not yet a real home page
+				"route_name" => 'dashboard', // There is not yet a real home page
 				"roles" => null,
 				"is_homepage" => true // this value MUST be set only ONCE (this define which route is the Home Page); TODO : also this should be set into the database
 			],
