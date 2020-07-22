@@ -77,7 +77,7 @@ DATABASE_URL=mysql://[db_user]:[db_password]@127.0.0.1:3306/mediatheque_3wa?serv
 ```
 Remplacer "db_user" par son utilisateur MySQL ayant le droit de créer une database (par exemple "root").
 
-Pour fini, utiliser la console symfony :
+Pour finir, utiliser la console symfony :
 ```bash
 cd /path/to/project
 # Si l'on souhaite d'abord supprimer une base existante :

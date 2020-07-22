@@ -25,7 +25,7 @@ class StockableMediaCopy
     private $copy_number;
 
     /**
-     * @ORM\ManyToOne(targetEntity=StockableMedia::class, inversedBy="stockableMediaCopies")
+     * @ORM\ManyToOne(targetEntity=StockableMedia::class, inversedBy="stockableMediaCopies", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $stockable_media;
@@ -117,8 +117,8 @@ class StockableMediaCopy
 
         return $this;
     }
-    public function __toString():string
-    {
-        return $this->id;
+
+    public function __toString(): string{
+    	return $this->getStockableMedia()->getMedia()->getMediaType()->getName() . ' : ' . $this->getStockableMedia()->getMedia()->getName() . ", Exemplaire " . $this->getCopyNumber();
     }
 }

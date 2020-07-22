@@ -66,7 +66,7 @@ class BorrowController extends AbstractController
     {
         $form = $this->createForm(BorrowType::class, $borrow);
         $form->handleRequest($request);
-        $borrow_duration = $borrow->getDurationDate();
+        $borrow_duration = $borrow->getBorrowDuration();
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 

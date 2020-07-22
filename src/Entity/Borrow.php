@@ -12,16 +12,6 @@ use phpDocumentor\Reflection\Types\Integer;
  */
 class Borrow
 {
-    public function __construct()
-    {
-       /* $cuurentDate = new \DateTime();
-        $this->borrow_date = $cuurentDate;
-        $cuurentDate2 = new \DateTime();
-        $this->expiry_date = $cuurentDate2->add(new \DateInterval('P20D'));*/
-
-        $this->borrow_date = new \DateTime();
-    }
-
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -61,6 +51,12 @@ class Borrow
      */
     private $return_media_state;
 
+    
+    public function __construct()
+    {
+    	$this->borrow_date = new \DateTime();
+    }
+    
     public function getId(): ?int
     {
         return $this->id;
@@ -101,14 +97,7 @@ class Borrow
 
         return $this;
     }
-    /**
-     * @ORM\PrePersist
-     */
-    public function createdAt ()
-    {
-        $this->borrow_date = new \DateTime();
 
-    }
 
     public function getExpiryDate(): ?\DateTimeInterface
     {
@@ -145,12 +134,28 @@ class Borrow
 
         return $this;
     }
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function calculateExpiryDate(): self
+    {
+        // Expiry date must be pre-defined (on insert only) by the day numbers set to media type
+        // e.g. if media type is book, and borrow duration is 30 days, then expiry date must be borrow date + 30 days
+
+        // Get borrow duration
+        $borrowDuration = $this->getStockableMediaCopy()->getStockableMedia()->getMedia()->getMediaType()->getBorrowDuration();
+        $expiryDateTime = new \DateTime($this->getBorrowDate()->format('Y-m-d H:i'));
+        $expiryDateTime->add(new \DateInterval("P${borrowDuration}D"));
+        return $this->setExpiryDate($expiryDateTime);
+    }
+
     public function __toString()
     {
         return $this->id;
     }
 
-    public function getDurationDate() :Int
+    public function getBorrowDuration() :Int
     {
         return $this->getStockableMediaCopy()
                         ->getStockableMedia()

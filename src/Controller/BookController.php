@@ -66,11 +66,14 @@ class BookController extends AbstractController
      */
     public function edit(Request $request, Book $book): Response
     {
+    	// Setting DoctrineRegistry for book object
+    	$book->setDoctrine($this->getDoctrine());
+    	
         $form = $this->createForm(BookType::class, $book);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+        	$this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('book_index');
         }
