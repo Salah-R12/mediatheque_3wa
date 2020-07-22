@@ -40,13 +40,13 @@ class BorrowType extends AbstractType
                 ])
             ->add('return_date')
             ->add('member')
-            ->add('stockable_media_copy', EntityType::class, [
+            ->add('stockable_media_copy'/*, EntityType::class, [
                 'class' => StockableMedia::class,
                 'query_builder' => function() use ($smc){
                 	// TODO: use findAllAvailable()
                     return $smc->findAll();
                 }
-            ])
+            ]*/)
             ->add('return_media_state')
         ;
     }
