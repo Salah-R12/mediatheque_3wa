@@ -3,32 +3,44 @@
 {% block title %}Borrow{% endblock %}
 
 {% block body %}
-    <h1>Borrow</h1>
+    <h1>Prêt {{ borrow.stockableMediaCopy.stockableMedia.media.mediaType.name|lower }}</h1>
 
     <table class="table">
         <tbody>
             <tr>
-                <th>Id</th>
+                <th>N° enregistrement</th>
                 <td>{{ borrow.id }}</td>
             </tr>
             <tr>
-                <th>Borrow_date</th>
-                <td>{{ borrow.borrowDate ? borrow.borrowDate|date('Y-m-d H:i:s') : '' }}</td>
+                <th>Adhérent</th>
+                <td>{{ borrow.member ? borrow.member.username : '' }}</td>
             </tr>
             <tr>
-                <th>Expiry_date</th>
-                <td>{{ borrow.expiryDate ? borrow.expiryDate|date('Y-m-d H:i:s') : '' }}</td>
+                <th>Média</th>
+                <td>{{ borrow.stockableMediaCopy.stockableMedia.media.name }}</td>
             </tr>
             <tr>
-                <th>Return_date</th>
-                <td>{{ borrow.returnDate ? borrow.returnDate|date('Y-m-d H:i:s') : '' }}</td>
+                <th>N° exemplaire</th>
+                <td>{{ borrow.stockableMediaCopy.copyNumber }} (sur {{ borrow.stockableMediaCopy.stockableMedia.stock }} exemplaire(s))</td>
+            </tr>
+            <tr>
+                <th>Date de l'emprunt</th>
+                <td>{{ borrow.borrowDate ? borrow.borrowDate|date('d/m/Y H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Échéance</th>
+                <td>{{ borrow.expiryDate ? borrow.expiryDate|date('d/m/Y H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Restitué le</th>
+                <td>{{ borrow.returnDate ? borrow.returnDate|date('d/m/Y H:i:s') : "en cours d'emprunt" }}</td>
             </tr>
         </tbody>
     </table>
 
-    <a href="{{ path('borrow_index') }}">back to list</a>
-
-    <a href="{{ path('borrow_edit', {'id': borrow.id}) }}">edit</a>
+    <a href="{{ path('borrow_index') }}">Retour à la liste</a>
+	|
+    <a href="{{ path('borrow_edit', {'id': borrow.id}) }}">Modifier</a>
 
     {{ include('borrow/_delete_form.html.twig') }}
 {% endblock %}

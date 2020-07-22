@@ -3,37 +3,43 @@
 {% block title %}Borrow index{% endblock %}
 
 {% block body %}
-    <h1>Borrow index</h1>
+    <h1>Liste des prêts</h1>
 
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
-                <th>Borrow_date</th>
-                <th>Expiry_date</th>
-                <th>Return_date</th>
+                <th>Catégorie</th>
+                <th>Titre</th>
+                <th>N° exemplaire</th>
+                <th>Adhérent</th>
+                <th>Date d'emprunt</th>
+                <th>Échéance</th>
+                <th>Restitué le</th>
                 <th>actions</th>
             </tr>
         </thead>
         <tbody>
         {% for borrow in borrows %}
             <tr>
-                <td>{{ borrow.id }}</td>
-                <td>{{ borrow.borrowDate ? borrow.borrowDate|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ borrow.expiryDate ? borrow.expiryDate|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ borrow.returnDate ? borrow.returnDate|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ borrow.stockableMediaCopy.stockableMedia.media.mediaType.name }}</td>
+                <td>{{ borrow.stockableMediaCopy.stockableMedia.media.name }}</td>
+                <td>{{ borrow.stockableMediaCopy.copyNumber }}/{{ borrow.stockableMediaCopy.stockableMedia.stock }}</td>
+                <td>{{ borrow.member ? borrow.member.username : '' }}</td>
+                <td>{{ borrow.borrowDate ? borrow.borrowDate|date('d/m/Y') : '' }}</td>
+                <td>{{ borrow.expiryDate ? borrow.expiryDate|date('d/m/Y') : '' }}</td>
+                <td>{{ borrow.returnDate ? borrow.returnDate|date('d/m/Y') : '' }}</td>
                 <td>
-                    <a href="{{ path('borrow_show', {'id': borrow.id}) }}">show</a>
-                    <a href="{{ path('borrow_edit', {'id': borrow.id}) }}">edit</a>
+                    <a href="{{ path('borrow_show', {'id': borrow.id}) }}">voir</a> |
+                    <a href="{{ path('borrow_edit', {'id': borrow.id}) }}">modifier</a>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="5">no records found</td>
+                <td colspan="5">Aucune donnée</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('borrow_new') }}">Create new</a>
+    <a href="{{ path('borrow_new') }}">Saisir un nouveau prêt</a>
 {% endblock %}
