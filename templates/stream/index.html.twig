@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Stream index{% endblock %}
+
+{% block body %}
+    <h1>Stream index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Start_date</th>
+                <th>End_date</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for stream in streams %}
+            <tr>
+                <td>{{ stream.id }}</td>
+                <td>{{ stream.startDate ? stream.startDate|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ stream.endDate ? stream.endDate|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                    <a href="{{ path('stream_show', {'id': stream.id}) }}">show</a>
+                    <a href="{{ path('stream_edit', {'id': stream.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('stream_new') }}">Create new</a>
+{% endblock %}

@@ -117,7 +117,7 @@ class StockableMediaCopy
 
         return $this;
     }
-    
+
     public function __toString(): string{
     	return $this->getStockableMedia()->getMedia()->getMediaType()->getName() . ' : ' . $this->getStockableMedia()->getMedia()->getName() . ", Exemplaire " . $this->getCopyNumber();
     }

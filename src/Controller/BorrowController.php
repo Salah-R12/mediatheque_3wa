@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Borrow;
 use App\Form\BorrowType;
+use App\Form\BorrowNewType;
 use App\Repository\BorrowRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -31,7 +32,7 @@ class BorrowController extends AbstractController
     public function new(Request $request): Response
     {
         $borrow = new Borrow();
-        $form = $this->createForm(BorrowType::class, $borrow);
+        $form = $this->createForm(BorrowNewType::class, $borrow);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -65,7 +66,7 @@ class BorrowController extends AbstractController
     {
         $form = $this->createForm(BorrowType::class, $borrow);
         $form->handleRequest($request);
-
+        $borrow_duration = $borrow->getBorrowDuration();
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
@@ -75,6 +76,7 @@ class BorrowController extends AbstractController
         return $this->render('borrow/edit.html.twig', [
             'borrow' => $borrow,
             'form' => $form->createView(),
+            'borrow_duration' => $borrow_duration,
         ]);
     }
 
