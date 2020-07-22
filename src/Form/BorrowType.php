@@ -4,6 +4,8 @@ namespace App\Form;
 
 use App\Entity\Borrow;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use App\Repository\StockableMediaCopyRepository;
@@ -27,8 +29,15 @@ class BorrowType extends AbstractType
     {
     	$smc = $this->stockableMediaCopyRepo;
         $builder
-            ->add('borrow_date')
-            ->add('expiry_date')
+            ->add('borrow_date', DateType::class, [
+                'widget' => 'single_text',
+                'html5' => true,
+                /*'attr' => ['class' => 'js-datepicker'],*/
+                ])
+            ->add('expiry_date',DateType::class, [
+                'widget' => 'single_text',
+                'html5' => true,
+                ])
             ->add('return_date')
             ->add('member')
             ->add('stockable_media_copy', EntityType::class, [

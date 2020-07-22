@@ -1,15 +1,13 @@
 <?php
+
 namespace App\Entity;
+
 use App\Repository\StockableMediaRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Cache\Adapter\DoctrineAdapter;
-use Doctrine\Common\Cache\CacheProvider;
-use Doctrine\Persistence\ManagerRegistry;
 
 /**
- *
  * @ORM\Entity(repositoryClass=StockableMediaRepository::class)
  */
 class StockableMedia{

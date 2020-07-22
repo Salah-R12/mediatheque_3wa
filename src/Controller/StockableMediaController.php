@@ -3,14 +3,21 @@
 namespace App\Controller;
 
 use App\Entity\StockableMedia;
-use App\Form\StockableMediaType;
+use App\Form\StockableMedia1Type;
 use App\Repository\StockableMediaRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * @Route("/stockable/media")
+ */
 class StockableMediaController extends AbstractController
 {
+    /**
+     * @Route("/", name="stockable_media_index", methods={"GET"})
+     */
     public function index(StockableMediaRepository $stockableMediaRepository): Response
     {
         return $this->render('stockable_media/index.html.twig', [
@@ -18,10 +25,13 @@ class StockableMediaController extends AbstractController
         ]);
     }
 
+    /**
+     * @Route("/new", name="stockable_media_new", methods={"GET","POST"})
+     */
     public function new(Request $request): Response
     {
         $stockableMedia = new StockableMedia();
-        $form = $this->createForm(StockableMediaType::class, $stockableMedia);
+        $form = $this->createForm(StockableMedia1Type::class, $stockableMedia);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -39,6 +49,9 @@ class StockableMediaController extends AbstractController
         ]);
     }
 
+    /**
+     * @Route("/{id}", name="stockable_media_show", methods={"GET"})
+     */
     public function show(StockableMedia $stockableMedia): Response
     {
         return $this->render('stockable_media/show.html.twig', [
@@ -46,9 +59,12 @@ class StockableMediaController extends AbstractController
         ]);
     }
 
+    /**
+     * @Route("/{id}/edit", name="stockable_media_edit", methods={"GET","POST"})
+     */
     public function edit(Request $request, StockableMedia $stockableMedia): Response
     {
-        $form = $this->createForm(StockableMediaType::class, $stockableMedia);
+        $form = $this->createForm(StockableMedia1Type::class, $stockableMedia);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -63,6 +79,9 @@ class StockableMediaController extends AbstractController
         ]);
     }
 
+    /**
+     * @Route("/{id}", name="stockable_media_delete", methods={"DELETE"})
+     */
     public function delete(Request $request, StockableMedia $stockableMedia): Response
     {
         if ($this->isCsrfTokenValid('delete'.$stockableMedia->getId(), $request->request->get('_token'))) {
