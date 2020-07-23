@@ -80,8 +80,7 @@ class StockableMediaCopyRepository extends ServiceEntityRepository{
 			->select('s2.id')
 			->distinct()
 			->innerJoin('b2.stockable_media_copy', 's2')
-			->where('b2.return_date IS NULL')
-			->orWhere("b2.return_date LIKE ''");
+			->where('b2.return_date IS NULL');
 
 		// Exp permet de créer des conditions (SQL) sur la plupart des mots clés ("IN", "NOT IN", "=", "LIKE" etc.)
 		$exp = $mainQb->expr();
