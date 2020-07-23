@@ -22,44 +22,18 @@ class StockableMediaCopyRepository extends ServiceEntityRepository{
 		parent::__construct($registry, StockableMediaCopy::class);
 	}
 
-	// /**
-	//  * @return StockableMediaCopy[] Returns an array of StockableMediaCopy objects
-	//  */
-	/*
-	 public function findByExampleField($value)
-	 {
-	 return $this->createQueryBuilder('s')
-	 ->andWhere('s.exampleField = :val')
-	 ->setParameter('val', $value)
-	 ->orderBy('s.id', 'ASC')
-	 ->setMaxResults(10)
-	 ->getQuery()
-	 ->getResult()
-	 ;
-	 }
-	 */
-
-	/*
-	 public function findOneBySomeField($value): ?StockableMediaCopy
-	 {
-	 return $this->createQueryBuilder('s')
-	 ->andWhere('s.exampleField = :val')
-	 ->setParameter('val', $value)
-	 ->getQuery()
-	 ->getOneOrNullResult()
-	 ;
-	 }
-	 */
 
 	/**
 	 * Returns from database all "stockable_media_copies" that are free for borrowing
 	 * If you pass an argument, then this function can just return the QueryBuilder instead of the result (array)
-	 * 
-	 * @param string $return_type (optional)
+	 *
+	 * @param string $return_type
+	 *        	(optional)
 	 *        	Can be either \Doctrine\ORM\QueryBuilder::class | \Doctrine\ORM\Query::class | null
 	 *        	"null" (or any unknown string) means that the result will be returned as array (by default)
-	 * @param int $selectedBorrowId (optional)
-	 * 			This will keep in result the borrow line related to the consulted borrowed media
+	 * @param int $selectedBorrowId
+	 *        	(optional)
+	 *        	This will keep in result the borrow line related to the consulted borrowed media
 	 * @return mixed \Doctrine\ORM\QueryBuilder|\Doctrine\ORM\Query|array
 	 */
 	public function findAllAvailable(string $return_type = null, int $selectedBorrowId = null){
@@ -89,7 +63,7 @@ class StockableMediaCopyRepository extends ServiceEntityRepository{
 		$mainQb->where($exp->notIn('s.id', $subQb->getDQL()))
 			->orWhere('b IS NULL')
 			->orderBy('s.id', 'ASC');
-		
+
 		if ($selectedBorrowId){
 			$mainQb->orWhere('s.id = :id')->setParameter('id', $selectedBorrowId);
 		}
@@ -102,5 +76,42 @@ class StockableMediaCopyRepository extends ServiceEntityRepository{
 			default:
 				return $mainQb->getQuery()->getResult();
 		}
+	}
+
+	/**
+	 * Check if a media copy is available for borrowing
+	 *
+	 * @param int $id
+	 *        	The specified stockable_media_copy.id being searched
+	 * @return boolean
+	 */
+	public function isAvailable(int $id){
+		// First, check if there is no line into borrows
+		$existsInBorrow = $this->getEntityManager()
+			->createQueryBuilder()
+			->from(Borrow::class, 'b')
+			->innerJoin('b.stockable_media_copy', 's')
+			->where('s.id = :id')
+			->setParameter('id', $id)
+			->select('s.id')
+			->getQuery()
+			->getOneOrNullResult();
+		if (!$existsInBorrow)
+			return true;
+		
+		// Second, check if there is at least one borrow of specified copy that has no return_date (that means it is not returned yet)
+		$existsInBorrow = $this->createQueryBuilder('s')
+			->innerJoin('s.borrows', 'b')
+			->select('COUNT(b.id)')
+			->where('s.id = :id')
+			->setParameter('id', $id)
+			->andWhere('b.return_date IS NULL')
+			->groupBy('s.id')
+			->getQuery()
+			->getOneOrNullResult();
+		if (!$existsInBorrow)
+			return true;
+
+		return false;
 	}
 }
