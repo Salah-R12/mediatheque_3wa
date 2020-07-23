@@ -12,14 +12,14 @@ class BookType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name')
-            ->add('author')
-            ->add('description')
-            ->add('edition')
-            ->add('page_nb')
+            ->add('name', null, ['label' => 'Titre'])
+            ->add('author', null, ['label' => 'Auteur'])
+            ->add('description', null, ['label' => 'Description'])
+            ->add('edition', null, ['label' => 'Édition'])
+            ->add('page_nb', null, ['label' => 'Nombre de pages'])
             //->add('media_type')
-            ->add('digitalMedia', DigitalMediaType::class)
-            ->add('stockableMedia', StockableMediaType::class)
+        	->add('digitalMedia', DigitalMediaType::class, ['label' => 'Support digital (optionnel) :'])
+        	->add('stockableMedia', StockableMediaType::class, ['label' => 'Logistique (optionnel) :'])
         ;
     }
 
