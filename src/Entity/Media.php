@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Bundle\DoctrineBundle\Registry;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=MediaRepository::class)
@@ -26,6 +27,7 @@ class Media
 
     /**
      * @ORM\Column(type="string", length=500)
+     * @Assert\NotBlank(message="Le titre ne doit pas être vide")
      */
     protected $name;
 

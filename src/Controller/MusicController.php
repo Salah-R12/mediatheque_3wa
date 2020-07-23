@@ -36,16 +36,22 @@ class MusicController extends AbstractController
         $form = $this->createForm(MusicType::class, $music);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $mediaType = $this->getDoctrine()->getRepository(MediaType::class)->findOneBy(['name' => 'Music']);
-            $music->setMediaType($mediaType);
-            $stockableCopyService->generateCopyFromMedia($music->getStockableMedia());
-            
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($music);
-            $entityManager->flush();
+        if ($form->isSubmitted()) {
+            if ($form->isValid()) {
+                $mediaType = $this->getDoctrine()->getRepository(MediaType::class)->findOneBy(['name' => 'Music']);
+                $music->setMediaType($mediaType);
+                $stockableCopyService->generateCopyFromMedia($music->getStockableMedia());
 
-            return $this->redirectToRoute('music_index');
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->persist($music);
+                $entityManager->flush();
+                $this->addFlash("success", "New music is added to database with success");
+
+                return $this->redirectToRoute('music_index');
+            }
+            else {
+                $this->addFlash("warning", "an error occured");
+            }
         }
 
         return $this->render('music/new.html.twig', [
@@ -72,11 +78,17 @@ class MusicController extends AbstractController
         $form = $this->createForm(MusicType::class, $music);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-        	$stockableCopyService->generateCopyFromMedia($music->getStockableMedia());
-        	$this->getDoctrine()->getManager()->flush();
+        if ($form->isSubmitted()) {
+            if ($form->isValid()) {
+                $stockableCopyService->generateCopyFromMedia($music->getStockableMedia());
+                $this->getDoctrine()->getManager()->flush();
+                $this->addFlash("success", "The music is edited in database with success");
 
-            return $this->redirectToRoute('music_index');
+                return $this->redirectToRoute('music_index');
+            }
+            else{
+                $this->addFlash("warning", "Error: Edit process isn't finished");
+            }
         }
 
         return $this->render('music/edit.html.twig', [
@@ -98,6 +110,5 @@ class MusicController extends AbstractController
 
         return $this->redirectToRoute('music_index');
     }
-
 
 }
