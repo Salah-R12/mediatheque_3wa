@@ -1,5 +1,10 @@
-/* Suppression de la colonne en doublon "media_type" puisque "media_type_id" existe déjà */
+/* Suppression de la colonne en doublon "media_type" puisque "media_type_id" existe déjà.
+	Cette colonne en doublon est créée par Doctrine lorsqu'on utilise 
+ * @ORM\DiscriminatorColumn(name="media_type_id", type="integer")
+ * @ORM\DiscriminatorMap({"0" = "Media", "1" = "Book", "2" = "Film", "3" = "Music"})
+ */
 ALTER TABLE media DROP media_type;
+ALTER TABLE media DROP media_type_id_id;
 
 /* Sous MySQL, REPLACE fait la même chose que INSERT, sauf qu'il permet également de faire un update si la ligne existe déjà dans la table
 	cf. : UPSERT
