@@ -36,15 +36,26 @@ class BookController extends AbstractController
         $form = $this->createForm(BookType::class, $book);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $mediaType = $this->getDoctrine()->getRepository(MediaType::class)->findOneBy(['name' => 'Book']);
-            $book->setMediaType($mediaType);
-            $stockableCopyService->generateCopyFromMedia($book->getStockableMedia());
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($book);
-            $entityManager->flush();
-
-            return $this->redirectToRoute('book_index');
+        if ($form->isSubmitted()) {
+        	if ($form->isValid()){
+        		try{
+	            $mediaType = $this->getDoctrine()->getRepository(MediaType::class)->findOneBy(['name' => 'Book']);
+	            $book->setMediaType($mediaType);
+	            $stockableCopyService->generateCopyFromMedia($book->getStockableMedia());
+	            $entityManager = $this->getDoctrine()->getManager();
+	            $entityManager->persist($book);
+	            $entityManager->flush();
+	
+	            $this->addFlash('success', 'Données enregistrées avec succès');
+	            
+	            return $this->redirectToRoute('book_index');
+        		}catch(\Exception $ex){
+        			$this->addFlash('warning', 'Une erreur s\'est produite lors de l\'enregistrement');
+        			throw $ex;
+        		}
+        	}else{
+        		$this->addFlash('warning', 'Certaines informations saisies ne sont pas correctes');
+        	}
         }
 
         return $this->render('book/new.html.twig', [
@@ -71,11 +82,22 @@ class BookController extends AbstractController
         $form = $this->createForm(BookType::class, $book);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-        	$stockableCopyService->generateCopyFromMedia($book->getStockableMedia());
-         	$this->getDoctrine()->getManager()->flush();
-
-            return $this->redirectToRoute('book_index');
+        if ($form->isSubmitted()) {
+        	if ($form->isValid()){
+	        	try{
+		        	$stockableCopyService->generateCopyFromMedia($book->getStockableMedia());
+		         	$this->getDoctrine()->getManager()->flush();
+					
+		         	$this->addFlash('success', 'Données modifiées avec succès');
+		         	
+		            return $this->redirectToRoute('book_index');
+	        	}catch(\Exception $ex){
+	        		$this->addFlash('warning', 'Une erreur s\'est produite lors de l\'enregistrement');
+	        		throw $ex;
+	        	}
+        	}else{
+        		$this->addFlash('warning', 'Certaines informations saisies ne sont pas correctes');
+        	}
         }
 
         return $this->render('book/edit.html.twig', [
