@@ -1,0 +1,42 @@
+html, body{
+	margin: 0;
+	padding: 0;
+}
+
+.message-flash{
+	padding: 1em;
+	text-align: center;
+	font-weight: bold;
+}
+
+.label-warning{
+	color: orange;
+}
+
+.label-success{
+	color: green;
+}
+
+.label-notice{
+	color: navy;
+}
+
+.main-body{
+	margin: auto;
+	width: 95%;
+}
+
+h1{
+	font-size: 1.8em;
+}
+
+label{
+	margin-right: 1em;
+}
+
+button.btn{
+	background: lightgray;
+}
+button.btn:hover{
+	background: rgb(210, 210, 210);
+}

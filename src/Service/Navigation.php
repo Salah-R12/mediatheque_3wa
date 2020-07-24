@@ -91,16 +91,12 @@ class Navigation{
 		// TODO should define routes & roles into database, instead of hard links defined into this code, i.e. store values from previous array into the database
 		// Nota: all routes are not listed here. Use Symfony command to see all all routes: ./bin/console debug:router
 		
-		$filteredLinks = [];
-		if ($role_id){
-			$filteredLinks = $this->recursiveFilterOnLinksArray($links, $role_id);
-		} else
-			$filteredLinks = $links;
+		$filteredLinks = $role_id ? $this->recursiveFilterOnLinksArray($links, $role_id) : $links;
 		return $filteredLinks;
 	}
 	
 	/**
-	 * Filters links recursively
+	 * Filters links recursively, matching roles
 	 * 
 	 * @param array $links
 	 * @param int $role_id

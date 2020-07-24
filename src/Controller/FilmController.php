@@ -43,7 +43,19 @@ class FilmController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($film);
             $entityManager->flush();
+
+            $this->addFlash(
+                'success',
+                'Your new film were saved!'
+            );
             return $this->redirectToRoute('film_index');
+        }
+
+        if ($form->isSubmitted()) {
+            $this->addFlash(
+                'warning',
+                'Your new member is nat saved!'
+            );
         }
 
         return $this->render('film/new.html.twig', [
