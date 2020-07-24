@@ -34,9 +34,9 @@ label{
 	margin-right: 1em;
 }
 
-button.btn{
+.main-body button.btn{
 	background: lightgray;
 }
-button.btn:hover{
+.main-body button.btn:hover{
 	background: rgb(210, 210, 210);
 }
