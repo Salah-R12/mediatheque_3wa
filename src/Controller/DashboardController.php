@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class DashboardController extends AbstractController
@@ -10,9 +11,17 @@ class DashboardController extends AbstractController
     /**
      * @Route("/", name="dashboard")
      */
-    public function index()
+    public function index(): Response
     {
+        return $this->render('dashboard/index.html.twig');
+    }
 
+
+    /**
+     * @deprecated
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function deprecated_index(){
         $DatabaseEm1 = $this->getDoctrine()->getManager();
         $DatabaseEm2 = $this->getDoctrine()->getManager();
         $DatabaseEm3 = $this->getDoctrine()->getManager();
@@ -49,7 +58,7 @@ class DashboardController extends AbstractController
         $resultDatabase4 = $statementDB3->fetchAll();
 
         $em = $this->getDoctrine()->getManager();
-        return $this->render('dashboard/index.html.twig', [
+        return $this->render('dashboard/deprecated_index.html.twig', [
             'controller_name' => 'DashboardController',
             'last_books' => $resultDatabase1,
             'last_films' => $resultDatabase2,
