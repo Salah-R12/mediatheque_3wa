@@ -5,6 +5,9 @@ namespace App\Repository;
 use App\Entity\Media;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use App\Entity\Book;
+use App\Entity\Music;
+use App\Entity\Film;
 
 /**
  * @method Media|null find($id, $lockMode = null, $lockVersion = null)
@@ -47,4 +50,15 @@ class MediaRepository extends ServiceEntityRepository
         ;
     }
     */
+    public function findLast(int $limit)
+    {
+        return $this->createQueryBuilder('m')
+            ->innerJoin('m.media_type', 'mt')
+            ->orderBy('m.id', 'DESC')
+            ->setMaxResults($limit)
+            ->select('m,mt')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
 }

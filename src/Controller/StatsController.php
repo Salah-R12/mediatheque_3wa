@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Repository\BookRepository;
+use App\Repository\MediaRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -18,10 +18,10 @@ class StatsController extends AbstractController
         ]);
     }
 
-    public function lastBooks(BookRepository $bookRepository){
+    public function lastMedias(MediaRepository $mediaRepository){
 
-        return $this->render('stats/last_books.html.twig', [
-            "last_books"=>$bookRepository->findLastBooks(5)
-          ]);
+        return $this->render('stats/last_medias.html.twig', [
+            "last_medias"=>$mediaRepository->findLast(10)
+        ]);
     }
 }

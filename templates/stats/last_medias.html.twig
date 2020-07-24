@@ -1,0 +1,36 @@
+<h1>Les derniers médias créés</h1>
+{% if last_medias is defined and last_medias|length>0 %}
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Type du média</th>
+            <th>Titre</th>
+            <th>Auteur</th>
+            <th>Description</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for i,item in last_medias %}
+            <tr>
+                <td>{{ item.mediaType.name }}</td>
+                <td>{{ item.name }}</td>
+                <td>{{ item.author }}</td>
+                <td>{{ item.description }}</td>
+                <td>
+                    {% set media_type = item.mediaType.id == 1 ? 'book' : (item.mediaType.id == 2 ? 'music' : (item.mediaType.id == 3 ? 'film' : null)) %}
+                    {% if media_type %}
+                    <a href="{{ path(media_type ~ '_show', {'id': item.id}) }}">voir</a>
+                    <a href="{{ path(media_type ~ '_edit', {'id': item.id}) }}">modifier</a>
+                    {%  endif %}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <div>
+        Aucune donnée
+    </div>
+{% endif %}

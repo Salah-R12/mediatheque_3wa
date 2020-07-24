@@ -48,16 +48,5 @@ class BookRepository extends ServiceEntityRepository
     }
     */
 
-    public function findLastBooks(int $limit)
-    {
-        return $this->createQueryBuilder('b')
-            ->innerJoin('b.media_type', 'mt')
-            ->orderBy('b.id', 'DESC')
-            ->setMaxResults($limit)
-            ->select('b,mt')
-            ->getQuery()
-            ->getResult()
-            ;
-    }
 }
 
