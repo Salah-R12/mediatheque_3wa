@@ -4,7 +4,7 @@ namespace App\Entity;
 
 use App\Repository\FilmRepository;
 use Doctrine\ORM\Mapping as ORM;
-
+use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ORM\Entity(repositoryClass=FilmRepository::class)
  */
@@ -29,6 +29,11 @@ class Film extends Media
 
     /**
      * @ORM\Column(type="integer", nullable=true, nullable=true)
+     * @Assert\Regex(
+     * pattern="/\d/",
+     * match=true,
+     * message="Your name cannot contain a number"
+     * )
      */
     private $duration;
 
