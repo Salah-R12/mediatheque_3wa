@@ -8,6 +8,7 @@ use App\Repository\MemberRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Notifier\NotifierInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -38,8 +39,18 @@ class MemberController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($member);
             $entityManager->flush();
+            $this->addFlash(
+                'success',
+                'Your new member were saved!'
+            );
 
             return $this->redirectToRoute('member_index');
+        }
+        if ($form->isSubmitted()) {
+            $this->addFlash(
+                'warning',
+                'Your new member is nat saved!'
+            );
         }
 
         return $this->render('member/new.html.twig', [
@@ -68,8 +79,17 @@ class MemberController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
-
+            $this->addFlash(
+                'success',
+                'Your changes were saved!'
+            );
             return $this->redirectToRoute('member_index');
+        }
+        if ($form->isSubmitted()) {
+            $this->addFlash(
+                'warning',
+                'Your changes were not saved!'
+            );
         }
 
         return $this->render('member/edit.html.twig', [

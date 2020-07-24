@@ -6,7 +6,7 @@ use App\Repository\MemberRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-
+use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ORM\Entity(repositoryClass=MemberRepository::class)
  */
@@ -21,56 +21,101 @@ class Member
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank
+     * @Assert\Regex(
+     *     pattern     = "/^[a-z]+$/i   ",
+     *     htmlPattern = "^[a-zA-Z]+$"
+     * )
      */
     private $first_name;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank
+     * @Assert\Regex(
+     *     pattern="/\d/",
+     *     match=false,
+     *     message="Your name cannot contain a number"
+     * )
      */
     private $last_name;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlanK
+     * )
      */
     private $username;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank
      */
     private $password;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Email(
+     *     message = "The email '{{ value }}' is not a valid email."
+     * )
      */
     private $email;
 
     /**
      * @ORM\Column(type="string", length=500)
+     * @Assert\NotBlank
+     *
      */
     private $address1;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\NotBlank
      */
     private $address2;
 
     /**
      * @ORM\Column(type="string", length=50)
+     * @Assert\Length(
+     *      min = 5,
+     *      max = 5,
+     *      exactMessage = "This value should have exactly {{ limit }} characters",
+     *      allowEmptyString = false
+     * )
+     *  @Assert\Regex(
+     *     pattern="/\d/",
+     *     match=true,
+     *     message="Your name cannot contain a special characters"
+     * )
+     *
+     *
      */
     private $zipcode;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank
+     * @Assert\Regex(
+     *     pattern="/\d/",
+     *     match=false,
+     *     message="Your name cannot contain a number"
+     * )
      */
     private $city;
 
     /**
      * @ORM\Column(type="string", length=50, nullable=true)
+     *@Assert\Regex(
+     *     pattern="/\d/",
+     *     match=true,
+     *     message="Your name cannot contain a number"
+     * )
      */
     private $phone;
 
     /**
      * @ORM\ManyToOne(targetEntity=Staff::class)
+     *@Assert\NotBlanK
      */
     private $created_by_staff;
 
