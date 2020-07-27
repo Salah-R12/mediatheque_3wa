@@ -39,26 +39,35 @@ class BorrowType extends AbstractType{
 		
 		$builder->add('borrow_date', DateType::class, [
 				'widget' => 'single_text',
-				'html5' => true
+				'html5' => true,
+				'label' => "Date de l'emprunt"
 			])
 			->add('expiry_date', DateType::class, [
 				'widget' => 'single_text',
 				'html5' => true,
+				'label' => 'À restituer avant le',
 				'attr' => [
 					'readonly' => true // This field is not manually updatable, but calculated
 				]
 			])
-			->add('member')
+			->add('member', null, [
+				'label' => 'Adhérent'
+			])
 			->add('stockable_media_copy', EntityType::class, [
 				'class' => StockableMediaCopy::class,
+				'label' => 'Exemplaire emprunté',
 				// Closure function using property "stockableMediaCopyRepo"
 				'query_builder' => $queryBuilder
 			])
 			->add('return_date', DateType::class, [
 				'widget' => 'single_text',
-				'html5' => true
+				'label' => 'Restitué le',
+				'html5' => true,
+				'required' => false
 			])
-			->add('return_media_state');
+			->add('return_media_state', null, [
+				'label' => 'État de l\'exemplaire après restitution'
+			]);
 	}
 
 	public function configureOptions(OptionsResolver $resolver){
