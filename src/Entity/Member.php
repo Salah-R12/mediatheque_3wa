@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+
 /**
  * @ORM\Entity(repositoryClass=MemberRepository::class)
  */
@@ -22,21 +23,12 @@ class Member
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank
-     * @Assert\Regex(
-     *     pattern     = "/^[a-z]+$/i   ",
-     *     htmlPattern = "^[a-zA-Z]+$"
-     * )
      */
     private $first_name;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank
-     * @Assert\Regex(
-     *     pattern="/\d/",
-     *     match=false,
-     *     message="Your name cannot contain a number"
-     * )
      */
     private $last_name;
 
