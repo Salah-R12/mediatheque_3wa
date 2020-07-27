@@ -47,4 +47,20 @@ class BorrowRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function findLast(int $limit)
+    {
+        return $this->createQueryBuilder('b')
+            ->innerJoin('b.member', 'bm')
+            ->innerJoin('b.stockable_media_copy', 'smc')
+            ->innerJoin('smc.stockable_media', 'sm')
+            ->innerJoin('sm.media', 'm')
+            ->innerJoin('m.media_type', 'mt')
+            ->orderBy('b.id', 'DESC')
+            ->setMaxResults($limit)
+            ->select('b,bm,smc,sm,m,mt')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
 }

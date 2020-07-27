@@ -8,4 +8,5 @@
 
 {% block body %}
         {{ render_hinclude(controller('App\\Controller\\StatsController::lastMedias', {default: 'Chargement...'})) }}
+        {{ render_hinclude(controller('App\\Controller\\StatsController::lastBorrows', {default: 'Chargement...'})) }}
 {% endblock %}
