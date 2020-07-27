@@ -16,6 +16,15 @@
 ALTER TABLE media DROP media_type;
 ALTER TABLE media DROP media_type_id_id;
 
+
+/* Ajout des contraintes d'unicité sur les champs email et username des tables staff et member */
+ALTER TABLE staff ADD CONSTRAINT uq_staff_username UNIQUE (username);
+ALTER TABLE staff ADD CONSTRAINT uq_staff_email UNIQUE (email);
+ALTER TABLE member ADD CONSTRAINT uq_member_username UNIQUE (username);
+ALTER TABLE member ADD CONSTRAINT uq_member_email UNIQUE (email);
+
+
+
 /* Sous MySQL, REPLACE fait la même chose que INSERT, sauf qu'il permet également de faire un update si la ligne existe déjà dans la table
 	cf. : UPSERT
  */
