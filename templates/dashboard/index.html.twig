@@ -7,5 +7,5 @@
 {% endblock %}
 
 {% block body %}
-        {{ render(controller('App\\Controller\\StatsController::lastMedias' )) }}
+        {{ render_hinclude(controller('App\\Controller\\StatsController::lastMedias', {default: 'Chargement...'})) }}
 {% endblock %}
