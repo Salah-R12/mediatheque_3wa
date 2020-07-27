@@ -1,26 +1,20 @@
 <?php
 namespace App\Service\Entity;
-use Doctrine\Persistence\ManagerRegistry;
+use App\Service\Entity as EntityService;
 use App\Entity\StockableMedia;
 use App\Entity\StateOfMedia;
 use App\Entity\StockableMediaCopy as StockableMediaCopyEntity;
 
-class StockableMediaCopy{
-
+class StockableMediaCopy extends EntityService{
+	
 	/**
-	 *
-	 * @var Doctrine\Persistence\ManagerRegistry;
+	 * Dès lors que l'on modifie la valeur de "stock", on doit impacter le nombre d'exemplaires présents dans la médiathèque
+	 * Par exemple, si on indique que la quantité "stock" d'un livre est égal à 5,
+	 * alors il doit y avoir 5 exemplaires de ce même livre dans la table "stockable_media_copy"
+	 * 
+	 * @param StockableMedia $stockableMedia
 	 */
-	private $doctrine;
-
-	public function __construct(ManagerRegistry $doctrine){
-		$this->doctrine = $doctrine;
-	}
-
 	public function generateCopyFromMedia(StockableMedia $stockableMedia){
-		// Dès lors que l'on modifie la valeur de "stock", on doit impacter le nombre d'exemplaires présents dans la médiathèque
-		// Par exemple, si on indique que la quantité "stock" d'un livre est égal à 5,
-		// alors il doit y avoir 5 exemplaires de ce même livre dans la table "stockable_media_copy"
 		// On récupère le vrai nombre d'exemplaires présents dans la médiathèque
 		$realStock = $stockableMedia->getStockableMediaCopies()->count();
 		// On récupère le nouveau nombre d'exemplaires (stock)
