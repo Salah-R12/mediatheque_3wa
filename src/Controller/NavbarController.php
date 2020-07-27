@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use phpDocumentor\Reflection\Types\String_;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Service\Navigation;
@@ -15,7 +16,7 @@ class NavbarController extends AbstractController
 	 * @param string $current_route_name It is passed from template, to give the parent controller route name (since here, current route name would be in this controller, actually not defined)
 	 * @return \Symfony\Component\HttpFoundation\Response
 	 */
-    public function index(Navigation $nav, string $current_route_name)
+    public function index(Navigation $nav, string $current_route_name=null)
     {
     	// TODO defined roles: for instance, all is public
     	$userRoleID = null;
