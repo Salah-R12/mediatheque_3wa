@@ -1,13 +1,15 @@
 <h1>Les derniers emprunts créés</h1>
+{{ dump(last_borrows) }}
 {% if last_borrows is defined and last_borrows|length>0 %}
 
     <table class="table">
         <thead>
         <tr>
+            <th>Utilisateur</th>
+            <th>Date d'emprunt</th>
+            <th>Date de retour</th>
+            <th>Nom du média</th>
             <th>Type du média</th>
-            <th>Titre</th>
-            <th>Auteur</th>
-            <th>Description</th>
             <th>Actions</th>
         </tr>
         </thead>
@@ -15,16 +17,14 @@
         {% for i,item in last_borrows %}
             <tr>
                 <td>{{ item.member.username }}</td>
-                {# <td>{{ item.borrow_date }}</td> #}
-                {# <td>{{ item.expiry_date }}</td> #}
-                {# <td>{{ item.stockableMediaRepositoryCopy.stockableMediaRepository.media.name }}</td> #}
-                {# <td>
-                    {% set media_type = item.mediaType.id == 1 ? 'book' : (item.mediaType.id == 2 ? 'music' : (item.mediaType.id == 3 ? 'film' : null)) %}
-                    {% if media_type %}
-                    <a href="{{ path(media_type ~ '_show', {'id': item.id}) }}">voir</a>
-                    <a href="{{ path(media_type ~ '_edit', {'id': item.id}) }}">modifier</a>
-                    {%  endif %}
-                </td> #}
+                <td>{{ item.borrowDate|date('Y-m-d') }}</td>
+                <td>{{ item.expiryDate|date('Y-m-d') }}</td>
+                <td>{{ item.stockableMediaCopy.stockableMedia.media.name }}</td>
+                <td>{{ item.stockableMediaCopy.stockableMedia.media.mediaType.name }}</td>
+                <td>
+                    <a href="{{ path('borrow' ~ '_show', {'id': item.id}) }}">voir</a>
+                    <a href="{{ path('borrow' ~ '_edit', {'id': item.id}) }}">modifier</a>
+                </td>
             </tr>
         {% endfor %}
         </tbody>
