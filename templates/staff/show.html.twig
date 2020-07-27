@@ -1,9 +1,9 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Staff{% endblock %}
+{% block title %}Fiche staff{% endblock %}
 
 {% block body %}
-    <h1>Staff</h1>
+    <h1>Fiche de {{ staff.username }}</h1>
 
     <table class="table">
         <tbody>
@@ -12,51 +12,45 @@
                 <td>{{ staff.id }}</td>
             </tr>
             <tr>
-                <th>First_name</th>
+                <th>Prénom</th>
                 <td>{{ staff.firstName }}</td>
             </tr>
             <tr>
-                <th>Last_name</th>
+                <th>Nom</th>
                 <td>{{ staff.lastName }}</td>
             </tr>
-            <tr>
-                <th>Username</th>
-                <td>{{ staff.username }}</td>
-            </tr>
-            <tr>
-                <th>Password</th>
-                <td>{{ staff.password }}</td>
-            </tr>
-            <tr>
-                <th>Email</th>
+           <tr>
+                <th>E-mail</th>
                 <td>{{ staff.email }}</td>
             </tr>
             <tr>
-                <th>Address1</th>
-                <td>{{ staff.address1 }}</td>
+                <th>Adresse complète</th>
+                <td>
+                    {{ staff.address1 }}<br>
+                    {% if staff.address2 %}
+                        {{ staff.address2 }}<br>
+                    {% endif %}
+                    {{ staff.zipcode }} {{ staff.city }}
+                </td>
             </tr>
             <tr>
-                <th>Address2</th>
-                <td>{{ staff.address2 }}</td>
-            </tr>
-            <tr>
-                <th>Zipcode</th>
-                <td>{{ staff.zipcode }}</td>
-            </tr>
-            <tr>
-                <th>City</th>
-                <td>{{ staff.city }}</td>
-            </tr>
-            <tr>
-                <th>Phone</th>
+                <th>Téléphone principal</th>
                 <td>{{ staff.phone }}</td>
+            </tr>
+            <tr>
+            	<th>Rôles</th>
+            	<td>
+                {% for role in staff.roles %}
+                	{{ role.name }}<br>
+                 {% endfor %}
+            	</td>
             </tr>
         </tbody>
     </table>
 
-    <a href="{{ path('staff_index') }}">back to list</a>
-
-    <a href="{{ path('staff_edit', {'id': staff.id}) }}">edit</a>
-
+    <a href="{{ path('staff_index') }}">Retour à la liste</a>
+	|
+    <a href="{{ path('staff_edit', {'id': staff.id}) }}">Modifier</a>
+	<br><br>
     {{ include('staff/_delete_form.html.twig') }}
 {% endblock %}

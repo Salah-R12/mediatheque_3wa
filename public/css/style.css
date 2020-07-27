@@ -40,3 +40,19 @@ label{
 .main-body button.btn:hover{
 	background: rgb(210, 210, 210);
 }
+
+.flash-warning{
+	color: orange;
+}
+.flash-success{
+	color: green;
+}
+.flash-notice{
+	font-style: italic;
+}
+.flash-error{
+	color: red;
+}
+form label{
+	min-width: 20%;
+}

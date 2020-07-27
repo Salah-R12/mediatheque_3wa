@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Notifier\NotifierInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Form\MemberNewType;
 
 /**
  * @Route("/member")
@@ -32,7 +33,7 @@ class MemberController extends AbstractController
     public function new(Request $request): Response
     {
         $member = new Member();
-        $form = $this->createForm(MemberType::class, $member);
+        $form = $this->createForm(MemberNewType::class, $member);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

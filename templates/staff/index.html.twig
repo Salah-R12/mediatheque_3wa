@@ -1,23 +1,19 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Staff index{% endblock %}
+{% block title %}Liste des membres du staff{% endblock %}
 
 {% block body %}
-    <h1>Staff index</h1>
+    <h1>Liste des membres du staff</h1>
 
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
-                <th>First_name</th>
-                <th>Last_name</th>
-                <th>Username</th>
-                <th>Password</th>
+                <th>N°</th>
+                <th>Prénom</th>
+                <th>Nom</th>
+                <th>Identifiant</th>
                 <th>Email</th>
-                <th>Address1</th>
-                <th>Address2</th>
-                <th>Zipcode</th>
-                <th>City</th>
+                <th>Addresse</th>
                 <th>Phone</th>
                 <th>actions</th>
             </tr>
@@ -29,25 +25,24 @@
                 <td>{{ staff.firstName }}</td>
                 <td>{{ staff.lastName }}</td>
                 <td>{{ staff.username }}</td>
-                <td>{{ staff.password }}</td>
                 <td>{{ staff.email }}</td>
-                <td>{{ staff.address1 }}</td>
-                <td>{{ staff.address2 }}</td>
-                <td>{{ staff.zipcode }}</td>
-                <td>{{ staff.city }}</td>
+                <td>{{ staff.address1 }}<br>
+                    {{ staff.zipcode }} {{ staff.city }}
+                </td>
                 <td>{{ staff.phone }}</td>
                 <td>
-                    <a href="{{ path('staff_show', {'id': staff.id}) }}">show</a>
-                    <a href="{{ path('staff_edit', {'id': staff.id}) }}">edit</a>
+                    <a href="{{ path('staff_show', {'id': staff.id}) }}">voir</a>
+                    |
+                    <a href="{{ path('staff_edit', {'id': staff.id}) }}">modifier</a>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="12">no records found</td>
+                <td colspan="12">Aucune donnée</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('staff_new') }}">Create new</a>
+    <a href="{{ path('staff_new') }}">Inscrire un nouveau membre</a>
 {% endblock %}
