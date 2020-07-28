@@ -84,13 +84,31 @@ class BookController extends AbstractController
 
         if ($form->isSubmitted()) {
         	if ($form->isValid()){
+        		$redirectToRoute = true;
 	        	try{
-		        	$stockableCopyService->generateCopyFromMedia($book->getStockableMedia());
+	        		$stockableMedia = $book->getStockableMedia();
+	        		
+	        		// First, check in case of a removal, if at least one copy has borrow
+	        		if ($stockableCopyService->isRemoval($stockableMedia)){
+	        			if ($borrowAtCopyNumber = $stockableCopyService->copiesHaveBorrows($stockableMedia)){
+	        				// Case when $borrowAtCopyNumber is positive, means program will not remove copies from this position
+	        				$this->addFlash('warning', sprintf('Attention, le système a détecté qu\'à partir de l\'exemplaire %d, le livre a été emprunté. Seuls les numéros d\'exemplaires au-dessus de ce numéro et n\'ayant jamais été emprunté seront supprimés', $borrowAtCopyNumber));
+	        				// Reset new "stock" value
+	        				$stockableMedia->setStock($borrowAtCopyNumber);
+	        				$redirectToRoute = false;
+	        			}
+	        		}
+	        			
+	        		$stockableCopyService->generateCopyFromMedia($stockableMedia);
 		         	$this->getDoctrine()->getManager()->flush();
 					
-		         	$this->addFlash('success', 'Données modifiées avec succès');
 		         	
-		            return $this->redirectToRoute('book_index');
+		         	if ($redirectToRoute){
+		         		$this->addFlash('success', 'Données modifiées avec succès');
+		         		return $this->redirectToRoute('book_index');
+		         	}else{
+		         		$this->addFlash('notice', 'Les données ont été partiellement mises à jour');
+		         	}
 	        	}catch(\Exception $ex){
 	        		$this->addFlash('warning', 'Une erreur s\'est produite lors de l\'enregistrement');
 	        		throw $ex;
