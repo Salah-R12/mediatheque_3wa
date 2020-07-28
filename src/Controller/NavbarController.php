@@ -17,7 +17,7 @@ class NavbarController extends AbstractController
 	 * @param Request $request
 	 * @return \Symfony\Component\HttpFoundation\Response
 	 */
-    public function index(Navigation $nav, string $current_route_name, Request $request)
+    public function index(Navigation $nav, string $current_route_name)
     {
 		// TODO defined roles: for instance, all is public
 		
@@ -35,18 +35,18 @@ class NavbarController extends AbstractController
     			break;
     		}
 		}
-		$form->handleRequest($request);
-        if($form->isSubmitted() && $form->isValid())
-        {
-            var_dump($property); die;
-        }
+		// $form->handleRequest($request);
+        // if($form->isSubmitted() && $form->isValid())
+        // {
+        //     var_dump($request); die;
+        // }
 	    return $this->render('navbar/index.html.twig', [
             'controller_name' => 'NavbarController',
         	'navbar_links' => $navbar_links,
         	'home_page' => $homepage_link,
 			'current_route_name'  => $current_route_name,
-			'request' => $request,
-			'form' => $form
+	
+			'form' => $form->CreateView()
         ]);
     }
 }
