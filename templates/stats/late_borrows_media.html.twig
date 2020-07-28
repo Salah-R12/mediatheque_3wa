@@ -1,0 +1,38 @@
+<h1>Les emprunts retardés </h1>
+{% if late_borrows is defined and late_borrows|length>0 %}
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Nom</th>
+            <th>Prenom</th>
+            <th>Mail</th>
+            <th>Date d'emprunt</th>
+            <th>Date de retour</th>
+            <th>Nom du média</th>
+            <th>Type du média</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for i,item in late_borrows %}
+            <tr>
+                <td>{{ item.member.firstName }}</td>
+                <td>{{ item.member.lastName }}</td>
+                <td>{{ item.member.email }}</td>
+                <td>{{ item.borrowDate|date('Y-m-d') }}</td>
+                <td>{{ item.expiryDate|date('Y-m-d') }}</td>
+                <td>{{ item.stockableMediaCopy.stockableMedia.media.name }}</td>
+                <td>{{ item.stockableMediaCopy.stockableMedia.media.mediaType.name }}</td>
+                <td>
+                    <a href="{{ path('borrow' ~ '_show', {'id': item.id}) }}">voir</a>
+                    <a href="{{ path('borrow' ~ '_edit', {'id': item.id}) }}">modifier</a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <div>
+        Aucune donnée
+    </div>
+{% endif %}
