@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\BookRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=BookRepository::class)
@@ -24,6 +25,11 @@ class Book extends Media
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * @Assert\Regex(
+     *     pattern="/\d/",
+     *     match=true,
+     *     message="Le nombre de pages doit être un entier"
+     * )
      */
     private $page_nb;
 

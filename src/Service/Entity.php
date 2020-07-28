@@ -19,7 +19,7 @@ abstract class Entity{
 	/**
 	 * @var Doctrine\Persistence\ManagerRegistry;
 	 */
-	private $doctrine;
+	protected $doctrine;
 
 	public function __construct(ManagerRegistry $doctrine){
 		$this->doctrine = $doctrine;

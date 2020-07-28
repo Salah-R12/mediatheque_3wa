@@ -37,7 +37,7 @@ class Borrow extends EntityService{
 		$expiryDate = $borrowEntity->getExpiryDate();
 		// Calculate expected expiry date
 		$expectedExpiryDate = new \DateTime(date('Y-m-d', $borrowDate->getTimestamp()));
-		$expectedExpiryDate->add('P' . $borrowDuration . 'D');
+		$expectedExpiryDate->add(new \DateInterval('P' . $borrowDuration . 'D'));
 		if (!$expiryDate){
 			$borrowEntity->setExpiryDate($expectedExpiryDate);
 			return true;

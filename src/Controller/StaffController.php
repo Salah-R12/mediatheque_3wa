@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Staff;
+use App\Form\StaffNewType;
 use App\Form\StaffType;
 use App\Repository\StaffRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -31,15 +32,20 @@ class StaffController extends AbstractController
     public function new(Request $request): Response
     {
         $staff = new Staff();
-        $form = $this->createForm(StaffType::class, $staff);
+        $form = $this->createForm(StaffNewType::class, $staff);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($staff);
-            $entityManager->flush();
-
-            return $this->redirectToRoute('staff_index');
+        if ($form->isSubmitted()) {
+        	if ($form->isValid()){
+	            $entityManager = $this->getDoctrine()->getManager();
+	            $entityManager->persist($staff);
+	            $entityManager->flush();
+	
+	            $this->addFlash('success', 'Données enregistrées avec succès');
+	            return $this->redirectToRoute('staff_index');
+        	}else{
+        		$this->addFlash('warning', 'Certaines informations sont invalides ou manquantes');
+        	}
         }
 
         return $this->render('staff/new.html.twig', [
@@ -66,10 +72,15 @@ class StaffController extends AbstractController
         $form = $this->createForm(StaffType::class, $staff);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
-
-            return $this->redirectToRoute('staff_index');
+        if ($form->isSubmitted()) {
+        	if ($form->isValid()){
+	            $this->getDoctrine()->getManager()->flush();
+	
+	            $this->addFlash('success', 'Données enregistrées avec succès');
+	            return $this->redirectToRoute('staff_index');
+        	}else{
+        		$this->addFlash('warning', 'Certaines informations sont invalides ou manquantes');
+        	}
         }
 
         return $this->render('staff/edit.html.twig', [

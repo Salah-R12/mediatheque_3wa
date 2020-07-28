@@ -1,13 +1,13 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Staff{% endblock %}
+{% block title %}Modifier {{ staff.username }}{% endblock %}
 
 {% block body %}
-    <h1>Edit Staff</h1>
+    <h1>Modifier les données d'un membre de l'équipe</h1>
 
-    {{ include('staff/_form.html.twig', {'button_label': 'Update'}) }}
-
-    <a href="{{ path('staff_index') }}">back to list</a>
+    {{ include('staff/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
+	<br><br>
+    <a href="{{ path('staff_index') }}">Retour à la liste</a>
 
     {{ include('staff/_delete_form.html.twig') }}
 {% endblock %}

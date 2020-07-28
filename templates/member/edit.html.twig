@@ -1,13 +1,20 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Member{% endblock %}
+{% block title %}Fiche adhérent {{ member.username }}{% endblock %}
 
 {% block body %}
-    <h1>Edit Member</h1>
+    <h1>Modifier une fiche adhérent</h1>
 
-    {{ include('member/_form.html.twig', {'button_label': 'Update'}) }}
+    {{ include('member/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
 
-    <a href="{{ path('member_index') }}">back to list</a>
-
+	<br>
+	<a href="#" onclick="var msg = 'TODO: créer un fomulaire spécifique pour le changement de mot de passe, \ncar par défaut - sur le formulaire edit - ';
+		msg += 'symfony laisse le champ de type password vide alors que c est une valeur requise. \n';
+		msg += 'Ce qui forcerait à retaper le mot de passe à chaque qu on éditerait la fiche d un adhérent';
+		alert(msg);
+	">Modifier son mot de passe</a>
+	|
+    <a href="{{ path('member_index') }}">Retour à la liste</a>
+	<br><br>
     {{ include('member/_delete_form.html.twig') }}
 {% endblock %}

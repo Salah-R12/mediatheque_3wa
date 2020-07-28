@@ -80,10 +80,11 @@ class BorrowController extends AbstractController{
 		if ($form->isSubmitted()){
 			if ($form->isValid()){
 				try{
+					$redirectToList = true;
 					if (!$borrowService->checkExpiryDateValidity($borrow)){
 						$this->addFlash(
 							'warning',
-							sprintf("Les données ont été enregistrées, mais la date d'échéance du prêt n'est pas à %d jour(s) de la date d\'emprunt (durée normalement prédéfinie pour tous les types de médias : %s",
+							sprintf("Les données ont été enregistrées, mais la date d'échéance du prêt n'est pas %d jour(s) après la date d'emprunt (durée normalement prédéfinie pour tous les types de médias : %s",
 								$borrow->getBorrowDuration(),
 								$borrow->getStockableMediaCopy()
 									->getStockableMedia()
@@ -92,11 +93,13 @@ class BorrowController extends AbstractController{
 									->getName()
 							)
 						);
+						$redirectToList = false;
 					}
 					$this->getDoctrine()->getManager()->flush();
 		
 					$this->addFlash('success', 'Données modifiées avec succès');
-					return $this->redirectToRoute('borrow_index');
+					if ($redirectToList)
+						return $this->redirectToRoute('borrow_index');
 				}catch(\Exception $ex){
 					$this->addFlash('error', 'Une erreur est survenue lors du traitement des données');
 					throw $ex;
