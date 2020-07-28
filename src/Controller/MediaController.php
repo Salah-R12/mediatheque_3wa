@@ -11,13 +11,11 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/media")
+ * Should not be routable, it is handled by Book, Film & Music controllers
+ * Should only be used for template rendering
  */
 class MediaController extends AbstractController
 {
-    /**
-     * @Route("/", name="media_index", methods={"GET"})
-     */
     public function index(MediaRepository $mediaRepository): Response
     {
         return $this->render('media/index.html.twig', [
@@ -25,9 +23,6 @@ class MediaController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/new", name="media_new", methods={"GET","POST"})
-     */
     public function new(Request $request): Response
     {
         $medium = new Media();
@@ -48,9 +43,6 @@ class MediaController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/{id}", name="media_show", methods={"GET"})
-     */
     public function show(Media $medium): Response
     {
         return $this->render('media/show.html.twig', [
@@ -58,9 +50,6 @@ class MediaController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/{id}/edit", name="media_edit", methods={"GET","POST"})
-     */
     public function edit(Request $request, Media $medium): Response
     {
         $form = $this->createForm(MediaType::class, $medium);
@@ -78,9 +67,6 @@ class MediaController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/{id}", name="media_delete", methods={"DELETE"})
-     */
     public function delete(Request $request, Media $medium): Response
     {
         if ($this->isCsrfTokenValid('delete'.$medium->getId(), $request->request->get('_token'))) {

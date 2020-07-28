@@ -10,13 +10,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route("/media_type")
- */
 class MediaTypeController extends AbstractController
 {
     /**
-     * @Route("/", name="media_type_index", methods={"GET"})
+     * @Route("/list/media_type", name="media_type_index", methods={"GET"})
      */
     public function index(MediaTypeRepository $mediaTypeRepository): Response
     {
@@ -26,7 +23,7 @@ class MediaTypeController extends AbstractController
     }
 
     /**
-     * @Route("/new", name="media_type_new", methods={"GET","POST"})
+     * @Route("/admin/new/media_type", name="media_type_new", methods={"GET","POST"})
      */
     public function new(Request $request): Response
     {
@@ -49,7 +46,7 @@ class MediaTypeController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="media_type_show", methods={"GET"})
+     * @Route("/admin/show/media_type/{id}", name="media_type_show", methods={"GET"})
      */
     public function show(MediaType $mediaType): Response
     {
@@ -59,7 +56,7 @@ class MediaTypeController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="media_type_edit", methods={"GET","POST"})
+     * @Route("/admin/edit/media_type/{id}", name="media_type_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, MediaType $mediaType): Response
     {
@@ -79,7 +76,7 @@ class MediaTypeController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="media_type_delete", methods={"DELETE"})
+     * @Route("/admin/delete/media_type/{id}", name="media_type_delete", methods={"DELETE"})
      */
     public function delete(Request $request, MediaType $mediaType): Response
     {

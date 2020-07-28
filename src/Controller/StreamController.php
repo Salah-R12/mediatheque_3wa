@@ -10,13 +10,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route("/stream")
- */
 class StreamController extends AbstractController
 {
     /**
-     * @Route("/", name="stream_index", methods={"GET"})
+     * @Route("/admin/list/stream", name="stream_index", methods={"GET"})
      */
     public function index(StreamRepository $streamRepository): Response
     {
@@ -26,7 +23,7 @@ class StreamController extends AbstractController
     }
 
     /**
-     * @Route("/new", name="stream_new", methods={"GET","POST"})
+     * @Route("/admin/new/stream", name="stream_new", methods={"GET","POST"})
      */
     public function new(Request $request): Response
     {
@@ -49,7 +46,7 @@ class StreamController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="stream_show", methods={"GET"})
+     * @Route("/admin/show/stream/{id}", name="stream_show", methods={"GET"})
      */
     public function show(Stream $stream): Response
     {
@@ -59,7 +56,7 @@ class StreamController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="stream_edit", methods={"GET","POST"})
+     * @Route("/admin/edit/stream/{id}", name="stream_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Stream $stream): Response
     {
@@ -79,7 +76,7 @@ class StreamController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="stream_delete", methods={"DELETE"})
+     * @Route("/admin/delete/stream/{id}", name="stream_delete", methods={"DELETE"})
      */
     public function delete(Request $request, Stream $stream): Response
     {
