@@ -72,7 +72,8 @@ class BorrowRepository extends ServiceEntityRepository
             ->innerJoin('smc.stockable_media', 'sm')
             ->innerJoin('sm.media', 'm')
             ->innerJoin('m.media_type', 'mt')
-            ->where('b.expiry_date < CURRENT_DATE()')
+            ->where('b.expiry_date < CURRENT_DATE()') // Note de FD: TODO Attention, il manque une condition -> il faut tester que "return_date" est null ou pas, car s'il y a une date de
+            // restitution, c'est normal que expiry_date soit inférieur à current_date (pour les anciens emprunts)
             ->getQuery()
             ->getResult();
 
