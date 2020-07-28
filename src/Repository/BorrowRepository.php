@@ -63,4 +63,21 @@ class BorrowRepository extends ServiceEntityRepository
             ->getResult()
             ;
     }
+
+    public function lateBorrows(){
+        $query = $this->createQueryBuilder('b')
+            ->select('b,bm,smc,sm,m,mt')
+            ->innerJoin('b.member','bm')
+            ->innerJoin('b.stockable_media_copy', 'smc')
+            ->innerJoin('smc.stockable_media', 'sm')
+            ->innerJoin('sm.media', 'm')
+            ->innerJoin('m.media_type', 'mt')
+            ->where('b.expiry_date < CURRENT_DATE()')
+            ->getQuery()
+            ->getResult();
+
+        return $query;
+
+    }
+
 }
