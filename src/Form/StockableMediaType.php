@@ -13,7 +13,12 @@ class StockableMediaType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('stock', null, ['label' => "Nombre d'exemplaires"])
+            ->add('stock', null, [
+            	'label' => "Nombre d'exemplaires",
+            	'attr' => [
+            		'min' => 0
+            	]
+            ])
             ->add('reception_date', DateType::class, [
             	'label' => 'Date de réception',
             	'widget' => 'single_text',
