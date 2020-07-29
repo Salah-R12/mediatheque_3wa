@@ -26,7 +26,7 @@ class Role
     private $name;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Staff::class, mappedBy="roles")
+     * @ORM\ManyToMany(targetEntity=Staff::class, mappedBy="roleCollection")
      */
     private $staffs;
 

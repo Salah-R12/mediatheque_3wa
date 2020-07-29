@@ -89,7 +89,7 @@ class Staff
     /**
      * @ORM\ManyToMany(targetEntity=Role::class, inversedBy="staffs")
      */
-    private $roles;
+    private $roleCollection;
 
 
     public function __construct()
@@ -225,24 +225,24 @@ class Staff
     /**
      * @return Collection|Role[]
      */
-    public function getRoles(): Collection
+    public function getRoleCollection(): Collection
     {
-        return $this->roles;
+        return $this->roleCollection;
     }
 
-    public function addRole(Role $role): self
+    public function addRoleCollection(Role $role): self
     {
-        if (!$this->roles->contains($role)) {
-            $this->roles[] = $role;
+    	if (!$this->roleCollection->contains($role)) {
+    		$this->roleCollection[] = $role;
         }
 
         return $this;
     }
 
-    public function removeRole(Role $role): self
+    public function removeRoleCollection(Role $role): self
     {
-        if ($this->roles->contains($role)) {
-            $this->roles->removeElement($role);
+    	if ($this->roleCollection->contains($role)) {
+    		$this->roleCollection->removeElement($role);
         }
 
         return $this;
