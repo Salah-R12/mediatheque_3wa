@@ -6,12 +6,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
-use Symfony\Component\HttpFoundation\Session\Session;
 
-class SecurityMemberController extends AbstractController
+class SecurityStaffController extends AbstractController
 {
     /**
-     * @Route("/login/member", name="member_login")
+     * @Route("/login/staff", name="staff_login")
      */
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
@@ -24,14 +23,14 @@ class SecurityMemberController extends AbstractController
         // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
 
-        return $this->render('security/login.member.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
+        return $this->render('security/login.staff.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
     }
 
     /**
-     * @Route("/logout/member", name="member_logout")
+     * @Route("/logout/staff", name="staff_logout")
      */
     public function logout()
     {
-    	return $this->redirectToRoute('dashboard');
+        throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
     }
 }
