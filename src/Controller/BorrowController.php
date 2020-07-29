@@ -14,7 +14,7 @@ class BorrowController extends AbstractController{
 
 	/**
 	 *
-	 * @Route("/list/borrow", name="borrow_index", methods={"GET"})
+	 * @Route("/admin/list/borrow", name="borrow_index", methods={"GET"})
 	 */
 	public function index(BorrowRepository $borrowRepository): Response{
 		return $this->render('borrow/index.html.twig', [

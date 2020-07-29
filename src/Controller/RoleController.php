@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class RoleController extends AbstractController
 {
     /**
-     * @Route("/list/role", name="role_index", methods={"GET"})
+     * @Route("/admin/list/role", name="role_index", methods={"GET"})
      */
     public function index(RoleRepository $roleRepository): Response
     {
