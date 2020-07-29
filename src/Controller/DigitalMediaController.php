@@ -10,13 +10,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route("/digital/media")
- */
 class DigitalMediaController extends AbstractController
 {
     /**
-     * @Route("/", name="digital_media_index", methods={"GET"})
+     * @Route("/list/digital_media", name="digital_media_index", methods={"GET"})
      */
     public function index(DigitalMediaRepository $digitalMediaRepository): Response
     {
@@ -26,7 +23,7 @@ class DigitalMediaController extends AbstractController
     }
 
     /**
-     * @Route("/new", name="digital_media_new", methods={"GET","POST"})
+     * @Route("/admin/new/digital_media", name="digital_media_new", methods={"GET","POST"})
      */
     public function new(Request $request): Response
     {
@@ -49,7 +46,7 @@ class DigitalMediaController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="digital_media_show", methods={"GET"})
+     * @Route("/admin/show/digital_media/{id}", name="digital_media_show", methods={"GET"})
      */
     public function show(DigitalMedia $digitalMedia): Response
     {
@@ -59,7 +56,7 @@ class DigitalMediaController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="digital_media_edit", methods={"GET","POST"})
+     * @Route("/admin/edit/digital_media/{id}", name="digital_media_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, DigitalMedia $digitalMedia): Response
     {
@@ -79,7 +76,7 @@ class DigitalMediaController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="digital_media_delete", methods={"DELETE"})
+     * @Route("/admin/delete/digital_media/{id}", name="digital_media_delete", methods={"DELETE"})
      */
     public function delete(Request $request, DigitalMedia $digitalMedia): Response
     {

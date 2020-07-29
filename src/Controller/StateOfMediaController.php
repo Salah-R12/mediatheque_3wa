@@ -10,13 +10,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route("/state/of/media")
- */
 class StateOfMediaController extends AbstractController
 {
     /**
-     * @Route("/", name="state_of_media_index", methods={"GET"})
+     * @Route("/admin/list/state_of_media", name="state_of_media_index", methods={"GET"})
      */
     public function index(StateOfMediaRepository $stateOfMediaRepository): Response
     {
@@ -26,7 +23,7 @@ class StateOfMediaController extends AbstractController
     }
 
     /**
-     * @Route("/new", name="state_of_media_new", methods={"GET","POST"})
+     * @Route("/admin/new/state_of_media", name="state_of_media_new", methods={"GET","POST"})
      */
     public function new(Request $request): Response
     {
@@ -49,7 +46,7 @@ class StateOfMediaController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="state_of_media_show", methods={"GET"})
+     * @Route("/admin/show/state_of_media/{id}", name="state_of_media_show", methods={"GET"})
      */
     public function show(StateOfMedia $stateOfMedia): Response
     {
@@ -59,7 +56,7 @@ class StateOfMediaController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="state_of_media_edit", methods={"GET","POST"})
+     * @Route("/admin/edit/state_of_media/{id}", name="state_of_media_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, StateOfMedia $stateOfMedia): Response
     {
@@ -79,7 +76,7 @@ class StateOfMediaController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="state_of_media_delete", methods={"DELETE"})
+     * @Route("/admin/delete/state_of_media/{id}", name="state_of_media_delete", methods={"DELETE"})
      */
     public function delete(Request $request, StateOfMedia $stateOfMedia): Response
     {

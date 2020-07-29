@@ -32,4 +32,9 @@ class StatsController extends AbstractController
             "last_borrows"=>$borrowRepository->findLast(10)
         ]);
     }
+    public function lateBorrowsMedia (BorrowRepository $borrowRepository){
+        return $this->render('stats/late_borrows_media.html.twig', [
+            "late_borrows"=>$borrowRepository->lateBorrows()
+        ]);
+    }
 }

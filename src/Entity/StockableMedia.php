@@ -6,6 +6,7 @@ use App\Repository\StockableMediaRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=StockableMediaRepository::class)
@@ -13,7 +14,6 @@ use Doctrine\ORM\Mapping as ORM;
 class StockableMedia{
 
 	/**
-	 *
 	 * @ORM\Id()
 	 * @ORM\GeneratedValue()
 	 * @ORM\Column(type="integer")
@@ -21,26 +21,25 @@ class StockableMedia{
 	private $id;
 
 	/**
-	 *
 	 * @ORM\Column(type="integer", nullable=true)
+	 * @Assert\PositiveOrZero(
+	 * 		message="Le nombre d'exemplaires doit être un entier positif"
+	 * )
 	 */
 	private $stock;
 
 	/**
-	 *
 	 * @ORM\Column(type="datetime", nullable=true)
 	 */
 	private $reception_date;
 
 	/**
-	 *
 	 * @ORM\OneToOne(targetEntity=Media::class, inversedBy="stockableMedia")
 	 * @ORM\JoinColumn(nullable=false)
 	 */
 	private $media;
 
 	/**
-	 *
 	 * @ORM\OneToMany(targetEntity=StockableMediaCopy::class, mappedBy="stockable_media", orphanRemoval=true)
 	 */
 	private $stockableMediaCopies;
@@ -58,6 +57,10 @@ class StockableMedia{
 	}
 
 	public function setStock(?int $stock): self{
+		// Stock cannot be negative
+		if ($stock < 0)
+			$stock = 0;
+		
 		$this->stock = $stock;
 
 		return $this;
