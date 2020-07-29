@@ -7,7 +7,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/login")
+ * @Route("/login2")
  */
 class LoginController extends AbstractController
 {
