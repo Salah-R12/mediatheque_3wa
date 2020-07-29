@@ -44,39 +44,28 @@
         {% endfor %}
         </ul>
         
-        
-        <!-- TODO Faire une condition d'affichage des éléments de menu pour les utilisateurs connectés -->
+		{# Ici, on vérifie que l'utilisateur est juste authentifié ou non, quelque soit son role, ce n'est pas important à cet endroit de savoir le type de l'utilisateur, ni son role #}
+		{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+			<!-- Etant donné que les listes et la consultation des ouvrages n'est accessibles qu'aux personnes connectées (l'accès n'est pas public),
+			le formulaire de recherche sur titre du média ne peut pas non plus être accessible publiquement -->
+		
+            <!-- TODO : indiquer le "route name" correct dans la fonction "path()" une fois le controller de recherche créé -->
+            <form method="GET" class="form-inline my-2 my-lg-0" action="{# path('search') #}" style="margin-right: 2em;">
+                <input class="form-control mr-sm-2" type="search" placeholder="Rechercher..." aria-label="Search" name="query">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">OK</button>
+            </form>
 
-        <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-        </form>
-
-        {#Member Login button#}
-        {#When we click on button the URL ends with "dashboard/login/member" but it had to be "login/staff"#}
-        <form class="form-inline my-2 my-lg-0 mx-3">
-            <a href="{{ home_page.route_name }}/login/member" class="btn btn-outline-primary my-2 my-sm-0" type="submit">Member Login
-                {% if home_page.route_name=='login/member' %}
-                    {{ render(controller('App\\Controller\\LoginController::member' )) }}
-                {% endif %}
-            </a>
-        </form>
-
-        {#Staff Login button#}
-        {#When we click on button the URL ends with "dashboard/login/staff" but it had to be "login/staff"#}
-        <form class="form-inline my-2 my-lg-0">
-            <a href="{{ home_page.route_name }}/login/staff" class="btn btn-outline-secondary my-2 my-sm-0 " type="submit">Staff Login
-                {% if home_page.route_name=='login/staff' %}
-                    {{ render(controller('App\\Controller\\LoginController::staff' )) }}
-                {% endif %}
-            </a>
-        </form>
-
-        {#Déconnexion button#}
-        {#TODO: last class of the this 'a' tag in the form has to be visible at home page but invisible at member login or staff login. It's not working maybe because of the variable 'home_page.route_name' whose final is "dashboard/login/" but not only "/login"#}
-        <form class="form-inline my-2 my-lg-0">
-            <a href="#" class="btn btn-outline-danger my-2 my-sm-0 ml-3 {{ home_page.route_name=='dashboard/login/member' or 'dashboard/login/staff' ? 'visible' : 'invisible' }}" type="submit">Déconnexion</a>
-        </form>
-
+            {#Déconnexion button#}
+            <!-- TODO: remplacer "absolute_url('/') par path('logout_route_name') une fois qu'on connaîtra exactement la route pour se délogguer -->
+            <a href="{{ absolute_url('/') }}logout" class="btn btn-outline-danger my-2 my-sm-0 ml-3">Déconnexion</a>
+		{% else %}
+            {#Member Login button#}
+            {#When we click on button the URL ends with "dashboard/login/member" but it had to be "login/staff"#}
+            <a href="{{ path('login_member') }}" class="btn btn-outline-primary my-2 my-sm-0" type="submit" style="margin-right: .8em;">Espace adhérent</a>
+     
+            {#Staff Login button#}
+            {#When we click on button the URL ends with "dashboard/login/staff" but it had to be "login/staff"#}
+            <a href="{{ path('login_staff') }}" class="btn btn-outline-secondary my-2 my-sm-0 " type="submit">Espace admin</a>
+		{% endif %}
     </div>
 </nav>
