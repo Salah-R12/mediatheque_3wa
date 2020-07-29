@@ -4,6 +4,7 @@ use App\Service\Entity as EntityService;
 use App\Entity\StockableMedia;
 use App\Entity\StateOfMedia;
 use App\Entity\StockableMediaCopy as StockableMediaCopyEntity;
+use App\Entity\Media;
 
 class StockableMediaCopy extends EntityService{
 
@@ -48,18 +49,13 @@ class StockableMediaCopy extends EntityService{
 			}
 		} elseif ($propStock < $realStock){ // Cas où l'on supprime un ou plusieurs exemplaires si "stock" diminue
 			foreach ($stockableMedia->getStockableMediaCopies() as $stockableMediaCopy){
-				$hasBorrows = $stockableMediaCopy->getBorrows()->count();
-				if ($hasBorrows){
-					// at first iteration where a copy has borrow, then interrupt removal (break loop)
-					break;
-				}
 				if ($stockableMediaCopy->getCopyNumber() > $propStock){
 					$stockableMedia->removeStockableMediaCopy($stockableMediaCopy);
 				}
 			}
 			// set real count of copies to "stock" property
-			$stockableMedia->setStock($stockableMedia->getStockableMediaCopies()
-				->count());
+			$finalCount = $stockableMedia->getStockableMediaCopies()->count();
+			$stockableMedia->setStock($finalCount);
 		}
 	}
 
@@ -77,5 +73,37 @@ class StockableMediaCopy extends EntityService{
 			}
 		}
 		return $copyNumber;
+	}
+
+	/**
+	 * Perform functions :
+	 * self::generateCopyFromMedia
+	 * self::copiesHaveBorrows
+	 * self::isRemoval
+	 *
+	 * @param Media $media
+	 *        	(types: Book|Film|Music)
+	 * @return int If 0, process succeeded with no problem.
+	 *         If >0, it's in that case only because - on removal copies - some of them have borrowing data and then, cannot be removed
+	 *         Then it returns the copy number that at last failed to be removed
+	 */
+	public function handleMediaEdition(Media $media): int{
+		$stockableMedia = $media->getStockableMedia();
+
+		// First, check in case of a removal, if at least one copy has borrow
+		if ($this->isRemoval($stockableMedia)){
+			$stock = $stockableMedia->getStock();
+			if ($borrowAtCopyNumber = $this->copiesHaveBorrows($stockableMedia)){
+				if ($borrowAtCopyNumber > $stock){
+					// Case when $borrowAtCopyNumber is positive AND > initial "stock" value, means program will not remove copies from this position
+					// Set "stock" value to max copy number that have been borrowed
+					$stockableMedia->setStock($borrowAtCopyNumber);
+					return $borrowAtCopyNumber;
+				}
+			}
+		}
+		// Then execute "generateCopyFromMedia" (that also remove copies if needed) based on new value set to "stock"
+		$this->generateCopyFromMedia($stockableMedia);
+		return 0;
 	}
 }

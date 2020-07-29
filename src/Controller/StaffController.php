@@ -11,13 +11,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route("/staff")
- */
 class StaffController extends AbstractController
 {
     /**
-     * @Route("/", name="staff_index", methods={"GET"})
+     * @Route("/admin/list/staff", name="staff_index", methods={"GET"})
      */
     public function index(StaffRepository $staffRepository): Response
     {
@@ -27,7 +24,7 @@ class StaffController extends AbstractController
     }
 
     /**
-     * @Route("/new", name="staff_new", methods={"GET","POST"})
+     * @Route("/admin/new/staff", name="staff_new", methods={"GET","POST"})
      */
     public function new(Request $request): Response
     {
@@ -55,7 +52,7 @@ class StaffController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="staff_show", methods={"GET"})
+     * @Route("/admin/show/{id}", name="staff_show", methods={"GET"})
      */
     public function show(Staff $staff): Response
     {
@@ -65,7 +62,7 @@ class StaffController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="staff_edit", methods={"GET","POST"})
+     * @Route("/admin/edit/staff/{id}", name="staff_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Staff $staff): Response
     {
@@ -90,7 +87,7 @@ class StaffController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="staff_delete", methods={"DELETE"})
+     * @Route("/admin/delete/staff/{id}", name="staff_delete", methods={"DELETE"})
      */
     public function delete(Request $request, Staff $staff): Response
     {

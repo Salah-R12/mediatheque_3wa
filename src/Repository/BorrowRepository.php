@@ -63,4 +63,22 @@ class BorrowRepository extends ServiceEntityRepository
             ->getResult()
             ;
     }
+
+    public function lateBorrows(){
+        $query = $this->createQueryBuilder('b')
+            ->select('b,bm,smc,sm,m,mt')
+            ->innerJoin('b.member','bm')
+            ->innerJoin('b.stockable_media_copy', 'smc')
+            ->innerJoin('smc.stockable_media', 'sm')
+            ->innerJoin('sm.media', 'm')
+            ->innerJoin('m.media_type', 'mt')
+            ->where('b.expiry_date < CURRENT_DATE()') // Note de FD: TODO Attention, il manque une condition -> il faut tester que "return_date" est null ou pas, car s'il y a une date de
+            // restitution, c'est normal que expiry_date soit inférieur à current_date (pour les anciens emprunts)
+            ->getQuery()
+            ->getResult();
+
+        return $query;
+
+    }
+
 }
