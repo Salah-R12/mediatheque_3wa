@@ -19,7 +19,7 @@ security:
                     - App\Security\MemberAuthenticator
             logout:
                 path: member_logout
-                # where to redirect after logout
+                # Après logout, on redirige vers la page de dashboard
                 target: dashboard
 
             # activate different ways to authenticate
