@@ -21,8 +21,8 @@
                 <td>{{ item.stockableMediaCopy.stockableMedia.media.name }}</td>
                 <td>{{ item.stockableMediaCopy.stockableMedia.media.mediaType.name }}</td>
                 <td>
-                    <a href="{{ path('borrow' ~ '_show', {'id': item.id}) }}">voir</a>
-                    <a href="{{ path('borrow' ~ '_edit', {'id': item.id}) }}">modifier</a>
+                    <a href="{{ path('borrow_show', {'id': item.id}) }}">voir</a>
+                    <a href="{{ path('borrow_edit', {'id': item.id}) }}">modifier</a>
                 </td>
             </tr>
         {% endfor %}
