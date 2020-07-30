@@ -101,7 +101,7 @@ class Staff implements UserInterface{
 	private $roleCollection;
 
 	public function __construct(){
-		$this->roles = new ArrayCollection();
+		$this->roleCollection = new ArrayCollection();
 	}
 
 	public function getId(): ?int{
