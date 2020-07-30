@@ -46,7 +46,7 @@
         
         
         <!-- TODO Faire une condition d'affichage des éléments de menu pour les utilisateurs connectés -->
-        {{ form_start(form, {'attr': {'class': 'form-group'}}) }}
+        {{ form_start(form, {'action': path('search'), 'attr': {'class': 'form-group'}}) }}
             {{ form(form) }}
         {{ form_end(form) }}
         <div class="btn-group ml-3">

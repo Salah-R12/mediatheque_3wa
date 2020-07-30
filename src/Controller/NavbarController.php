@@ -21,9 +21,7 @@ class NavbarController extends AbstractController
     {
 		// TODO defined roles: for instance, all is public
 		
-		$form = $this->createForm(ResearchType::class, [
-            'action' => $this->generateUrl('search')
-		]);
+		$form = $this->createForm(ResearchType::class);
 		
     	$userRoleID = null;
     	$navbar_links = $nav->getNavBarLinks($userRoleID);
@@ -35,11 +33,6 @@ class NavbarController extends AbstractController
     			break;
     		}
 		}
-		// $form->handleRequest($request);
-        // if($form->isSubmitted() && $form->isValid())
-        // {
-        //     var_dump($request); die;
-        // }
 	    return $this->render('navbar/index.html.twig', [
             'controller_name' => 'NavbarController',
         	'navbar_links' => $navbar_links,
