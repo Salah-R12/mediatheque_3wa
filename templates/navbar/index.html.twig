@@ -55,18 +55,11 @@
                 <button class="btn btn-outline-success my-2 my-sm-0" type="submit">OK</button>
             </form>
 
-            {#Déconnexion button#}
-            <!-- TODO: remplacer "absolute_url('/') par path('logout_route_name') une fois qu'on connaîtra exactement la route pour se délogguer -->
-            {% set lgout_url = is_granted('ROLE_ADMIN') or is_granted('superadmin') or is_granted('webmaster') or is_granted('bibliothécaire') ? path('staff_logout') : path('member_logout') %}
-            <a href="{{ lgout_url }}" class="btn btn-outline-danger my-2 my-sm-0 ml-3">Déconnexion</a>
+            {# Bouton de déconnexion #}
+            <a href="{{ path('logout') }}" class="btn btn-outline-danger my-2 my-sm-0 ml-3">Déconnexion</a>
 		{% else %}
-            {#Member Login button#}
-            {#When we click on button the URL ends with "dashboard/login/member" but it had to be "login/staff"#}
-            <a href="{{ path('member_login') }}" class="btn btn-outline-primary my-2 my-sm-0" type="submit" style="margin-right: .8em;">Espace adhérent</a>
-     
-            {#Staff Login button#}
-            {#When we click on button the URL ends with "dashboard/login/staff" but it had to be "login/staff"#}
-            <a href="{{ path('staff_login') }}" class="btn btn-outline-secondary my-2 my-sm-0 " type="submit">Espace admin</a>
+            {# Lien vers page de connexion #}
+            <a href="{{ path('login_index') }}" class="btn btn-outline-primary my-2 my-sm-0" type="submit">Connexion</a>
 		{% endif %}
     </div>
 </nav>

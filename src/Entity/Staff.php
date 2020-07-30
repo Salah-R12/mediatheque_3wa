@@ -267,10 +267,7 @@ class Staff implements UserInterface{
 			'ROLE_USER'
 		];
 		foreach ($this->getRoleCollection() as $Role){
-			/*if ($Role->getId() === 1)
-				$roles[] = 'ROLE_ADMIN';
-			else*/
-				$roles[] = $Role->getName();
+			$roles[] = $Role->getName();
 		}
 		return array_unique($roles);
 	}
