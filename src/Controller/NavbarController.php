@@ -13,14 +13,18 @@ class NavbarController extends AbstractController
 	/**
 	 * 
 	 * @param Navigation $nav
-	 * @param string $current_route_name It is passed from template, to give the parent controller route name (since here, current route name would be in this controller, actually not defined)
+	 * @param string $current_route_name It is passed from "base.html.twig" template, to give the parent controller route name (since here, current route name would be in this controller, actually not defined)
 	 * @return \Symfony\Component\HttpFoundation\Response
 	 */
     public function index(Navigation $nav, string $current_route_name=null)
     {
-    	// TODO defined roles: for instance, all is public
-    	$userRoleID = null;
-    	$navbar_links = $nav->getNavBarLinks($userRoleID);
+    	// Get user roles
+    	$userRoles = $this->getUser() ? $this->getUser()->getRoles() : null;
+    	
+    	// Get menu links depending on user's roles
+    	$navbar_links = $nav->getNavBarLinks($userRoles);
+    	
+    	// pop the information about the defined home page from the array ($navbar_links)
     	$homepage_link = [];
     	foreach ($navbar_links as $ix => $item){
     		if (!empty($item['is_homepage'])){
