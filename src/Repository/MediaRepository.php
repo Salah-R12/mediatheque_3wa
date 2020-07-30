@@ -61,4 +61,15 @@ class MediaRepository extends ServiceEntityRepository
             ->getResult()
             ;
     }
+
+    public function findByName(string $query)
+    {
+        return $this->createQueryBuilder('m')
+            ->innerJoin('m.media_type', 'mt')
+            ->where("m.name LIKE '%" . $query . "%'")
+            ->select('m, mt')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
 }
