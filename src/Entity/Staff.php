@@ -271,17 +271,4 @@ class Staff implements UserInterface{
 		}
 		return array_unique($roles);
 	}
-
-	/**
-	 * En principe, on ne devrait pas non plus "setter" les roles par ce biais, on doit d'abord add ou remove un role de la collection.
-	 * Puis lorsqu'on appelle la fonction getRoles(), celui-ci renverra une liste basée sur la collection roleCollection
-	 *
-	 * @deprecated
-	 * @param array $roles
-	 * @return \App\Entity\Staff
-	 */
-	private function setRoles(array $roles){
-		$this->roles = $roles;
-		return $this;
-	}
 }
