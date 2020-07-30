@@ -3,9 +3,12 @@
 {% block title %}Hello SearchController!{% endblock %}
 
 {% block body %}
-
 {% if results is defined and results|length>0 %}
-
+    {% if results|length<2 %}
+        <h2 style="margin-bottom: 50px">Résultat pour "{{ query }}"</h2>
+    {% else %}
+        <h2 style="margin-bottom: 50px">Résultats pour "{{ query }}"</h2>
+    {% endif %}
     <table class="table">
         <thead>
         <tr>
@@ -36,7 +39,7 @@
     </table>
 {% else %}
     <div>
-        Aucune donnée
+        Aucuns résultats pour "{{ query }}"
     </div>
 {% endif %}
 

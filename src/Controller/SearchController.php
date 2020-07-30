@@ -15,11 +15,12 @@ class SearchController extends AbstractController
      */
     public function index(Request $request, MediaRepository $mediaRepository)
     {
-        $query = $request->get('research')['research'];
+        $query = $request->get('search');
 
         return $this->render('search/index.html.twig', [
             'controller_name' => 'SearchController',
-            'results' => $mediaRepository->findByname($query)
+            'results' => $mediaRepository->findByname($query),
+            'query' => $query
         ]);
     }
 }

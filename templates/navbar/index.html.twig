@@ -46,9 +46,13 @@
         
         
         <!-- TODO Faire une condition d'affichage des éléments de menu pour les utilisateurs connectés -->
-        {{ form_start(form, {'action': path('search'), 'attr': {'class': 'form-group'}}) }}
+        {# {{ form_start(form, {'action': path('search'), 'attr': {'class': 'form-inline my-2 my-lg-0'}}) }}
             {{ form(form) }}
-        {{ form_end(form) }}
+        {{ form_end(form) }} #}
+        <form class="form-inline my-2 my-lg-0" action="/search">
+            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
         <div class="btn-group ml-3">
             <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" data-display="static" aria-haspopup="true" aria-expanded="false">
                 Member Login</button>

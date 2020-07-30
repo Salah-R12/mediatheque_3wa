@@ -21,7 +21,6 @@ class NavbarController extends AbstractController
     {
 		// TODO defined roles: for instance, all is public
 		
-		$form = $this->createForm(ResearchType::class);
 		
     	$userRoleID = null;
     	$navbar_links = $nav->getNavBarLinks($userRoleID);
@@ -37,9 +36,7 @@ class NavbarController extends AbstractController
             'controller_name' => 'NavbarController',
         	'navbar_links' => $navbar_links,
         	'home_page' => $homepage_link,
-			'current_route_name'  => $current_route_name,
-	
-			'form' => $form->CreateView()
+			'current_route_name'  => $current_route_name
         ]);
     }
 }
