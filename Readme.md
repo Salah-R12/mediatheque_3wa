@@ -91,3 +91,12 @@ rm -f src/Migrations/Version*.php
 # Migration (création des tables en BDD)
 ./bin/console doctrine:migrations:migrate
 ```
+
+
+
+# Créer la sécurité et la pate de login, pour les 2 types d'utilisateurs (Member & Staff)
+
+Pré-construire un user provider avec la console symfony (?utile? -> on peut le faire à la main)
+```bash
+./bin/console make:user
+```

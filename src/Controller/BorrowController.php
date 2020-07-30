@@ -10,15 +10,11 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Service\Entity\Borrow as BorrowService;
 
-/**
- *
- * @Route("/borrow")
- */
 class BorrowController extends AbstractController{
 
 	/**
 	 *
-	 * @Route("/", name="borrow_index", methods={"GET"})
+	 * @Route("/admin/list/borrow", name="borrow_index", methods={"GET"})
 	 */
 	public function index(BorrowRepository $borrowRepository): Response{
 		return $this->render('borrow/index.html.twig', [
@@ -28,7 +24,7 @@ class BorrowController extends AbstractController{
 
 	/**
 	 *
-	 * @Route("/new", name="borrow_new", methods={"GET","POST"})
+	 * @Route("/admin/new/borrow", name="borrow_new", methods={"GET","POST"})
 	 */
 	public function new(Request $request): Response{
 		$borrow = new Borrow();
@@ -61,7 +57,7 @@ class BorrowController extends AbstractController{
 
 	/**
 	 *
-	 * @Route("/{id}", name="borrow_show", methods={"GET"})
+	 * @Route("/admin/show/borrow/{id}", name="borrow_show", methods={"GET"})
 	 */
 	public function show(Borrow $borrow): Response{
 		return $this->render('borrow/show.html.twig', [
@@ -71,7 +67,7 @@ class BorrowController extends AbstractController{
 
 	/**
 	 *
-	 * @Route("/{id}/edit", name="borrow_edit", methods={"GET","POST"})
+	 * @Route("/admin/edit/borrow/{id}/edit", name="borrow_edit", methods={"GET","POST"})
 	 */
 	public function edit(Request $request, Borrow $borrow, BorrowService $borrowService): Response{
 		$form = $this->createForm(BorrowType::class, $borrow);
@@ -118,7 +114,7 @@ class BorrowController extends AbstractController{
 
 	/**
 	 *
-	 * @Route("/{id}", name="borrow_delete", methods={"DELETE"})
+	 * @Route("/admin/delete/borrow/{id}", name="borrow_delete", methods={"DELETE"})
 	 */
 	public function delete(Request $request, Borrow $borrow): Response{
 		if ($this->isCsrfTokenValid('delete' . $borrow->getId(), $request->request->get('_token'))){

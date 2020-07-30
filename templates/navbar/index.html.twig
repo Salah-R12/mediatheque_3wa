@@ -25,7 +25,7 @@
                 </a>
                 {# display child links if exist #}
                 {% if hasChildren %}
-                <ul class="navbar-nav mr-auto" style="display: none; position: absolute; background: lightgrey;">
+                <ul class="navbar-nav mr-auto" style="display: none; position: absolute; background: #ff0000;">
                 {% for child in item.children %}
                     {% set activeClass = child.route_name == current_route_name ? 'active' : '' %}
                 	<li class="nav-item {{ activeClass }}">
@@ -44,70 +44,29 @@
         {% endfor %}
         </ul>
         
-        
-        <!-- TODO Faire une condition d'affichage des éléments de menu pour les utilisateurs connectés -->
-        {# {{ form_start(form, {'action': path('search'), 'attr': {'class': 'form-inline my-2 my-lg-0'}}) }}
-            {{ form(form) }}
-        {{ form_end(form) }} #}
-        <form class="form-inline my-2 my-lg-0" action="/search">
-            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="search">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-        </form>
-        <div class="btn-group ml-3">
-            <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" data-display="static" aria-haspopup="true" aria-expanded="false">
-                Member Login</button>
-            <div class="dropdown-menu dropdown-menu-lg-right">
-                <form class="px-4 py-3">
-                    <div class="form-group">
-                        <label for="exampleDropdownFormEmail1">Email address</label>
-                        <input type="email" class="form-control" id="exampleDropdownFormEmail1" placeholder="email@example.com">
-                    </div>
-                    <div class="form-group">
-                        <label for="exampleDropdownFormPassword1">Password</label>
-                        <input type="password" class="form-control" id="exampleDropdownFormPassword1" placeholder="Password">
-                    </div>
-                    <div class="form-group">
-                        <div class="form-check">
-                            <input type="checkbox" class="form-check-input" id="dropdownCheck">
-                            <label class="form-check-label" for="dropdownCheck">
-                                Remember me
-                            </label>
-                        </div>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Sign in</button>
-                </form>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#">New around here? Sign up</a>
-                <a class="dropdown-item" href="#">Forgot password?</a>
-            </div>
-        </div>
-        <div class="btn-group ml-3">
-            <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" data-display="static" aria-haspopup="true" aria-expanded="false">
-                Staff Login</button>
-            <div class="dropdown-menu dropdown-menu-lg-right">
-                <form class="px-4 py-3">
-                    <div class="form-group">
-                        <label for="exampleDropdownFormEmail1">Email address</label>
-                        <input type="email" class="form-control" id="exampleDropdownFormEmail1" placeholder="email@example.com">
-                    </div>
-                    <div class="form-group">
-                        <label for="exampleDropdownFormPassword1">Password</label>
-                        <input type="password" class="form-control" id="exampleDropdownFormPassword1" placeholder="Password">
-                    </div>
-                    <div class="form-group">
-                        <div class="form-check">
-                            <input type="checkbox" class="form-check-input" id="dropdownCheck3">
-                            <label class="form-check-label" for="dropdownCheck3">
-                                Remember me
-                            </label>
-                        </div>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Sign in</button>
-                </form>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#">New around here? Sign up</a>
-                <a class="dropdown-item" href="#">Forgot password?</a>
-            </div>
-        </div>
+		{# Ici, on vérifie que l'utilisateur est juste authentifié ou non, quelque soit son role, ce n'est pas important à cet endroit de savoir le type de l'utilisateur, ni son role #}
+		{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+			<!-- Etant donné que les listes et la consultation des ouvrages n'est accessibles qu'aux personnes connectées (l'accès n'est pas public),
+			le formulaire de recherche sur titre du média ne peut pas non plus être accessible publiquement -->
+		
+            <!-- TODO : indiquer le "route name" correct dans la fonction "path()" une fois le controller de recherche créé -->
+            <form method="GET" class="form-inline my-2 my-lg-0" action="/search" style="margin-right: 2em;">
+                <input class="form-control mr-sm-2" type="search" placeholder="Rechercher..." aria-label="Search" name="query">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">OK</button>
+            </form>
+
+            {#Déconnexion button#}
+            <!-- TODO: remplacer "absolute_url('/') par path('logout_route_name') une fois qu'on connaîtra exactement la route pour se délogguer -->
+            {% set lgout_url = is_granted('ROLE_ADMIN') or is_granted('superadmin') or is_granted('webmaster') or is_granted('bibliothécaire') ? path('staff_logout') : path('member_logout') %}
+            <a href="{{ lgout_url }}" class="btn btn-outline-danger my-2 my-sm-0 ml-3">Déconnexion</a>
+		{% else %}
+            {#Member Login button#}
+            {#When we click on button the URL ends with "dashboard/login/member" but it had to be "login/staff"#}
+            <a href="{{ path('member_login') }}" class="btn btn-outline-primary my-2 my-sm-0" type="submit" style="margin-right: .8em;">Espace adhérent</a>
+     
+            {#Staff Login button#}
+            {#When we click on button the URL ends with "dashboard/login/staff" but it had to be "login/staff"#}
+            <a href="{{ path('staff_login') }}" class="btn btn-outline-secondary my-2 my-sm-0 " type="submit">Espace admin</a>
+		{% endif %}
     </div>
 </nav>

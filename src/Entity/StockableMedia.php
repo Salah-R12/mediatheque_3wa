@@ -57,6 +57,7 @@ class StockableMedia{
 	}
 
 	public function setStock(?int $stock): self{
+		// Stock cannot be negative
 		if ($stock < 0)
 			$stock = 0;
 		
