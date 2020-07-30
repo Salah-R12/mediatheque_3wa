@@ -28,9 +28,11 @@ security:
                     - App\Security\StaffAuthenticator
                 entry_point: App\Security\MemberAuthenticator
             logout:
-                path: member_logout
-                # Après logout, on redirige vers la page de dashboard
-                target: dashboard
+                # En déclarant la propriété "path", on indique le "route name" de la fonction et du controller qui va être intercepté par Symfony
+                # De ce fait, en vérité, dans la fonction "LoginController::logout", il n'y a pas besoin de rajouter du code. Symfony se charge de nettoyer la session utilisateur pour telle url
+                path: logout
+                # Après logout, on redirige vers la page principale de login (géré par Symfony, avant même l'exécution du controller)
+                target: login_index
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#firewalls-authentication
@@ -38,24 +40,16 @@ security:
             # https://symfony.com/doc/current/security/impersonating_user.html
             # switch_user: true
 
-        admin:
-            pattern: ^/admin
-            anonymous: false
-            security: true
-            provider: app_staff_provider
-            guard:
-                authenticators:
-                    - App\Security\StaffAuthenticator
-            logout:
-                path: staff_logout
-                target: dashboard
+            # Ajout d'un "access denied" customisé
+            access_denied_handler: App\Security\CustomAccessDeniedHandler
 
 
-    # Il est important de définir la hiérarchie des rôles afin d'y intégrer les rôles spécifiques définis en base de données
-    ## pour ce qui serait par exemple de donner des droits spécifiques aux users sur l'action de boutons dans une même page (par exemple, on ne fait apparaître le bouton "Supprimer" que pour les superadmin)
+    # Il est important de définir la hiérarchie des rôles afin d'y intégrer les rôles spécifiques définis en base de données.
+    ## Pour ce qui serait par exemple de donner des droits spécifiques aux users sur l'action de boutons dans une même page (par exemple, on ne fait apparaître le bouton "Supprimer" que pour les superadmin)
     ## ça se gèrera dans les templates twig
     role_hierarchy:
         ROLE_ADMIN: ROLE_USER
+        # Pour le moment, tous les roles staffs sont équivalents
         superadmin: ROLE_ADMIN
         webmaster: ROLE_ADMIN
         bilbiothécaire: ROLE_ADMIN
@@ -65,3 +59,4 @@ security:
     access_control:
         - { path: ^/admin, roles: [ROLE_ADMIN, superadmin, webmaster, bibliothécaire] }
         - { path: ^/list, roles: ROLE_USER }
+        - { path: ^/show, roles: ROLE_USER }
