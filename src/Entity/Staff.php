@@ -263,9 +263,7 @@ class Staff implements UserInterface{
 	 * @see \Symfony\Component\Security\Core\User\UserInterface::getRoles()
 	 */
 	public function getRoles(): array{
-		$roles = [
-			'ROLE_USER'
-		];
+		$roles = [];
 		foreach ($this->getRoleCollection() as $Role){
 			$roles[] = $Role->getName();
 		}
