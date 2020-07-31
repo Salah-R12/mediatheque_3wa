@@ -1,10 +1,15 @@
 {# losque ce controller est inclus comme un sous-block (dans la page de login principale présentant les 2 form de login en une seule page) on n'utilise pas "base.html.twig" sinon cela fera encore s'afficher la navbar #}
-{% extends (included_as_block ? 'login/block.html.twig' : 'base.html.twig') %}
+{% extends (included_as_block ? 'block.html.twig' : 'base.html.twig') %}
 
-{% block title %}
-	<h3 class="login-title">Espace admin</h3>
-{% endblock %}
+{% set spaceTitle = 'Espace admin' %}
+
+{% block title %}{{ spaceTitle }}{% endblock %}
+
 {% block body %}
+<div id="staff-login" class="login-container">
+
+    <h3 class="login-title">{{ spaceTitle }}</h3>
+	
     {# Il est important de spécifier l'URL pour le POST dans le cas où ce controller de login est inclus comme un block dans une autre template (ici, la template "login/index.html.twig") #}
     <form method="post" action="{{ path('staff_login') }}">
         {% if error %}
@@ -36,4 +41,6 @@
             Se connecter en tant qu'admin
         </button>
     </form>
+
+</div>
 {% endblock %}

@@ -1,12 +1,19 @@
 {# losque ce controller est inclus comme un sous-block (dans la page de login principale présentant les 2 form de login en une seule page) on n'utilise pas "base.html.twig" sinon cela fera encore s'afficher la navbar #}
-{% extends (included_as_block ? 'login/block.html.twig' : 'base.html.twig') %}
+{% extends (included_as_block ? 'block.html.twig' : 'base.html.twig') %}
 
-{% block title %}
-	<h3 class="login-title">Espace adhérent</h3>
-{% endblock %}
-    {% block body %}
+{% set spaceTitle = 'Espace adhérent' %}
+
+{% block title %}{{ spaceTitle }}{% endblock %}
+
+{% block body %}
+<div id="member-login" class="login-container">
+
+    <h3 class="login-title">{{ spaceTitle }}</h3>
+    
     {# Il est important de spécifier l'URL pour le POST dans le cas où ce controller de login est inclus comme un block dans une autre template (ici, la template "login/index.html.twig") #}
     <form method="post" action="{{ path('member_login') }}">
+
+	
         {% if error %}
             <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
         {% endif %}
@@ -36,4 +43,6 @@
             Se connecter en tant qu'adhérent
         </button>
     </form>
+    
+</div>
 {% endblock %}
