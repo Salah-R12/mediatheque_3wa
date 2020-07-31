@@ -55,13 +55,15 @@
 			<!-- Etant donné que les listes et la consultation des ouvrages n'est accessibles qu'aux personnes connectées (l'accès n'est pas public),
 			le formulaire de recherche sur titre du média ne peut pas non plus être accessible publiquement -->
 		
-            <!-- TODO : indiquer le "route name" correct dans la fonction "path()" une fois le controller de recherche créé -->
+			{#
+				La search box : présente sur toutes les pages des utilisateurs authentifiés, celle-ci se présente sous la forme d'un formulaire qui sera soumis au controller Search
+			#}
             <form method="GET" class="form-inline my-2 my-lg-0" action="{{ path('search') }}" style="margin-right: 2em;">
                 <input class="form-control mr-sm-2" type="search" placeholder="Rechercher..." aria-label="Search" name="query">
                 <button class="btn btn-outline-success my-2 my-sm-0" type="submit">OK</button>
             </form>
 
-            {# Bouton de déconnexion #}
+            {# Lien vers page de déconnexion #}
             <a href="{{ path('logout') }}" class="btn btn-outline-danger my-2 my-sm-0 ml-3">Déconnexion</a>
 		{% else %}
             {# Lien vers page de connexion #}
