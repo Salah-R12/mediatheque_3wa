@@ -44,7 +44,13 @@
         {% endfor %}
         </ul>
         
-		{# Ici, on vérifie que l'utilisateur est juste authentifié ou non, quelque soit son role, ce n'est pas important à cet endroit de savoir le type de l'utilisateur, ni son role #}
+		{#
+			Ici, on vérifie que l'utilisateur est juste authentifié ou non, quelque soit son role, ce n'est pas important à cet endroit de savoir le type de l'utilisateur (Staff ou Member), ni son role.
+			On peut utiliser la valeur 'IS_AUTHENTICATED_REMEMBERED' qui correspond au statut "utilisateur connecté et session active", y compris les sessions anonymes (comme par exemple faire un panier d'achat sur un e-commerce, sans avoir encore créé de compte sur le site marchand).
+			Le statut : 'IS_AUTHENTICATED_FULLY' qu'on utilise plutôt pour des pages du type "checkout/cart" où l'on arrive à une page où l'on créé enfin réellement son compte sur le site marchand pour valider le panier et procéder au paiement et aux modalités de livraison.
+			Par précaution, on va utiliser 'IS_AUTHENTICATED_FULLY' car à priori, on n'autorise pas les connexions anonymes mais si on utilise 'IS_AUTHENTICATED_REMEMBERED', ça marche aussi
+			(du coup, je ne sais pas trop si c'est pas mieux d'utiliser 'IS_AUTHENTICATED_REMEMBERED')
+		#}
 		{% if is_granted('IS_AUTHENTICATED_FULLY') %}
 			<!-- Etant donné que les listes et la consultation des ouvrages n'est accessibles qu'aux personnes connectées (l'accès n'est pas public),
 			le formulaire de recherche sur titre du média ne peut pas non plus être accessible publiquement -->
