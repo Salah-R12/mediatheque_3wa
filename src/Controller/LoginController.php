@@ -30,24 +30,4 @@ class LoginController extends AbstractController{
 		// retour à la page login après le logout (si jamais la config security.yaml change, mais en principe, on peut laisser vide cette fonction
 		return $this->redirectToRoute('login_index');
 	}
-
-	/**
-	 *
-	 * @deprecated To be removed
-	 * @see SecurityMemberController
-	 * @Route("/member", name="login_member", methods={"GET","POST"})
-	 */
-	public function member(Request $request){
-		return $this->render('login/member.html.twig', []);
-	}
-
-	/**
-	 *
-	 * @deprecated To be removed
-	 * @see SecurityStaffController
-	 * @Route("/staff", name="login_staff", methods={"GET","POST"})
-	 */
-	public function staff(Request $request){
-		return $this->render('login/staff.html.twig', []);
-	}
 }
