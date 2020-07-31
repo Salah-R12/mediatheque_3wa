@@ -51,29 +51,32 @@ security:
     ## ça se gèrera dans les templates twig
     role_hierarchy:
         # Dans notre cas, les roles de ce yaml sont en quelque sorte nos ALIAS de roles enregistrés en BDD, car on a déjà une table de role dans notre base
-        # Si on avait souhaité laisser Symfony créer les roles en base de données, ça aurait créé une colonne "roles" du type varchar dans une table "user" qui enregistrerait ces roles en JSON
-        ROLE_BIBLIO: ROLE_USER # ROLE_BIBLIO englobe ROLE_USER
-        ROLE_WEBMASTER: ROLE_USER # ROLE_WEBMASTER englobe aussi ROLE_USER
-        ROLE_ADMIN: [ROLE_BIBLIO, ROLE_WEBMASTER] # ROLE_ADMIN englobe donc à la fois ROLE_BIBLIO, ROLE_WEBMASTER et ROLE_USER
-        # Il faut faire correspondre les roles définis en BDD à ceux du dessus qui sont préfixés par "ROLE_"
+        # Si on avait souhaité laisser Symfony créer les roles en base de données, ça aurait créé une colonne "roles" du type varchar dans une table "user" qui enregistrerait ces roles au format JSON
+        ROLE_ADMIN: ROLE_USER # Role admin engloge ROLE_USER et est une strate au-dessus
+        ROLE_BIBLIO: ROLE_ADMIN # ROLE_BIBLIO englobe ROLE_ADMIN
+        ROLE_WEBMASTER: ROLE_ADMIN # ROLE_WEBMASTER englobe aussi ROLE_ADMIN
+        ROLE_SUPERADMIN: [ROLE_BIBLIO, ROLE_WEBMASTER] # ROLE_ADMIN englobe donc à la fois ROLE_BIBLIO, ROLE_WEBMASTER, ROLE_ADMIN et ROLE_USER
+
+        # Il faut faire correspondre les rôles définis en BDD à ceux du dessus qui sont préfixés par "ROLE_"
         # afin que Symfony reconnaissent le role récupéré en BDD comme un ROLE_*
-        superadmin: ROLE_ADMIN # superadmin alias ROLE_ADMIN
-        webmaster: ROLE_WEBMASTER
-        bibliothècaire: ROLE_BIBLIO
+        superadmin: ROLE_SUPERADMIN # superadmin alias ROLE_ADMIN (nécessaire à déclarer pour que Symfony relie la valeur "superadmin" en BDD avec le role ROLE_SUPERADMIN)
+        webmaster: ROLE_WEBMASTER # webmaster alias ROLE_WEBMASTER
+        bibliothècaire: ROLE_BIBLIO # bibliothècaire alias ROLE_BIBLIO
 
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
         ## Ici, on n'utilise QUE les roles qui sont préfixés par ROLE_ (apparemment, ça ne marche pas si on met "superadmin")
+        ## Dans les templates TWIG, avec la fonction "is_granted", il faudra aussi utiliser que les ROLE_*
         - { path: ^/admin/edit/borrow, roles: [ROLE_BIBLIO] }
         - { path: ^/admin/new/borrow, roles: [ROLE_BIBLIO] }
         - { path: ^/admin/edit/staff, roles: [ROLE_WEBMASTER] }
         - { path: ^/admin/new/staff, roles: [ROLE_WEBMASTER] }
-        - { path: ^/admin/edit/role, roles: [ROLE_ADMIN] }
-        - { path: ^/admin/new/role, roles: [ROLE_ADMIN] }
-         # Avant de faire l'accès sur le reste des pages commençants par /admin il faut obligatoirement mettre en premier les pages d'admin qui en descendent, car si on met /admin en premier
+        - { path: ^/admin/edit/role, roles: [ROLE_SUPERADMIN] }
+        - { path: ^/admin/new/role, roles: [ROLE_SUPERADMIN] }
+        # Avant de faire l'accès sur le reste des pages commençants par /admin il faut obligatoirement mettre en premier les pages d'admin qui en descendent, car si on met /admin en premier
         # tout le reste ne serait pas pris en compte, parce que comme dit plus haut : "Only the first access control that matches will be used" --> ça veut dire que dès que "^/admin" est vrai
         # Symfony s'arrêterait là, donc il faut mettre les URLs "longues" en premier
-        - { path: ^/admin, roles: [ROLE_BIBLIO, ROLE_WEBMASTER] }
+        - { path: ^/admin, roles: [ROLE_ADMIN] }
         - { path: ^/list, roles: ROLE_USER }
         - { path: ^/show, roles: ROLE_USER }

@@ -52,17 +52,35 @@
 			(du coup, je ne sais pas trop si c'est pas mieux d'utiliser 'IS_AUTHENTICATED_REMEMBERED')
 		#}
 		{% if is_granted('IS_AUTHENTICATED_FULLY') %}
-			<!-- Etant donné que les listes et la consultation des ouvrages n'est accessibles qu'aux personnes connectées (l'accès n'est pas public),
-			le formulaire de recherche sur titre du média ne peut pas non plus être accessible publiquement -->
-		
 			{#
-				La search box : présente sur toutes les pages des utilisateurs authentifiés, celle-ci se présente sous la forme d'un formulaire qui sera soumis au controller Search
+    			Etant donné que les listes et la consultation des ouvrages n'est accessibles qu'aux personnes connectées (l'accès n'est pas public),
+    			le formulaire de recherche sur titre du média (search box) ne peut pas non plus être accessible publiquement
 			#}
+		
+			{# La search box : présente sur toutes les pages des utilisateurs authentifiés, celle-ci se présente sous la forme d'un formulaire qui sera soumis au controller Search #}
             <form method="GET" class="form-inline my-2 my-lg-0" action="{{ path('search') }}" style="margin-right: 2em;">
                 <input class="form-control mr-sm-2" type="search" placeholder="Rechercher..." aria-label="Search" name="query">
                 <button class="btn btn-outline-success my-2 my-sm-0" type="submit">OK</button>
             </form>
 
+			{# Identité de la personne connectée #}
+			<div id="user-profile">
+				<div class="user-profile username">
+					Profile :
+					{%  set edit_path = 'ROLE_USER' in app.user.roles ? path('member_edit', {'id': app.user.id}) : path('staff_edit', {'id': app.user.id}) %}
+					<a href="{{ edit_path }}">
+						{{ app.user.username }}
+					</a>
+				</div>
+				
+				{% if is_granted('ROLE_ADMIN') %}
+				{# on affiche ce cadre uniquement pour les Staff, sachant qu'un Staff par défaut est un admin et pas pour les Member (qui sont des ROLE_USER uniquement) #}
+				<div class="user-profile role">
+					<strong>Rôle(s) :</strong> {{ app.user.roles|join(', ') }}
+				</div>
+				{% endif %}
+			</div>
+			
             {# Lien vers page de déconnexion #}
             <a href="{{ path('logout') }}" class="btn btn-outline-danger my-2 my-sm-0 ml-3">Déconnexion</a>
 		{% else %}

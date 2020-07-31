@@ -102,3 +102,9 @@ body.staff_login .main-body, body.member_login .main-body{
 	flex-direction: row;
 	justify-content: center;
 }
+.user-profile.username{
+	font-weight: bold;
+}
+.user-profile.role{
+	font-size: .9rem;
+}
