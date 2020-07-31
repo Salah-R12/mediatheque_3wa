@@ -52,38 +52,38 @@ class Navigation{
 			[
 				"title" => "Livres",
 				"route_name" => "book_index",
-				"roles" => ['ROLE_USER']
+				"roles" => ['ROLE_USER', 'superadmin', 'bibliothècaire', 'webmaster']
 			],
 			[
 				"title" => "Musiques",
 				"route_name" => "music_index",
-				"roles" => ['ROLE_USER']
+				"roles" => ['ROLE_USER', 'superadmin', 'bibliothècaire', 'webmaster']
 			],
 			[
 				"title" => "Films",
 				"route_name" => "film_index",
-				"roles" => ['ROLE_USER']
+				"roles" => ['ROLE_USER', 'superadmin', 'bibliothècaire', 'webmaster']
 			],
 			[
 				"title" => "Adhérents",
 				"route_name" => "member_index",
-				"roles" => ['ROLE_ADMIN', 'superadmin', 'bibliothécaire', 'webmaster']
+				"roles" => ['superadmin', 'bibliothècaire', 'webmaster']
 			],
 			[
 				"title" => "Équipe",
 				"route_name" => "staff_index",
-				"roles" => ['ROLE_ADMIN', 'superadmin', 'bibliothécaire', 'webmaster'],
+				"roles" => ['superadmin', 'bibliothècaire', 'webmaster'],
 				// Here is an example of possible children
 				"children" => [
 					[
 						"title" => "Rôles",
 						"route_name" => "role_index",
-						"roles" => ['ROLE_ADMIN', 'superadmin', 'bibliothécaire', 'webmaster']
+						"roles" => ['superadmin']
 					],
 					[
 						"title" => "Emprunts",
 						"route_name" => "borrow_index",
-						"roles" => ['ROLE_ADMIN', 'superadmin', 'bibliothécaire', 'webmaster']
+						"roles" => ['superadmin', 'bibliothècaire']
 					]
 				]
 			],
