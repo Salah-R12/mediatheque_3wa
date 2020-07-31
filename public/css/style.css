@@ -56,3 +56,44 @@ label{
 form label{
 	min-width: 20%;
 }
+
+#main-login-container{
+	display: flex;
+	flex-direction: row;
+	margin: auto;
+	justify-content: center;
+}
+.login-container{
+	width: 75%;
+	padding: 1% 5%;
+	max-width: 500px;
+}
+.login-container:first-of-type{
+	border-right: 1px solid navy;
+}
+.login-container h3{
+	margin-bottom: 1.1em;
+}
+.login-container .form-control{
+	max-width: 300px;
+	margin-bottom: .8em;
+}
+.login-container button{
+	font-size: .9em;
+	font-weight: bold;
+	color: white;
+	margin-top: .5em;
+	border: none;
+}
+#member-login button{
+	background: #007bff;
+}
+#staff-login button{
+	background: #6c757d;
+}
+#member-login h3{
+	color: #007bff;
+}
+#staff-login h3{
+	color: #6c757d;
+}

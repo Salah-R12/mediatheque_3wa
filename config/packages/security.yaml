@@ -1,7 +1,21 @@
+### NOTE DE FD : les commentaires en français sont tapés par le développeur et correspondent donc à des explications propres au projet
+###             en anglais, c'est donc les commentaires auto générés par Symfony
+
 security:
+    # Eventuellement, si l'on souhaite utiliser un cryptage particulier
+    #encoders:
+        #App\Entity\Member:
+            #algorithm: bcrypt
+            # Algorithm by default is auto
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     providers:
-        users_in_memory: { memory: null }
+        # used to reload user from session & other features (e.g. switch_user)
+        app_member_provider:
+             entity:
+                class: App\Entity\Member
+        app_staff_provider:
+            entity:
+                class: App\Entity\Staff
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
@@ -9,7 +23,18 @@ security:
         main:
             anonymous: true
             lazy: true
-            provider: users_in_memory
+            provider: app_member_provider
+            guard:
+                authenticators:
+                    - App\Security\MemberAuthenticator
+                    - App\Security\StaffAuthenticator
+                entry_point: App\Security\MemberAuthenticator
+            # On explicite ici comment et quand s'exécute le logout, i.e. le nettoyage de la session de l'utilisateur authentifié
+            logout:
+                # Dans "path", on indique le "route name" de la fonction et du controller qui va être intercepté par Symfony
+                path: logout # "logout" c'est le route name de la fonction "LoginController::logout"
+                # Redirection après logout vers la page principale de login
+                target: login_index
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#firewalls-authentication
@@ -17,8 +42,38 @@ security:
             # https://symfony.com/doc/current/security/impersonating_user.html
             # switch_user: true
 
+            # Ajout d'un "access denied" customisé
+            access_denied_handler: App\Security\CustomAccessDeniedHandler
+
+
+    # Il est important de définir la hiérarchie des rôles afin d'y intégrer les rôles spécifiques définis en base de données.
+    ## Pour ce qui serait par exemple de donner des droits spécifiques aux users sur l'action de boutons dans une même page (par exemple, on ne fait apparaître le bouton "Supprimer" que pour les superadmin)
+    ## ça se gèrera dans les templates twig
+    role_hierarchy:
+        # Dans notre cas, les roles de ce yaml sont en quelque sorte nos ALIAS de roles enregistrés en BDD, car on a déjà une table de role dans notre base
+        # Si on avait souhaité laisser Symfony créer les roles en base de données, ça aurait créé une colonne "roles" du type varchar dans une table "user" qui enregistrerait ces roles en JSON
+        ROLE_BIBLIO: ROLE_USER # ROLE_BIBLIO englobe ROLE_USER
+        ROLE_WEBMASTER: ROLE_USER # ROLE_WEBMASTER englobe aussi ROLE_USER
+        ROLE_ADMIN: [ROLE_BIBLIO, ROLE_WEBMASTER] # ROLE_ADMIN englobe donc à la fois ROLE_BIBLIO, ROLE_WEBMASTER et ROLE_USER
+        # Il faut faire correspondre les roles définis en BDD à ceux du dessus qui sont préfixés par "ROLE_"
+        # afin que Symfony reconnaissent le role récupéré en BDD comme un ROLE_*
+        superadmin: ROLE_ADMIN # superadmin alias ROLE_ADMIN
+        webmaster: ROLE_WEBMASTER
+        bibliothècaire: ROLE_BIBLIO
+
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        # - { path: ^/admin, roles: ROLE_ADMIN }
-        # - { path: ^/profile, roles: ROLE_USER }
+        ## Ici, on n'utilise QUE les roles qui sont préfixés par ROLE_ (apparemment, ça ne marche pas si on met "superadmin")
+        - { path: ^/admin/edit/borrow, roles: [ROLE_BIBLIO] }
+        - { path: ^/admin/new/borrow, roles: [ROLE_BIBLIO] }
+        - { path: ^/admin/edit/staff, roles: [ROLE_WEBMASTER] }
+        - { path: ^/admin/new/staff, roles: [ROLE_WEBMASTER] }
+        - { path: ^/admin/edit/role, roles: [ROLE_ADMIN] }
+        - { path: ^/admin/new/role, roles: [ROLE_ADMIN] }
+         # Avant de faire l'accès sur le reste des pages commençants par /admin il faut obligatoirement mettre en premier les pages d'admin qui en descendent, car si on met /admin en premier
+        # tout le reste ne serait pas pris en compte, parce que comme dit plus haut : "Only the first access control that matches will be used" --> ça veut dire que dès que "^/admin" est vrai
+        # Symfony s'arrêterait là, donc il faut mettre les URLs "longues" en premier
+        - { path: ^/admin, roles: [ROLE_BIBLIO, ROLE_WEBMASTER] }
+        - { path: ^/list, roles: ROLE_USER }
+        - { path: ^/show, roles: ROLE_USER }

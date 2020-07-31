@@ -15,7 +15,7 @@ use App\Form\MemberNewType;
 class MemberController extends AbstractController
 {
     /**
-     * @Route("/list/member", name="member_index", methods={"GET"})
+     * @Route("/admin/list/member", name="member_index", methods={"GET"})
      */
     public function index(MemberRepository $memberRepository): Response
     {

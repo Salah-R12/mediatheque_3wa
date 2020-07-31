@@ -1,0 +1,17 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Page de connexion{% endblock %}
+
+{% block body %}
+	<div id="main-login-container">
+		{# Ici, l'inclusion des 2 blocks de login se fait en passant un paramètre "included_as_block" qui va permettre de "savoir" dans ces 2 controllers et leur template respective, s'ils ont été insérés dans
+			dans une autre template, ou bien s'ils sont affichés comme page principale.
+			Dans le cas présent, ils sont inclus comme "block", côte à côte #}
+		<div id="member-login" class="login-container">
+            {{ render(controller('App\\Controller\\SecurityMemberController::login', {"included_as_block": true})) }}
+		</div>
+		<div id="staff-login" class="login-container">
+            {{ render(controller('App\\Controller\\SecurityStaffController::login', {"included_as_block": true})) }}
+		</div>
+	</div>
+{% endblock %}

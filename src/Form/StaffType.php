@@ -42,7 +42,7 @@ class StaffType extends AbstractType
             ->add('phone', null, [
             	'label' => 'Téléphone'
             ])
-            ->add('roles', EntityType::class, [
+            ->add('roleCollection', EntityType::class, [
             	'label' => 'Rôles',
             	'class' => Role::class,
             	'expanded' => true, // Combine expanded & multiple to display checkboxes
