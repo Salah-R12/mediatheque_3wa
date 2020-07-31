@@ -11,8 +11,7 @@ security:
     providers:
         # used to reload user from session & other features (e.g. switch_user)
         app_member_provider:
-            # id: App\Security\MemberProvider
-            entity:
+             entity:
                 class: App\Entity\Member
         app_staff_provider:
             entity:
@@ -34,7 +33,7 @@ security:
             logout:
                 # Dans "path", on indique le "route name" de la fonction et du controller qui va être intercepté par Symfony
                 path: logout # "logout" c'est le route name de la fonction "LoginController::logout"
-                # Redirection après logout vers la route "login_index" (qui est aussi dans LoginController)
+                # Redirection après logout vers la page principale de login
                 target: login_index
 
             # activate different ways to authenticate
