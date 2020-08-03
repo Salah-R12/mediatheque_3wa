@@ -17,11 +17,11 @@ class Navigation{
 	 * 
 	 * @todo Store links into database that could be managed from backend/admin session.
 	 * 
-	 * @param int $role_id (optional) ID defined into table/entity "role"
+	 * @param array $roles (optional) list of user roles
 	 * 
 	 * @return array
 	 */
-	public function getNavBarLinks(int $role_id = null): array{
+	public function getNavBarLinks(array $roles = null): array{
 		/** Array schema:
 		 * [
 		 * 		// category
@@ -52,66 +52,76 @@ class Navigation{
 			[
 				"title" => "Livres",
 				"route_name" => "book_index",
-				"roles" => null, // TODO: define roles, for instance, it's public
+				"roles" => ['ROLE_USER', 'superadmin', 'bibliothècaire', 'webmaster']
 			],
 			[
 				"title" => "Musiques",
 				"route_name" => "music_index",
-				"roles" => null
+				"roles" => ['ROLE_USER', 'superadmin', 'bibliothècaire', 'webmaster']
 			],
 			[
 				"title" => "Films",
 				"route_name" => "film_index",
-				"roles" => null
+				"roles" => ['ROLE_USER', 'superadmin', 'bibliothècaire', 'webmaster']
 			],
 			[
 				"title" => "Adhérents",
 				"route_name" => "member_index",
-				"roles" => null
+				"roles" => ['superadmin', 'bibliothècaire', 'webmaster']
 			],
 			[
 				"title" => "Équipe",
 				"route_name" => "staff_index",
-				"roles" => null,
+				"roles" => ['superadmin', 'bibliothècaire', 'webmaster'],
 				// Here is an example of possible children
 				"children" => [
 					[
 						"title" => "Rôles",
 						"route_name" => "role_index",
-						"roles" => null
+						"roles" => ['superadmin']
 					],
 					[
 						"title" => "Emprunts",
 						"route_name" => "borrow_index",
-						"roles" => null
+						"roles" => ['superadmin', 'bibliothècaire']
 					]
 				]
 			],
 		];
-		// TODO should define routes & roles into database, instead of hard links defined into this code, i.e. store values from previous array into the database
-		// Nota: all routes are not listed here. Use Symfony command to see all all routes: ./bin/console debug:router
 		
-		$filteredLinks = $role_id ? $this->recursiveFilterOnLinksArray($links, $role_id) : $links;
-		return $filteredLinks;
+		return $this->recursiveFilterOnLinksArray($links, $roles);
 	}
 	
 	/**
 	 * Filters links recursively, matching roles
 	 * 
 	 * @param array $links
-	 * @param int $role_id
+	 * @param array $roles
 	 * @return array
 	 */
-	private function recursiveFilterOnLinksArray(array $links, int $role_id): array{
-		foreach ($links as $key => $item){
+	private function recursiveFilterOnLinksArray(array $links, array $roles = null): array{
+		foreach ($links as $ix => $item){
 			if (!empty($item['children'])){
-				$links[$key] = $this->recursiveFilterOnLinksArray($item['children'], $role_id);
+				$links[$ix]['children'] = $this->recursiveFilterOnLinksArray($item['children'], $roles);
 			}
 		}
-		return array_filter($links, function($item) use ($role_id){
-			if (empty($item['roles']))
+		return array_filter($links, function($item) use ($roles){
+			if (empty($item['roles'])){
+				// S'il n'y a pas de role défini pour le lien (item), alors on retourne vrai quoi qu'il en soit
 				return true;
-				return in_array($role_id, $item['roles']);
+			}
+			if (empty($roles)){
+				// Si c'est la liste des roles passées en paramètre qui est vide, alors que le lien a défini des droits, alors on retourne faux (l'item est retiré)
+				return false;
+			}
+			// On vérifie dans la liste de roles donnée en paramètre qu'au moins l'un des roles de l'utilisateur "match" avec l'un des roles définis pour le lien
+			foreach ($roles as $role){
+				if (in_array($role, $item['roles'])){
+					return true;
+				}
+			}
+			// Aucune condition remplie, retourner faux
+			return false;
 		});
 	}
 }

@@ -9,7 +9,7 @@
 		<link rel="stylesheet" href="{{ absolute_url('/') }}css/style.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     </head>
-    <body class="{{ app.request.get('_route') }}">
+    <body class="{{ app.request.get('_route') }}">{{ app.request.getBaseURL() }}
         {{ render(controller('App\\Controller\\NavbarController::index', { 'current_route_name': app.request.get('_route')})) }}
         <div class="message-flash">
             {% for label, messages in app.flashes %}

@@ -1,0 +1,48 @@
+{# losque ce controller est inclus comme un sous-block (dans la page de login principale présentant les 2 form de login en une seule page) on n'utilise pas "base.html.twig" sinon cela fera encore s'afficher la navbar #}
+{% extends (included_as_block ? 'block.html.twig' : 'base.html.twig') %}
+
+{% set spaceTitle = 'Espace adhérent' %}
+
+{% block title %}{{ spaceTitle }}{% endblock %}
+
+{% block body %}
+<div id="member-login" class="login-container">
+
+    <h3 class="login-title">{{ spaceTitle }}</h3>
+    
+    {# Il est important de spécifier l'URL pour le POST dans le cas où ce controller de login est inclus comme un block dans une autre template (ici, la template "login/index.html.twig") #}
+    <form method="post" action="{{ path('member_login') }}">
+
+	
+        {% if error %}
+            <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+        {% endif %}
+    
+        {% if app.user and not included_as_block %}
+            <div class="mb-3">
+                Vous êtes connecté avec le compte {{ app.user.username }}, <a href="{{ path('member_logout') }}">cliquez ici pour vous déconnecter</a>
+            </div>
+        {% endif %}
+    
+        <input type="text" value="{{ last_username }}" name="username" id="inputMemberUsername" class="form-control" required autofocus  placeholder="Nom d'utilisateur">
+        <input type="password" name="password" id="inputMemberPassword" class="form-control" required placeholder="Mot de passe">
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}" >
+    
+        {#
+            Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
+            See https://symfony.com/doc/current/security/remember_me.html
+    
+            <div class="checkbox mb-3">
+                <label>
+                    <input type="checkbox" name="_remember_me"> Remember me
+                </label>
+            </div>
+        #}
+    
+        <button class="btn btn-lg btn-primary" type="submit">
+            Se connecter en tant qu'adhérent
+        </button>
+    </form>
+    
+</div>
+{% endblock %}

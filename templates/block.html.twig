@@ -1,0 +1,6 @@
+{#
+	Layout (gabarit de page) basic contenant juste un bloc body, qui sera utilisé et "extends" par les blocks qui ne souhaitent pas réinclure "base.html.twig"
+	car ce dernier contient tout le gabarit de page avec les <head>, <script>, <style> et <nav> qu'on ne veut pas revoir affiché dans le block.
+	Voir par exemple la template "templates/security/login.member.html.twig" (il y a une condition dans le "extends")
+ #}
+{% block body %}{% endblock %}
