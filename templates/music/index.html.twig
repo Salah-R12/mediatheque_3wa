@@ -1,15 +1,15 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Music index{% endblock %}
+{% block title %}{{ 'Music index'|trans }}{% endblock %}
 
 {% block body %}
-    <h1>Music index</h1>
+    <h1>{{ 'Music index'|trans }}</h1>
 
     <table class="table">
         <thead>
             <tr>
                 <th>Id</th>
-                <th>Name</th>
+                <th>{{ 'Title'|trans }}</th>
                 <th>Author</th>
                 <th>Description</th>
                 <th>Singer</th>

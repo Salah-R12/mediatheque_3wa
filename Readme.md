@@ -287,3 +287,62 @@ Là où le fichier "security.yaml" va s'avérer crucial, c'est dans sa gestion d
 
 Pour finir, regarder simplement dans le fichier "security.yaml" comment sont hiérarchisés les roles et
 comment les droits d'accès sont donnés en fonction des URLs.
+
+
+## Traductions
+
+En principe, le composant "translation" est déjà installé avec Symfony par défaut.
+
+Pour amorcer les traductions, il suffit d'aller sur l'un des fichiers Twig, et là où il y a du texte (peu importe en anglais ou en français),
+on met plutôt ces lignes :
+```twig
+<button class="btn">Delete</button>
+<!-- Remplacé par : --!>
+<button class="btn">{{ 'Delete'|trans }}</button>
+```
+
+Puis en console, on exécute :
+```bash
+# pour la locale "fr"
+./bin/console translation:update --force fr
+# pour la locale "fr_FR"
+./bin/console translation:update --force fr_FR
+# pour la locale "en_US"
+./bin/console translation:update --force en_US
+```
+
+Cela génère automatiquement la création du répertoire "translations" à la racine du projet + les fichiers "xlf" de trads (type XML). Pour "fr", ces fichiers sont suffixés par "fr.xlf"
+
+Il suffit alors de parcourir le fichier pour éditer tous les tags "target" correspondant à la langue cible :
+```xml
+<trans-unit id="4tClSWj" resname="Delete">
+    <source>Delete</source>
+    <target>Supprimer</target>
+</trans-unit>
+```
+
+Et pour appliquer une langue par défaut sur l'ensemble du site, on peut modifier la valeur de "default_locale" dans le fichier "config/packages/translation.yaml" :
+```yaml
+framework:
+    default_locale: fr
+```
+
+Il n'y a plus qu'à parcourir tous les fichiers Twig pour accoler la fonctions "trans" sur les chaînes de caractères à traduire.
+
+NOTE : dans Twig, la fonction "trans" est une fonction implémentée (ou propre) aux objets de type "string" et donc, ça marche un peu comme en Javascript lorsqu'on utilise par exemple la fonction "String.toLowerCase()" où l'on peut avoir un code écrit comme suit :
+```js
+var strLowerCased = "any string".toLowerCase();
+```
+
+Donc, dans un Twig, si on tape :
+```twig
+<span>{{ trans('any string') }}</span>
+```
+cela provoquera une erreur disant que la fonction "trans" n'existe pas.
+
+NOTE 2 : pour utiliser des chaînes à remplacer par une variable, comme je n'ai pas trouvé de doc vraiment explicite, on peut utiliser la fonction "replace" comme suit :
+```twig
+<span>{{ 'Hello %name%'|trans|replace({'%name%': app.user.username}) }}</span>
+```
+
+"replace" étant aussi une fonction propre de l'objet String dans Twig.
