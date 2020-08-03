@@ -12,47 +12,47 @@
                 <td>{{ member.id }}</td>
             </tr>
             <tr>
-                <th>Prénom</th>
+                <th>{{ 'First name'|trans }}</th>
                 <td>{{ member.firstName }}</td>
             </tr>
             <tr>
-                <th>Nom</th>
+                <th>{{ 'Last name'|trans }}</th>
                 <td>{{ member.lastName }}</td>
             </tr>
             <tr>
-                <th>Identifiant</th>
+                <th>{{ 'Identifier'|trans }}</th>
                 <td>{{ member.username }}</td>
             </tr>
             <tr>
-                <th>E-mail</th>
+                <th>{{ 'Email'|trans }}</th>
                 <td>{{ member.email }}</td>
             </tr>
             <tr>
-                <th>Adresse</th>
+                <th>{{ 'Address'|trans }}</th>
                 <td>{{ member.address1 }}</td>
             </tr>
             <tr>
-                <th>Complément d'adresse</th>
+                <th>{{ 'Additional address'|trans }}</th>
                 <td>{{ member.address2 }}</td>
             </tr>
             <tr>
-                <th>Code postal</th>
+                <th>{{ 'Zip code'|trans }}</th>
                 <td>{{ member.zipcode }}</td>
             </tr>
             <tr>
-                <th>Ville</th>
+                <th>{{ 'City'|trans }}</th>
                 <td>{{ member.city }}</td>
             </tr>
             <tr>
-                <th>Téléphone</th>
+                <th>{{ 'Phone number'|trans }}</th>
                 <td>{{ member.phone }}</td>
             </tr>
         </tbody>
     </table>
 
-    <a href="{{ path('member_index') }}">Retour à la liste</a>
+    <a href="{{ path('member_index') }}">{{ 'back to list'|trans }}</a>
 	|
-    <a href="{{ path('member_edit', {'id': member.id}) }}">Modifier</a>
+    <a href="{{ path('member_edit', {'id': member.id}) }}">{{ 'Edit'|trans }}</a>
 	<br><br>
     {{ include('member/_delete_form.html.twig') }}
 {% endblock %}

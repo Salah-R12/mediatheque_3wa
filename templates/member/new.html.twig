@@ -1,11 +1,11 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Nouvel adhérent{% endblock %}
+{% block title %}{{ 'New member' }}{% endblock %}
 
 {% block body %}
-    <h1>Créer une nouvelle fiche adhérent</h1>
+    <h1>{{ 'Subscribe new member' }}</h1>
 
     {{ include('member/_form.html.twig') }}
 	<br><br>
-    <a href="{{ path('member_index') }}">Retour à la liste</a>
+    <a href="{{ path('member_index') }}">{{ 'back to list'|trans }}</a>
 {% endblock %}

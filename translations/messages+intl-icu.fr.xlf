@@ -77,10 +77,6 @@
         <source>Save</source>
         <target>Enregistrer</target>
       </trans-unit>
-      <trans-unit id="fWdfxaS" resname="Modifier %s">
-        <source>Modifier %s</source>
-        <target>__Modifier %s</target>
-      </trans-unit>
       <trans-unit id="DAQwazp" resname="Are you sure you want to delete this borrow?">
         <source>Are you sure you want to delete this borrow?</source>
         <target>Êtes-vous sûr(e) de vouloir supprimer les données de ce prêt ?\nCette action est irréversible.</target>
@@ -115,115 +111,155 @@
       </trans-unit>
       <trans-unit id="9f2GiuU" resname="register new role">
         <source>register new role</source>
-        <target>__register new role</target>
+        <target>Créer un nouveau rôle</target>
       </trans-unit>
       <trans-unit id="FHNqLrn" resname="Role">
         <source>Role</source>
-        <target>__Role</target>
+        <target>Rôle</target>
       </trans-unit>
       <trans-unit id="83tvNKQ" resname="Edit Role">
         <source>Edit Role</source>
-        <target>__Edit Role</target>
+        <target>Modifier un rôle</target>
       </trans-unit>
       <trans-unit id="l8M.rw8" resname="Role index">
         <source>Role index</source>
-        <target>__Role index</target>
+        <target>Liste des rôles</target>
       </trans-unit>
       <trans-unit id="A1l0No6" resname="Are you sure you want to delete this music?">
         <source>Are you sure you want to delete this music?</source>
-        <target>__Are you sure you want to delete this music?</target>
+        <target>Êtes-vous sûr(e) de vouloir enlever cette oeuvre musicale de l\'inventaire ?\nCette action est irréversible.</target>
       </trans-unit>
       <trans-unit id="eM1TMEZ" resname="register new music">
         <source>register new music</source>
-        <target>__register new music</target>
+        <target>Répertorier une nouvelle oeuvre musicale</target>
       </trans-unit>
       <trans-unit id="brALSyY" resname="Music">
         <source>Music</source>
-        <target>__Music</target>
+        <target>Musique</target>
       </trans-unit>
       <trans-unit id="g6NhLYO" resname="Edit Music">
         <source>Edit Music</source>
-        <target>__Edit Music</target>
+        <target>Modifier les informations sur une oeuvre musicale</target>
       </trans-unit>
       <trans-unit id="qJQXs1l" resname="Are you sure you want to delete this film?">
         <source>Are you sure you want to delete this film?</source>
-        <target>__Are you sure you want to delete this film?</target>
+        <target>Êtes-vous sûr(e) de vouloir supprimer ce contenu filmographique de l\'inventaire ?\nCette action est irréversible.</target>
       </trans-unit>
       <trans-unit id="lA8jpB6" resname="register new film">
         <source>register new film</source>
-        <target>__register new film</target>
+        <target>Répertorier un nouveau film</target>
       </trans-unit>
       <trans-unit id="ETr5eUD" resname="Film">
         <source>Film</source>
-        <target>__Film</target>
+        <target>Film</target>
       </trans-unit>
       <trans-unit id="Um4Ah8w" resname="Description">
         <source>Description</source>
-        <target>__Description</target>
+        <target>Description</target>
       </trans-unit>
       <trans-unit id="n1bmkz5" resname="Original_title">
         <source>Original_title</source>
-        <target>__Original_title</target>
+        <target>Titre original (VO)</target>
       </trans-unit>
       <trans-unit id="jrN1U4F" resname="Synopsis">
         <source>Synopsis</source>
-        <target>__Synopsis</target>
+        <target>Synopsis</target>
       </trans-unit>
       <trans-unit id="T8UqPEx" resname="Duration">
         <source>Duration</source>
-        <target>__Duration</target>
+        <target>Durée (en minutes)</target>
       </trans-unit>
       <trans-unit id="wUm8FOR" resname="Director">
         <source>Director</source>
-        <target>__Director</target>
+        <target>Réalisateur</target>
       </trans-unit>
       <trans-unit id="..G6_F_" resname="Edit Film">
         <source>Edit Film</source>
-        <target>__Edit Film</target>
+        <target>Modifier les informations du film</target>
       </trans-unit>
       <trans-unit id="LxFMh.t" resname="Film index">
         <source>Film index</source>
-        <target>__Film index</target>
+        <target>Liste des films</target>
       </trans-unit>
       <trans-unit id="R9KlFe8" resname="Loading...">
         <source>Loading...</source>
-        <target>__Loading...</target>
+        <target>Chargement...</target>
       </trans-unit>
       <trans-unit id="IvxSaPf" resname="Are you sure you want to delete this book?">
         <source>Are you sure you want to delete this book?</source>
-        <target>__Are you sure you want to delete this book?</target>
+        <target>Êtes-vous sûr(e) de vouloir supprimer cette oeuvre littéraire de l\'inventaire ?\nCette action est irréversible.</target>
       </trans-unit>
       <trans-unit id="HSzaBFE" resname="Staff index">
         <source>Staff index</source>
-        <target>__Staff index</target>
+        <target>Liste des membres de l'équipe</target>
       </trans-unit>
       <trans-unit id="cC75Ie0" resname="First name">
         <source>First name</source>
-        <target>__First name</target>
+        <target>Prénom</target>
       </trans-unit>
       <trans-unit id="e0iIBJR" resname="Last name">
         <source>Last name</source>
-        <target>__Last name</target>
+        <target>Nom</target>
       </trans-unit>
       <trans-unit id="mxBYf4S" resname="Identifier">
         <source>Identifier</source>
-        <target>__Identifier</target>
+        <target>Identifiant</target>
       </trans-unit>
       <trans-unit id="lpzL089" resname="Email">
         <source>Email</source>
-        <target>__Email</target>
+        <target>E-mail</target>
       </trans-unit>
       <trans-unit id="wlM3BVR" resname="Roles">
         <source>Roles</source>
-        <target>__Roles</target>
+        <target>Rôles</target>
       </trans-unit>
       <trans-unit id="e6jKWWd" resname="register new staff member">
         <source>register new staff member</source>
-        <target>__register new staff member</target>
+        <target>Enregistrer un nouveau membre de l'équipe d'admin</target>
       </trans-unit>
       <trans-unit id="1FBmFDp" resname="Update &quot;%s&quot;">
         <source>Update "%s"</source>
-        <target>__Update "%s"</target>
+        <target>Mettre à jour "%s"</target>
+      </trans-unit>
+      <trans-unit id="4BXYLII" resname="Are you sure you want to delete this member?">
+        <source>Are you sure you want to delete this member?</source>
+        <target>Êtes-vous sûr(e) de vouloir supprimer toutes les données de cet adhérent ?\nCette action est irréversible.</target>
+      </trans-unit>
+      <trans-unit id="zA442px" resname="Subscribe">
+        <source>Subscribe</source>
+        <target>Inscrire</target>
+      </trans-unit>
+      <trans-unit id="Vu_PIJV" resname="Address">
+        <source>Address</source>
+        <target>Adresse</target>
+      </trans-unit>
+      <trans-unit id="932OzzG" resname="Additional address">
+        <source>Additional address</source>
+        <target>Complément d'adresse</target>
+      </trans-unit>
+      <trans-unit id=".GbXqym" resname="Zip code">
+        <source>Zip code</source>
+        <target>Code Postal</target>
+      </trans-unit>
+      <trans-unit id=".DP3Mkb" resname="City">
+        <source>City</source>
+        <target>Ville</target>
+      </trans-unit>
+      <trans-unit id="MG8bsgZ" resname="Phone number">
+        <source>Phone number</source>
+        <target>Téléphone</target>
+      </trans-unit>
+      <trans-unit id="RkxP.QG" resname="Edit">
+        <source>Edit</source>
+        <target>Modifier</target>
+      </trans-unit>
+      <trans-unit id="m3DJt5j" resname="Subscribe new member">
+        <source>Subscribe new member</source>
+        <target>Inscrire un nouvel adhérent</target>
+      </trans-unit>
+      <trans-unit id="IwiqrSm" resname="Edit %s">
+        <source>Edit %s</source>
+        <target>Modifier %s</target>
       </trans-unit>
     </body>
   </file>

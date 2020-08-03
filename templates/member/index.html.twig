@@ -8,11 +8,11 @@
     <table class="table">
         <thead>
             <tr>
-                <th>Prénom</th>
-                <th>Nom</th>
-                <th>Identifiant</th>
-                <th>E-mail</th>
-                <th>actions</th>
+                <th>{{ 'First name'|trans }}</th>
+                <th>{{ 'Last name'|trans }}</th>
+                <th>{{ 'Identifier'|trans }}</th>
+                <th>{{ 'Email'|trans }}</th>
+                <th>{{ 'Actions'|trans }}</th>
             </tr>
         </thead>
         <tbody>
@@ -23,18 +23,18 @@
                 <td>{{ member.username }}</td>
                 <td>{{ member.email }}</td>
                 <td>
-                    <a href="{{ path('member_show', {'id': member.id}) }}">voir</a>
+                    <a href="{{ path('member_show', {'id': member.id}) }}">{{ 'show'|trans }}</a>
                     |
-                    <a href="{{ path('member_edit', {'id': member.id}) }}">modifier</a>
+                    <a href="{{ path('member_edit', {'id': member.id}) }}">{{ 'edit'|trans }}</a>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="12">Aucune donnée</td>
+                <td colspan="12">{{ 'no records found'|trans }}</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('member_new') }}">Inscrire un nouvel adhérent</a>
+    <a href="{{ path('member_new') }}">{{ 'Subscribe new member'|trans }}</a>
 {% endblock %}

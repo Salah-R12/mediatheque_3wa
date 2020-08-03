@@ -1,11 +1,11 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Nouveau collaborateur{% endblock %}
+{% block title %}{{ 'New staff' }}{% endblock %}
 
 {% block body %}
-    <h1>Inscrire un nouveau membre du personnel</h1>
+    <h1>{{ 'New staff' }}</h1>
 
     {{ include('staff/_form.html.twig') }}
 	<br><br>
-    <a href="{{ path('staff_index') }}">Retour à la liste</a>
+    <a href="{{ path('staff_index') }}">{{ 'back to list'|trans }}</a>
 {% endblock %}
