@@ -68,15 +68,19 @@ security:
     access_control:
         ## Ici, on n'utilise QUE les roles qui sont préfixés par ROLE_ (apparemment, ça ne marche pas si on met "superadmin")
         ## Dans les templates TWIG, avec la fonction "is_granted", il faudra aussi utiliser que les ROLE_*
-        - { path: ^/admin/edit/borrow, roles: [ROLE_BIBLIO] }
-        - { path: ^/admin/new/borrow, roles: [ROLE_BIBLIO] }
-        - { path: ^/admin/edit/staff, roles: [ROLE_WEBMASTER] }
-        - { path: ^/admin/new/staff, roles: [ROLE_WEBMASTER] }
-        - { path: ^/admin/edit/role, roles: [ROLE_SUPERADMIN] }
-        - { path: ^/admin/new/role, roles: [ROLE_SUPERADMIN] }
+        - { path: ^/admin/edit/borrow, roles: ROLE_BIBLIO }
+        - { path: ^/admin/new/borrow, roles: ROLE_BIBLIO }
+        - { path: ^/admin/edit/staff, roles: ROLE_WEBMASTER }
+        - { path: ^/admin/new/staff, roles: ROLE_WEBMASTER }
+        - { path: ^/admin/edit/role, roles: ROLE_SUPERADMIN }
+        - { path: ^/admin/new/role, roles: ROLE_SUPERADMIN }
+        - { path: ^/admin/edit/media_type, roles: ROLE_SUPERADMIN }
+        - { path: ^/admin/new/media_type, roles: ROLE_SUPERADMIN }
+        - { path: ^/admin/edit/state_of_media, roles: ROLE_SUPERADMIN }
+        - { path: ^/admin/new/state_of_media, roles: ROLE_SUPERADMIN }
         # Avant de faire l'accès sur le reste des pages commençants par /admin il faut obligatoirement mettre en premier les pages d'admin qui en descendent, car si on met /admin en premier
         # tout le reste ne serait pas pris en compte, parce que comme dit plus haut : "Only the first access control that matches will be used" --> ça veut dire que dès que "^/admin" est vrai
         # Symfony s'arrêterait là, donc il faut mettre les URLs "longues" en premier
-        - { path: ^/admin, roles: [ROLE_ADMIN] }
+        - { path: ^/admin, roles: ROLE_ADMIN }
         - { path: ^/list, roles: ROLE_USER }
         - { path: ^/show, roles: ROLE_USER }
