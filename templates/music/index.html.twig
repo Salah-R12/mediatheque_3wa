@@ -33,17 +33,22 @@
                 <td>{{ music.album }}</td>
                 <td>{{ music.compositor }}</td>
                 <td>
-                    <a href="{{ path('music_show', {'id': music.id}) }}">show</a>
-                    <a href="{{ path('music_edit', {'id': music.id}) }}">edit</a>
+                    <a href="{{ path('music_show', {'id': music.id}) }}">{{ 'show'|trans }}</a>
+                    {% if is_granted('ROLE_ADMIN') %}
+                    |
+                    <a href="{{ path('music_edit', {'id': music.id}) }}">{{ 'edit'|trans }}</a>
+                    {% endif %}
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="10">no records found</td>
+                <td colspan="10">{{ 'no records found'|trans }}</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('music_new') }}">Create new</a>
+	{% if is_granted('ROLE_ADMIN') %}
+    <a href="{{ path('music_new') }}">{{ 'register new music'|trans }}</a>
+    {% endif %}
 {% endblock %}

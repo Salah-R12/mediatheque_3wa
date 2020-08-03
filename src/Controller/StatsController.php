@@ -9,15 +9,6 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class StatsController extends AbstractController
 {
-    /**
-     * @Route("/stats", name="stats")
-     */
-    public function index()
-    {
-        return $this->render('stats/index.html.twig', [
-            'controller_name' => 'StatsController',
-        ]);
-    }
 
     public function lastMedias(MediaRepository $mediaRepository)
     {

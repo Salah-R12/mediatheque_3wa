@@ -1,15 +1,15 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Borrow index{% endblock %}
+{% block title %}{{ 'Borrow index'|trans }}{% endblock %}
 
 {% block body %}
-    <h1>Liste des prêts</h1>
+    <h1>{{ 'Borrow index'|trans }}</h1>
 
     <table class="table">
         <thead>
             <tr>
                 <th>Catégorie</th>
-                <th>Titre</th>
+                <th>{{ 'Title'|trans }}</th>
                 <th>N° exemplaire</th>
                 <th>Adhérent</th>
                 <th>Date d'emprunt</th>
@@ -29,17 +29,20 @@
                 <td>{{ borrow.expiryDate ? borrow.expiryDate|date('d/m/Y') : '' }}</td>
                 <td>{{ borrow.returnDate ? borrow.returnDate|date('d/m/Y') : '' }}</td>
                 <td>
-                    <a href="{{ path('borrow_show', {'id': borrow.id}) }}">voir</a> |
-                    <a href="{{ path('borrow_edit', {'id': borrow.id}) }}">modifier</a>
+                    <a href="{{ path('borrow_show', {'id': borrow.id}) }}">{{ 'show'|trans }}</a>
+                    {% if is_granted('ROLE_BIBLIO') %}
+                    |
+                    <a href="{{ path('borrow_edit', {'id': borrow.id}) }}">{{ 'edit'|trans }}</a>
+                    {% endif %}
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="5">Aucune donnée</td>
+                <td colspan="5">{{ 'no records found'|trans }}</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('borrow_new') }}">Saisir un nouveau prêt</a>
+    <a href="{{ path('borrow_new') }}">{{ 'new borrow'|trans }}</a>
 {% endblock %}

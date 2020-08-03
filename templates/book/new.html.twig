@@ -1,11 +1,13 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Enregistrer un nouvel ouvrage{% endblock %}
+{% set mainTitle = 'New book'|trans %}
+
+{% block title %}{{ mainTitle }}{% endblock %}
 
 {% block body %}
-    <h1>Nouvelle oeuvre littéraire</h1>
+    <h1>{{ mainTitle }}</h1>
 
     {{ include('book/_form.html.twig') }}
 
-    <a href="{{ path('book_index') }}">retour à la liste</a>
+    <a href="{{ path('book_index') }}">{{ 'back to list'|trans }}</a>
 {% endblock %}

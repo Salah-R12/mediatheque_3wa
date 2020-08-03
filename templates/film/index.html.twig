@@ -1,16 +1,16 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Film index{% endblock %}
+{% block title %}{{ 'Film index'|trans }}{% endblock %}
 
 {% block body %}
-    <h1>Film index</h1>
+    <h1>{{ 'Film index'|trans }}</h1>
 
     <table class="table">
         <thead>
             <tr>
                 <th>Id</th>
-                <th>Name</th>
-                <th>Author</th>
+                <th>{{ 'Title'|trans }}</th>
+                <th>{{ 'Author'|trans }}</th>
                 <th>Description</th>
                 <th>Original_title</th>
                 <th>Synopsis</th>
@@ -33,17 +33,22 @@
                 <td>{{ film.director }}</td>
                 <td>{{ film.actors }}</td>
                 <td>
-                    <a href="{{ path('film_show', {'id': film.id}) }}">show</a>
-                    <a href="{{ path('film_edit', {'id': film.id}) }}">edit</a>
+                    <a href="{{ path('film_show', {'id': film.id}) }}">{{ 'show'|trans }}</a>
+                    {% if is_granted('ROLE_ADMIN') %}
+                    |
+                    <a href="{{ path('film_edit', {'id': film.id}) }}">{{ 'edit'|trans }}</a>
+                    {% endif %}
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="10">no records found</td>
+                <td colspan="10">{{ 'no records found'|trans }}</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('film_new') }}">Create new</a>
+	{% if is_granted('ROLE_ADMIN') %}
+    <a href="{{ path('film_new') }}">{{ 'register new film'|trans }}</a>
+    {% endif %}
 {% endblock %}

@@ -5,6 +5,6 @@
     {% if borrow_duration is defined %}
       <input class="borrow_duration" type="hidden" value="{{borrow_duration}}"/>
     {% endif %}
-    <button class="btn">{{ button_label|default('Enregistrer') }}</button>
+    <button class="btn">{{ button_label|default('Save'|trans) }}</button>
     {{ form_end(form) }}
 

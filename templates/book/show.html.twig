@@ -1,9 +1,11 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Littérature : {{ book.name }}{% endblock %}
+{% set mainTitle = 'Literrature: %s'|trans|replace({'%s': book.name}) %}
+
+{% block title %}{{ mainTitle }}{% endblock %}
 
 {% block body %}
-    <h1>Littérature</h1>
+    <h1>{{ mainTitle }}</h1>
 
     <table class="table">
         <tbody>
@@ -34,9 +36,18 @@
         </tbody>
     </table>
 
-    <a href="{{ path('book_index') }}">retour à la liste</a>
-	|
-    <a href="{{ path('book_edit', {'id': book.id}) }}">modifier</a>
+    {% if is_granted('ROLE_ADMIN') %}
+    <a href="{{ path('book_edit', {'id': book.id}) }}">{{ 'Update'|trans }}</a>
 
     {{ include('book/_delete_form.html.twig') }}
+    {% else %}
+ 	<p>
+ 		Pour emprunter le support physique de ce média (livre papier, DVD film ou CD de musique), veuillez directement vous présenter à la médiathèque.<br>
+		TODO: Dans le cas d'un ROLE_USER, on peut éventuellement rajouter un bouton "Emprunter " et/ou "Accéder au stream"
+	</p>
+	
+    {% endif %}
+    
+    <a href="{{ path('book_index') }}">{{ 'back to list'|trans }}</a>
+    
 {% endblock %}

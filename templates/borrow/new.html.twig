@@ -1,11 +1,11 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New Borrow{% endblock %}
+{% block title %}{{ 'New Borrow'|trans }}{% endblock %}
 
 {% block body %}
-    <h1>Create new Borrow</h1>
+    <h1>{{ 'New Borrow'|trans }}</h1>
 
     {{ include('borrow/_form.html.twig') }}
 
-    <a href="{{ path('borrow_index') }}">Retour à la liste</a>
+    <a href="{{ path('borrow_index') }}">{{ 'back to list'|trans }}</a>
 {% endblock %}

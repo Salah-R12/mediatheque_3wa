@@ -7,7 +7,29 @@
 {% endblock %}
 
 {% block body %}
-        {{ render_hinclude(controller('App\\Controller\\StatsController::lastMedias', {default: 'Chargement...'})) }}
-        {{ render_hinclude(controller('App\\Controller\\StatsController::lastBorrows', {default: 'Chargement...'})) }}
-        {{ render_hinclude(controller('App\\Controller\\StatsController::lateBorrowsMedia', {default: 'Chargement...'})) }}
+	{% if is_granted('ROLE_ADMIN') %}
+		{# Stats are only for admins #}
+        {{ render_hinclude(controller('App\\Controller\\StatsController::lastMedias'), {default: 'Loading...'|trans}) }}
+        {{ render_hinclude(controller('App\\Controller\\StatsController::lastBorrows'), {default: 'Loading...'|trans}) }}
+        {{ render_hinclude(controller('App\\Controller\\StatsController::lateBorrowsMedia'), {default: 'Loading...'|trans}) }}
+    {% elseif is_granted('ROLE_USER') %}
+    	TODO: include some stuff for ROLE_USER
+    	<p>
+    		Example: List of last user borrows
+    	</p>
+    {% else %}
+    	<h1>Bienvenue sur le site de la médiathèque 3WA</h1>
+    	<p>
+    		Pour consulter nos médias, il vous faut posséder un compte sur notre site.
+    	</p>
+    	<p>
+    		Contactez un administrateur ou le service municipal afin de vous inscrire et réaliser toutes les démarches, gratuitement.
+    	</p>
+    	<p>
+    		Cliquez sur le bouton "Connexion" en haut à droite si vous possédez déjà un compte.
+    	</p>
+    	<p>
+    		TODO: Afficher des actualités, éventuellement
+    	</p>
+    {% endif %}
 {% endblock %}

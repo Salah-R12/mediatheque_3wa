@@ -1,11 +1,11 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New Music{% endblock %}
+{% block title %}{{ 'register new music'|trans }}{% endblock %}
 
 {% block body %}
-    <h1>Create new Music</h1>
+    <h1>{{ 'register new music'|trans }}</h1>
 
     {{ include('music/_form.html.twig') }}
 
-    <a href="{{ path('music_index') }}">back to list</a>
+    <a href="{{ path('music_index') }}">{{ 'back to list'|trans }}</a>
 {% endblock %}

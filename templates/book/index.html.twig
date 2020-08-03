@@ -1,19 +1,21 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Liste des ouvrages littéraires{% endblock %}
+{% set mainTitle = 'Book list'|trans %}
+
+{% block title %}{{ mainTitle }}{% endblock %}
 
 {% block body %}
-    <h1>Liste des ouvrages littéraires</h1>
+    <h1>{{ mainTitle }}</h1>
 
     <table class="table">
         <thead>
             <tr>
                 <th>Id</th>
-                <th>Titre</th>
-                <th>Auteur</th>
-                <th>Édition</th>
-                <th>Pages</th>
-                <th>actions</th>
+                <th>{{ 'Title'|trans }}</th>
+                <th>{{ 'Author'|trans }}</th>
+                <th>{{ 'Edition'|trans }}</th>
+                <th>{{ 'Pages'|trans }}</th>
+                <th>{{ 'Actions'|trans }}</th>
             </tr>
         </thead>
         <tbody>
@@ -25,20 +27,22 @@
                 <td>{{ book.edition }}</td>
                 <td>{{ book.pageNb }}</td>
                 <td>
-                    <a href="{{ path('book_show', {'id': book.id}) }}">voir</a>
+                    <a href="{{ path('book_show', {'id': book.id}) }}">{{ 'show'|trans }}</a>
                     {% if is_granted('ROLE_ADMIN') %}
                     |
-                    <a href="{{ path('book_edit', {'id': book.id}) }}">modifier</a>
+                    <a href="{{ path('book_edit', {'id': book.id}) }}">{{ 'edit'|trans }}</a>
                     {%  endif %}
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="7">Aucune donnée</td>
+                <td colspan="7">{{ 'no records found'|trans }}</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('book_new') }}">Enregistrer un nouveau livre</a>
+    {% if is_granted('ROLE_ADMIN') %}
+    <a href="{{ path('book_new') }}">{{ 'register new book'|trans }}</a>
+    {% endif %}
 {% endblock %}
