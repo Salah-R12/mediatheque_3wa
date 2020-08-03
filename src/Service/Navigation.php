@@ -73,7 +73,16 @@ class Navigation{
 				"title" => "Équipe",
 				"route_name" => "staff_index",
 				"roles" => ['superadmin', 'bibliothècaire', 'webmaster'],
-				// Here is an example of possible children
+			],
+			[
+				"title" => "Emprunts",
+				"route_name" => "borrow_index",
+				"roles" => ['superadmin', 'bibliothècaire', 'webmaster']
+			],
+			[
+				"title" => "Paramètres avancés",
+				"route_name" => null,
+				"roles" => ['superadmin'],
 				"children" => [
 					[
 						"title" => "Rôles",
@@ -81,12 +90,17 @@ class Navigation{
 						"roles" => ['superadmin']
 					],
 					[
-						"title" => "Emprunts",
-						"route_name" => "borrow_index",
-						"roles" => ['superadmin', 'bibliothècaire']
+						"title" => "Types de média",
+						"route_name" => "media_type_index",
+						"roles" => ['superadmin']
+					],
+					[
+						"title" => "Statuts sur l'état général d'un média",
+						"route_name" => "media_type_index",
+						"roles" => ['superadmin']
 					]
 				]
-			],
+			]
 		];
 		
 		return $this->recursiveFilterOnLinksArray($links, $roles);
