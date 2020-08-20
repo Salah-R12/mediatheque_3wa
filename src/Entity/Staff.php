@@ -100,6 +100,16 @@ class Staff implements UserInterface{
 	 */
 	private $roleCollection;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $activation_token;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $reset_token;
+
 	public function __construct(){
 		$this->roleCollection = new ArrayCollection();
 	}
@@ -232,7 +242,7 @@ class Staff implements UserInterface{
 		return $this;
 	}
 
-	public function __toString(){
+	public function __toString(): string{
 		return $this->username;
 	}
 
@@ -263,10 +273,34 @@ class Staff implements UserInterface{
 	 * @see \Symfony\Component\Security\Core\User\UserInterface::getRoles()
 	 */
 	public function getRoles(): array{
-		$roles = [];
-		foreach ($this->getRoleCollection() as $Role){
-			$roles[] = $Role->getName();
-		}
-		return array_unique($roles);
-	}
+        $roles = [];
+        foreach ($this->getRoleCollection() as $Role){
+            $roles[] = $Role->getName();
+        }
+        return array_unique($roles);
+    }
+
+    public function getActivationToken(): ?string
+    {
+        return $this->activation_token;
+    }
+
+    public function setActivationToken(?string $activation_token): self
+    {
+        $this->activation_token = $activation_token;
+
+        return $this;
+    }
+
+    public function getResetToken(): ?string
+    {
+        return $this->reset_token;
+    }
+
+    public function setResetToken(?string $reset_token): self
+    {
+        $this->reset_token = $reset_token;
+
+        return $this;
+    }
 }
