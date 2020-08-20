@@ -3,9 +3,9 @@
 
 security:
     # Eventuellement, si l'on souhaite utiliser un cryptage particulier
-    #encoders:
-        #App\Entity\Member:
-            #algorithm: bcrypt
+    encoders:
+        App\Entity\Staff:
+             algorithm: auto
             # Algorithm by default is auto
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     providers:
