@@ -9,7 +9,7 @@
 <div id="staff-login" class="login-container">
 
     <h3 class="login-title">{{ spaceTitle }}</h3>
-	
+
     {# Il est important de spécifier l'URL pour le POST dans le cas où ce controller de login est inclus comme un block dans une autre template (ici, la template "login/index.html.twig") #}
     <form method="post" action="{{ path('staff_login') }}">
         {% if error %}
@@ -41,6 +41,8 @@
             Se connecter en tant qu'admin
         </button>
     </form>
-
+    <div>
+        <a href="{{ absolute_url(path('app_forgotten_password')) }}">Mot de passe oublié ?</a>
+    </div>
 </div>
 {% endblock %}

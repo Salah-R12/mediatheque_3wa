@@ -6,6 +6,7 @@ use App\Entity\Staff;
 use App\Form\StaffNewType;
 use App\Form\StaffType;
 use App\Repository\StaffRepository;
+use App\Service\SendMails;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -26,7 +27,7 @@ class StaffController extends AbstractController
     /**
      * @Route("/admin/new/staff", name="staff_new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    public function new(Request $request, SendMails $sendMails): Response
     {
         $staff = new Staff();
         $form = $this->createForm(StaffNewType::class, $staff);
@@ -34,10 +35,15 @@ class StaffController extends AbstractController
 
         if ($form->isSubmitted()) {
         	if ($form->isValid()){
+        	    $staff->setActivationToken(md5(uniqid()));
+                $staffToken = $staff->getActivationToken();
+        	    $staffMail = $form->get("email")->getData();
+                // $emailService   = $this->container->get('sendmails');
+                // On crée le message
 	            $entityManager = $this->getDoctrine()->getManager();
 	            $entityManager->persist($staff);
 	            $entityManager->flush();
-	
+                $sendMails->sendMailToNewStaff($staffMail, $staffToken);
 	            $this->addFlash('success', 'Données enregistrées avec succès');
 	            return $this->redirectToRoute('staff_index');
         	}else{
@@ -98,5 +104,32 @@ class StaffController extends AbstractController
         }
 
         return $this->redirectToRoute('staff_index');
+    }
+
+    /**
+     * @Route("/activation/{token}", name="activation")
+     */
+    public function activation($token, StaffRepository $staffRepository)
+    {
+        // On recherche si un staff avec ce token existe dans la base de données
+        $staff = $staffRepository->findOneBy(['activation_token' => $token]);
+
+        // Si aucun utilisateur n'est associé à ce token
+        if(!$staff){
+            // On renvoie une erreur 404
+            throw $this->createNotFoundException('Cet utilisateur n\'existe pas');
+        }
+
+        // On supprime le token
+        $staff->setActivationToken(null);
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($staff);
+        $entityManager->flush();
+
+        // On génère un message
+        $this->addFlash('message', 'Utilisateur activé avec succès');
+
+        // On retourne à l'accueil
+        return $this->redirectToRoute('dashboard');
     }
 }
